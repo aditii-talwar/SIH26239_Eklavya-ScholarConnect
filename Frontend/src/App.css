@@ -1,0 +1,32 @@
+/* App.css - GovTech Enterprise Light Mode Overrides */
+
+.portal-shell {
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --text: #0F172A;
+  --text-muted: #64748B;
+  --border: #E2E8F0;
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
+.portal-shell main {
+  min-height: calc(100vh - 4rem);
+}
+
+.card-hover-effect {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-hover-effect:hover {
+  border-color: #CBD5E1;
+}
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  line-height: 1;
+}

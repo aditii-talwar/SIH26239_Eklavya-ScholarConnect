@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+Frontend/node_modules/
+
+# Production build
+Frontend/dist/
+dist/
+build/
+
+# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Environment variables & secrets (NEVER commit API keys)
+.env
+.env.local
+.env.*.local
+Backend/.env
+
+# Local SQLite databases & instance folders
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# Uploaded runtime files
+Backend/uploads/*
+!Backend/uploads/.gitkeep
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
