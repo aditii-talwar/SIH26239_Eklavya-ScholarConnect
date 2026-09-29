@@ -10,8 +10,16 @@ def get_db():
     return conn
 
 
+def _ensure_column(cursor, table_name: str, col_name: str, col_def: str):
+    """Safely adds a column to an existing SQLite table if it does not already exist."""
+    cursor.execute(f"PRAGMA table_info({table_name})")
+    existing_cols = {row[1] for row in cursor.fetchall()}
+    if col_name not in existing_cols:
+        cursor.execute(f"ALTER TABLE {table_name} ADD COLUMN {col_name} {col_def}")
+
+
 def init_db():
-    """Creates all 12 MoTA Scholarship & Fellowship (SIH26239) tables if they do not already exist."""
+    """Creates all 16 MoTA Scholarship & Fellowship (SIH26239) tables if they do not already exist."""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -19,7 +27,7 @@ def init_db():
     # 1. CORE STAKEHOLDER TABLES (ST Applicants, Scrutiny Officers, MoTA Admins)
     # =========================================================================
 
-    # 1. ST_APPLICANTS (Scheduled Tribe Scholarship & Fellowship Applicants)
+    # 1. ST_APPLICANTS (Scheduled Tribe Scholarship & Fellowship Beneficiaries)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS st_applicants (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,11 +35,17 @@ def init_db():
         email TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
         college TEXT,
-        skills TEXT,
-        aptitude_score REAL DEFAULT 0.0,
-        github_url TEXT,
-        leetcode_url TEXT,
-        resume_url TEXT,
+        skills TEXT DEFAULT '',
+        nsp_otr_id TEXT,
+        aadhaar_vault_token TEXT,
+        npci_seeded_bank TEXT,
+        digilocker_url TEXT,
+        dossier_url TEXT,
+        prior_experience TEXT,
+        desired_role TEXT DEFAULT 'Post-Matric ST Scholarship',
+        resume_score REAL DEFAULT 0.0,
+        resume_review TEXT,
+        resume_text TEXT,
         university_roll_no TEXT,
         verification_status TEXT DEFAULT 'unverified',
         verified_at TIMESTAMP,
@@ -41,18 +55,34 @@ def init_db():
     );
     """)
 
-    # 2. PARTNER_UNIVERSITIES (Empaneled Universities & Research Institutes in India & Abroad)
+    for col_name, col_def in [
+        ("nsp_otr_id", "TEXT"),
+        ("aadhaar_vault_token", "TEXT"),
+        ("npci_seeded_bank", "TEXT"),
+        ("digilocker_url", "TEXT"),
+        ("dossier_url", "TEXT"),
+        ("prior_experience", "TEXT"),
+        ("desired_role", "TEXT DEFAULT 'Post-Matric ST Scholarship'"),
+        ("resume_score", "REAL DEFAULT 0.0"),
+        ("resume_review", "TEXT"),
+        ("resume_text", "TEXT"),
+    ]:
+        _ensure_column(cursor, "st_applicants", col_name, col_def)
+
+    # 2. PARTNER_UNIVERSITIES (Empaneled Universities & MoTA Fellowship Divisions)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS partner_universities (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         company_name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
+        aishe_code TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """)
+    _ensure_column(cursor, "partner_universities", "aishe_code", "TEXT")
 
-    # 3. MOTA_ADMINS (Ministry of Tribal Affairs Administrators & Divisions)
+    # 3. MOTA_ADMINS (Ministry of Tribal Affairs Administrators & State Nodal Cells)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS mota_admins (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,12 +90,13 @@ def init_db():
         email TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL,
         aishe_code TEXT,
-        admin_tpo_contact TEXT,
+        nodal_contact TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """)
+    _ensure_column(cursor, "mota_admins", "nodal_contact", "TEXT")
 
-    # 4. SCRUTINY_OFFICERS (Nodal Scrutiny & Screening Committee Officers)
+    # 4. SCRUTINY_OFFICERS (Level-1 Institute Nodal Officers / INO Scrutiny Committee)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS scrutiny_officers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -95,7 +126,7 @@ def init_db():
     );
     """)
 
-    # 6. SCHOLARSHIP_SCHEMES (NFST, NOS, Top Class Education, Post-Matric Scholarship Schemes)
+    # 6. SCHOLARSHIP_SCHEMES (NFST, NOS, Top Class Education, Post-Matric & Pre-Matric Scholarship Schemes)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS scholarship_schemes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -119,6 +150,7 @@ def init_db():
         posting_id INTEGER NOT NULL,
         status TEXT DEFAULT 'applied',
         applied_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(student_id, posting_id),
         FOREIGN KEY (student_id) REFERENCES st_applicants(id) ON DELETE CASCADE,
         FOREIGN KEY (posting_id) REFERENCES scholarship_schemes(id) ON DELETE CASCADE
     );
@@ -136,25 +168,29 @@ def init_db():
     );
     """)
 
-    # 9. SCHEME_RULE_CONFIGS (Configurable Scheme-Specific Eligibility & Screening Questions/Rules)
+    # 9. SCHEME_RULE_CONFIGS (Statutory Scheme-Specific Eligibility & Screening Rules)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS scheme_rule_configs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         skill_name TEXT NOT NULL,
         question_text TEXT NOT NULL,
-        option_a TEXT NOT NULL,
-        option_b TEXT NOT NULL,
-        option_c TEXT NOT NULL,
-        option_d TEXT NOT NULL,
-        correct_option TEXT NOT NULL
+        options TEXT,
+        correct_answer TEXT,
+        option_a TEXT,
+        option_b TEXT,
+        option_c TEXT,
+        option_d TEXT,
+        correct_option TEXT
     );
     """)
+    _ensure_column(cursor, "scheme_rule_configs", "options", "TEXT")
+    _ensure_column(cursor, "scheme_rule_configs", "correct_answer", "TEXT")
 
     # =========================================================================
     # 3. AI SCRUTINY, FELLOWSHIP DISBURSEMENT & DEFICIENCY COMMUNICATION TABLES
     # =========================================================================
 
-    # 10. AI_SCRUTINY_CACHE (AI OCR & Eligibility Verification Cache)
+    # 10. AI_SCRUTINY_CACHE (Google Vision OCR & Statutory Eligibility Verification Cache)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS ai_scrutiny_cache (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -163,12 +199,13 @@ def init_db():
         fit_score REAL DEFAULT 0.0,
         gap_analysis_text TEXT NOT NULL,
         generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(student_id, posting_id),
         FOREIGN KEY (student_id) REFERENCES st_applicants(id) ON DELETE CASCADE,
         FOREIGN KEY (posting_id) REFERENCES scholarship_schemes(id) ON DELETE CASCADE
     );
     """)
 
-    # 11. FELLOWSHIP_DISBURSEMENTS (Post-Selection Fellowship Management & Continuation Roadmaps)
+    # 11. FELLOWSHIP_DISBURSEMENTS (PFMS SNA SPARSH Fellowship Tranches & Continuation Roadmaps)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS fellowship_disbursements (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -176,12 +213,13 @@ def init_db():
         posting_id INTEGER,
         recommended_courses TEXT NOT NULL,
         generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(student_id, posting_id),
         FOREIGN KEY (student_id) REFERENCES st_applicants(id) ON DELETE CASCADE,
         FOREIGN KEY (posting_id) REFERENCES scholarship_schemes(id) ON DELETE CASCADE
     );
     """)
 
-    # 12. DEFICIENCY_COMMUNICATIONS (Deficiency Memos, Applicant Resubmissions & Official Remarks)
+    # 12. DEFICIENCY_COMMUNICATIONS (Level-1 INO Deficiency Memos & Official Scrutiny Remarks)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS deficiency_communications (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -226,7 +264,7 @@ def init_db():
         vision_confidence REAL DEFAULT 99.2,
         extracted_summary TEXT NOT NULL,
         changes_detected_json TEXT NOT NULL,
-        scanned_by TEXT DEFAULT 'MoTA Guideline Vision Scanner',
+        scanned_by TEXT DEFAULT 'Google Cloud Vision API (DOCUMENT_TEXT_DETECTION)',
         scanned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
     """)

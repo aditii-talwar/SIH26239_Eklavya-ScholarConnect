@@ -15,7 +15,7 @@ def seed():
     # 1. Seed MoTA Ministry Administrator
     cursor.execute(
         """
-        INSERT OR IGNORE INTO mota_admins (name, email, password_hash, admin_tpo_contact)
+        INSERT OR IGNORE INTO mota_admins (name, email, password_hash, nodal_contact)
         VALUES (?, ?, ?, ?)
         """,
         ("Ministry of Tribal Affairs (MoTA) — Scholarship & Fellowship Division", "admin@mota.gov.in", default_pw, "+91-11-23389888 (MoTA Nodal Cell)")
@@ -50,7 +50,7 @@ def seed():
         """
         INSERT OR IGNORE INTO st_applicants (
             name, email, password_hash, college, skills,
-            github_url, university_roll_no, verification_status, verified_at, institute_id
+            digilocker_url, university_roll_no, verification_status, verified_at, institute_id
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, 'verified', CURRENT_TIMESTAMP, ?)
         """,
@@ -78,7 +78,7 @@ def seed():
         """
         INSERT INTO st_applicants (
             name, email, password_hash, college, skills,
-            github_url, university_roll_no, verification_status, verified_at, institute_id
+            digilocker_url, university_roll_no, verification_status, verified_at, institute_id
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, 'verified', CURRENT_TIMESTAMP, ?)
         ON CONFLICT(email) DO UPDATE SET password_hash = excluded.password_hash
@@ -96,7 +96,7 @@ def seed():
         """
         INSERT INTO st_applicants (
             name, email, password_hash, college, skills,
-            github_url, university_roll_no, verification_status, verified_at, institute_id
+            digilocker_url, university_roll_no, verification_status, verified_at, institute_id
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, 'verified', CURRENT_TIMESTAMP, ?)
         ON CONFLICT(email) DO UPDATE SET password_hash = excluded.password_hash

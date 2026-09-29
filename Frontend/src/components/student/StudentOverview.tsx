@@ -129,6 +129,9 @@ export const StudentOverview: React.FC<{ student: Student; onNavigate?: (tab: st
   const [scanStage, setScanStage] = useState<number>(5);
   const [scanningDoc, setScanningDoc] = useState<boolean>(false);
   const [scanOutcome, setScanOutcome] = useState<any>(null);
+  const [uploadedFileBase64, setUploadedFileBase64] = useState<string>('');
+  const [uploadedFileName, setUploadedFileName] = useState<string>('');
+  const [uploadedFileSize, setUploadedFileSize] = useState<number>(0);
 
   // INO Deficiency Conversations State
   const [inoChats, setInoChats] = useState<InoDeficiencyChat[]>([]);
@@ -166,6 +169,20 @@ export const StudentOverview: React.FC<{ student: Student; onNavigate?: (tab: st
     setCurrentStep(updated.current_step);
   };
 
+  const handleSelectCertificateFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadedFileName(file.name);
+    setUploadedFileSize(file.size);
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setUploadedFileBase64(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleTriggerVisionScan = async () => {
     const isDeficientDoc = docType.endsWith('_deficient');
     const cleanDocType = docType.replace('_deficient', '');
@@ -182,6 +199,9 @@ export const StudentOverview: React.FC<{ student: Student; onNavigate?: (tab: st
           outcome === 'reject'
             ? 'EXPIRED INCOME CERTIFICATE #REV-2023-1104 | MISSING BARCODE | MISMATCHED INCOME Rs. 3,10,000'
             : 'VALID E-DISTRICT CERTIFICATE #JH-ST-2026-88412 | ANNUAL INCOME Rs. 1,80,000 | TEHSILDAR SIGNED',
+        image_base64: uploadedFileBase64 || undefined,
+        file_name: uploadedFileName || undefined,
+        file_size_bytes: uploadedFileSize || undefined,
         simulate_outcome: outcome,
       });
       setScanOutcome(res);
@@ -370,8 +390,18 @@ export const StudentOverview: React.FC<{ student: Student; onNavigate?: (tab: st
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs">
-            <input type="file" accept="image/*,.pdf" className="text-xs text-slate-600 flex-1" />
+          <div className="space-y-1.5 text-xs">
+            <input
+              type="file"
+              accept="image/*,.pdf"
+              onChange={handleSelectCertificateFile}
+              className="text-xs text-slate-600 w-full"
+            />
+            {uploadedFileName && (
+              <div className="text-[11px] font-mono text-[#1E3A8A] bg-blue-50 border border-blue-200 px-2.5 py-1 rounded">
+                📎 Binary File Ready for Vision OCR: {uploadedFileName} ({(uploadedFileSize / 1024).toFixed(1)} KB)
+              </div>
+            )}
           </div>
 
           <div className="flex flex-wrap gap-2 pt-1">

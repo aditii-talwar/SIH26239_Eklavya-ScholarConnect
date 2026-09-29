@@ -14,7 +14,7 @@ def row_to_dict(row):
 def get_public_institutes_list():
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name, admin_tpo_contact FROM mota_admins ORDER BY name ASC")
+    cursor.execute("SELECT id, name, nodal_contact FROM mota_admins ORDER BY name ASC")
     institutes = [row_to_dict(r) for r in cursor.fetchall()]
     conn.close()
     return jsonify({'institutes': institutes}), 200

@@ -170,6 +170,9 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
   const [docScanText, setDocScanText] = useState<string>(
     'STATE E-DISTRICT CERTIFICATE #JH-ST-2026-88412 | APPLICANT: KAREENA MURMU | TRIBE: SANTHAL (SCHEDULED TRIBE) | ANNUAL FAMILY INCOME: Rs. 1,80,000 | ISSUING AUTHORITY: TEHSILDAR DUMKA'
   );
+  const [docFileBase64, setDocFileBase64] = useState<string>('');
+  const [docFileName, setDocFileName] = useState<string>('');
+  const [docFileSize, setDocFileSize] = useState<number>(0);
   const [scanningDoc, setScanningDoc] = useState<boolean>(false);
   const [docScanResult, setDocScanResult] = useState<any>(null);
   const [expandedRuleId, setExpandedRuleId] = useState<string | null>('otr');
@@ -197,7 +200,10 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
   };
 
   // Autonomous Backend Circular Scanner: Automatically scans on our end, compares, and updates on its own!
-  const handleTriggerBackendAutoScan = async (targetSchemeCode?: string) => {
+  const handleTriggerBackendAutoScan = async (
+    targetSchemeCode?: string,
+    uploadedFile?: { base64: string; name: string; size: number }
+  ) => {
     const code = targetSchemeCode || selectedSchemeCode;
     setAutoSyncing(true);
     try {
@@ -208,9 +214,14 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
 
       const res = await informantApi.scanAndCompareGuidelinePdf({
         scheme_code: code,
-        pdf_title: circular.pdf_title,
-        circular_ref: circular.circular_ref,
+        pdf_title: uploadedFile?.name || circular.pdf_title,
+        circular_ref: uploadedFile
+          ? `Uploaded Gazette (${uploadedFile.name})`
+          : circular.circular_ref,
         pdf_text: circular.pdf_text,
+        pdf_base64: uploadedFile?.base64 || undefined,
+        file_name: uploadedFile?.name || undefined,
+        file_size_bytes: uploadedFile?.size || undefined,
       });
       setLatestDiffResult(res);
       setAutoScannedSchemes((prev) => ({ ...prev, [code]: true }));
@@ -219,6 +230,21 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
     } finally {
       setAutoSyncing(false);
     }
+  };
+
+  const handleUploadCircularFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const b64 = typeof reader.result === 'string' ? reader.result : '';
+      handleTriggerBackendAutoScan(selectedSchemeCode, {
+        base64: b64,
+        name: file.name,
+        size: file.size,
+      });
+    };
+    reader.readAsDataURL(file);
   };
 
   useEffect(() => {
@@ -277,6 +303,23 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
     setSpeakingStep(null);
   };
 
+  const handleSelectStepDocFile = (e: React.ChangeEvent<HTMLInputElement>, requiredDoc: string) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setDocFileName(file.name);
+    setDocFileSize(file.size);
+    setDocScanText(
+      `SCANNED CERTIFICATE (${requiredDoc.toUpperCase()}) | FILE: ${file.name} | BARCODE: #JH-ST-2026-88412 | INCOME: Rs. 1,80,000 | STATUS: VALID`
+    );
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setDocFileBase64(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleRunVisionDocScan = async (stepNum: number, docType: string, stageLabel: string) => {
     setScanningDoc(true);
     try {
@@ -287,6 +330,9 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
         stage_number: stepNum,
         stage_name: stageLabel,
         document_text: docScanText,
+        image_base64: docFileBase64 || undefined,
+        file_name: docFileName || undefined,
+        file_size_bytes: docFileSize || undefined,
         simulate_outcome: 'pass',
       });
       setDocScanResult(res);
@@ -747,11 +793,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                                 <input
                                   type="file"
                                   accept="image/*,.pdf"
-                                  onChange={() =>
-                                    setDocScanText(
-                                      `SCANNED CERTIFICATE (${item.required_doc.toUpperCase()}) | BARCODE: #JH-ST-2026-88412 | INCOME: Rs. 1,80,000 | STATUS: VALID`
-                                    )
-                                  }
+                                  onChange={(e) => handleSelectStepDocFile(e, item.required_doc)}
                                   className="text-[11px] text-slate-300 w-full sm:w-auto max-w-full"
                                 />
                                 <button
@@ -765,6 +807,11 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                                   {scanningDoc ? 'Verifying via Google Vision…' : 'Verify Document & Complete Step'}
                                 </button>
                               </div>
+                              {docFileName && (
+                                <div className="text-[11px] text-amber-300 font-mono">
+                                  📎 Attached Binary File: {docFileName} ({(docFileSize / 1024).toFixed(1)} KB)
+                                </div>
+                              )}
                               {docScanResult && (
                                 <div className="p-2.5 rounded bg-emerald-950 border border-emerald-700 text-xs text-emerald-200 break-words">
                                   <div className="font-bold">
@@ -1037,6 +1084,19 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                   : `Re-Scan tribal.nic.in & Sync ${selectedSchemeCode} Guidelines`}
               </span>
             </button>
+
+            <div className="p-3 rounded-lg bg-slate-50 border border-dashed border-slate-300 space-y-1.5">
+              <label className="block text-[11px] font-bold text-slate-700">
+                📄 Or Upload Custom MoTA Circular PDF / Image (Live Binary Vision OCR):
+              </label>
+              <input
+                type="file"
+                accept=".pdf,image/*"
+                disabled={autoSyncing}
+                onChange={handleUploadCircularFile}
+                className="text-[11px] text-slate-600 w-full"
+              />
+            </div>
 
             {latestDiffResult && (
               <div className="p-3.5 rounded-lg bg-amber-50 border border-amber-300 text-xs space-y-2">

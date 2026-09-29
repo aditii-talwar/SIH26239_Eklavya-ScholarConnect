@@ -20,18 +20,10 @@ def get_profile():
 
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(
-        """
-        SELECT id, name, email, college, skills, github_url, leetcode_url, 
-               codeforces_url, resume_url, prior_experience, university_roll_no, 
-               verification_status, verified_at, created_at, institute_id,
-               resume_score, resume_review, resume_text, desired_role
-        FROM st_applicants 
-        WHERE id = ?
-        """,
-        (student_id,)
-    )
+    cursor.execute("SELECT * FROM st_applicants WHERE id = ?", (student_id,))
     profile = row_to_dict(cursor.fetchone())
+    if profile and 'password_hash' in profile:
+        del profile['password_hash']
     cursor.execute("SELECT id, document_type, file_url, uploaded_at FROM applicant_documents WHERE student_id = ?", (student_id,))
     documents = [row_to_dict(r) for r in cursor.fetchall()]
     cursor.execute("SELECT skill_name, percentage, assessed_at FROM eligibility_verifications WHERE student_id = ?", (student_id,))
@@ -58,7 +50,11 @@ def get_profile():
 def update_profile():
     student_id = session['user_id']
     data = request.get_json() or {}
-    fields = ['college', 'skills', 'github_url', 'leetcode_url', 'codeforces_url', 'resume_url', 'prior_experience', 'university_roll_no', 'institute_id', 'desired_role']
+    fields = [
+        'college', 'skills', 'nsp_otr_id', 'aadhaar_vault_token', 'npci_seeded_bank',
+        'digilocker_url', 'dossier_url', 'prior_experience', 'university_roll_no',
+        'institute_id', 'desired_role'
+    ]
     updates = {}
     for f in fields:
         if f in data:

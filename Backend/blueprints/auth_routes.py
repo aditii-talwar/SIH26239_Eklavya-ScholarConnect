@@ -44,29 +44,23 @@ def student_signup():
             valid_institute_id = None
 
     try:
-        cursor.execute("SELECT id FROM st_applicants WHERE LOWER(email) = LOWER(?)", (email,))
+        cursor.execute("SELECT id, name, password_hash, university_roll_no FROM st_applicants WHERE LOWER(email) = LOWER(?)", (email,))
         existing = cursor.fetchone()
         if existing:
+            if not verify_password(existing['password_hash'], password):
+                return jsonify({
+                    'error': 'An account with this email is already registered on MoTA ScholarConnect. Please sign in with your existing password.'
+                }), 409
             student_id = existing['id']
-            cursor.execute(
-                """
-                UPDATE st_applicants
-                SET name = ?, password_hash = ?, college = COALESCE(?, college), skills = COALESCE(?, skills),
-                    university_roll_no = COALESCE(?, university_roll_no), institute_id = COALESCE(?, institute_id)
-                WHERE id = ?
-                """,
-                (name, pwd_hash, college, skills, university_roll_no, valid_institute_id, student_id)
-            )
-            conn.commit()
-            set_user_session(student_id, 'student', email, name)
+            set_user_session(student_id, 'student', email, existing['name'])
             return jsonify({
-                'message': 'Trainee logged in successfully!',
+                'message': 'ST Scholar Beneficiary logged in successfully!',
                 'user': {
                     'id': student_id,
-                    'name': name,
+                    'name': existing['name'],
                     'email': email,
                     'role': 'student',
-                    'university_roll_no': university_roll_no
+                    'university_roll_no': existing['university_roll_no']
                 }
             }), 200
 
@@ -82,7 +76,7 @@ def student_signup():
         set_user_session(student_id, 'student', email, name)
 
         return jsonify({
-            'message': 'Trainee registered and logged in successfully!',
+            'message': 'ST Scholar Beneficiary registered and logged in successfully!',
             'user': {
                 'id': student_id,
                 'name': name,
@@ -94,27 +88,12 @@ def student_signup():
 
     except Exception as e:
         conn.rollback()
-        cursor.execute("SELECT id FROM st_applicants WHERE LOWER(email) = LOWER(?)", (email,))
-        existing = cursor.fetchone()
-        if existing:
-            student_id = existing['id']
-            set_user_session(student_id, 'student', email, name)
-            return jsonify({
-                'message': 'Trainee logged in successfully!',
-                'user': {
-                    'id': student_id,
-                    'name': name,
-                    'email': email,
-                    'role': 'student',
-                    'university_roll_no': university_roll_no
-                }
-            }), 200
         return jsonify({'error': f'Registration failed: {str(e)}'}), 500
     finally:
         conn.close()
 
 # =========================================================================
-# 2. STUDENT / TRAINEE LOGIN
+# 2. ST SCHOLAR BENEFICIARY LOGIN
 # =========================================================================
 
 @auth_bp.route('/students/login', methods=['POST'])
@@ -169,21 +148,23 @@ def industry_signup():
     email = data.get('email', '').strip().lower()
     password = data.get('password', '')
     if not company_name or not email or not password:
-        return jsonify({'error': 'Partner name, email, and password are required.'}), 400
+        return jsonify({'error': 'Partner University / Division name, email, and password are required.'}), 400
     pwd_hash = hash_password(password)
     conn = get_db()
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT id, company_name FROM partner_universities WHERE LOWER(email) = LOWER(?)", (email,))
+        cursor.execute("SELECT id, company_name, password_hash FROM partner_universities WHERE LOWER(email) = LOWER(?)", (email,))
         existing = cursor.fetchone()
         if existing:
+            if not verify_password(existing['password_hash'], password):
+                return jsonify({
+                    'error': 'An institutional account with this email already exists. Please sign in with your existing password.'
+                }), 409
             industry_id = existing['id']
-            cursor.execute("UPDATE partner_universities SET company_name = ?, password_hash = ? WHERE id = ?", (company_name, pwd_hash, industry_id))
-            conn.commit()
-            set_user_session(industry_id, 'industry', email, company_name)
+            set_user_session(industry_id, 'industry', email, existing['company_name'])
             return jsonify({
-                'message': 'Partner logged in successfully!',
-                'user': {'id': industry_id, 'name': company_name, 'email': email, 'role': 'industry'}
+                'message': 'Empaneled University Division logged in successfully!',
+                'user': {'id': industry_id, 'name': existing['company_name'], 'email': email, 'role': 'industry'}
             }), 200
 
         cursor.execute(
@@ -194,19 +175,11 @@ def industry_signup():
         industry_id = cursor.lastrowid
         set_user_session(industry_id, 'industry', email, company_name)
         return jsonify({
-            'message': 'Partner registered successfully!',
+            'message': 'Empaneled University Division registered successfully!',
             'user': {'id': industry_id, 'name': company_name, 'email': email, 'role': 'industry'}
         }), 201
     except Exception as e:
         conn.rollback()
-        cursor.execute("SELECT id, company_name FROM partner_universities WHERE LOWER(email) = LOWER(?)", (email,))
-        existing = cursor.fetchone()
-        if existing:
-            set_user_session(existing['id'], 'industry', email, existing['company_name'])
-            return jsonify({
-                'message': 'Partner logged in successfully!',
-                'user': {'id': existing['id'], 'name': existing['company_name'], 'email': email, 'role': 'industry'}
-            }), 200
         return jsonify({'error': f'Registration failed: {str(e)}'}), 500
     finally:
         conn.close()
@@ -237,46 +210,40 @@ def institute_signup():
     name = data.get('name', '').strip()
     email = data.get('email', '').strip().lower()
     password = data.get('password', '')
-    admin_tpo_contact = data.get('admin_tpo_contact', '').strip()
+    nodal_contact = (data.get('nodal_contact') or data.get('admin_tpo_contact') or '').strip()
     if not name or not email or not password:
-        return jsonify({'error': 'Admin/Organization name, email, and password are required.'}), 400
+        return jsonify({'error': 'MoTA Division / Nodal name, email, and password are required.'}), 400
     pwd_hash = hash_password(password)
     conn = get_db()
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT id, name FROM mota_admins WHERE LOWER(email) = LOWER(?)", (email,))
+        cursor.execute("SELECT id, name, password_hash FROM mota_admins WHERE LOWER(email) = LOWER(?)", (email,))
         existing = cursor.fetchone()
         if existing:
+            if not verify_password(existing['password_hash'], password):
+                return jsonify({
+                    'error': 'A MoTA Nodal Admin account with this email already exists. Please sign in with your existing password.'
+                }), 409
             institute_id = existing['id']
-            cursor.execute("UPDATE mota_admins SET name = ?, password_hash = ?, admin_tpo_contact = COALESCE(?, admin_tpo_contact) WHERE id = ?", (name, pwd_hash, admin_tpo_contact, institute_id))
-            conn.commit()
-            set_user_session(institute_id, 'institute', email, name)
+            set_user_session(institute_id, 'institute', email, existing['name'])
             return jsonify({
-                'message': 'Admin logged in successfully!',
-                'user': {'id': institute_id, 'name': name, 'email': email, 'role': 'institute'}
+                'message': 'MoTA Nodal Administrator logged in successfully!',
+                'user': {'id': institute_id, 'name': existing['name'], 'email': email, 'role': 'institute'}
             }), 200
 
         cursor.execute(
-            "INSERT INTO mota_admins (name, email, password_hash, admin_tpo_contact) VALUES (?, ?, ?, ?)",
-            (name, email, pwd_hash, admin_tpo_contact)
+            "INSERT INTO mota_admins (name, email, password_hash, nodal_contact) VALUES (?, ?, ?, ?)",
+            (name, email, pwd_hash, nodal_contact)
         )
         conn.commit()
         institute_id = cursor.lastrowid
         set_user_session(institute_id, 'institute', email, name)
         return jsonify({
-            'message': 'Admin registered successfully!',
+            'message': 'MoTA Nodal Administrator registered successfully!',
             'user': {'id': institute_id, 'name': name, 'email': email, 'role': 'institute'}
         }), 201
     except Exception as e:
         conn.rollback()
-        cursor.execute("SELECT id, name FROM mota_admins WHERE LOWER(email) = LOWER(?)", (email,))
-        existing = cursor.fetchone()
-        if existing:
-            set_user_session(existing['id'], 'institute', email, existing['name'])
-            return jsonify({
-                'message': 'Admin logged in successfully!',
-                'user': {'id': existing['id'], 'name': existing['name'], 'email': email, 'role': 'institute'}
-            }), 200
         return jsonify({'error': f'Registration failed: {str(e)}'}), 500
     finally:
         conn.close()
@@ -310,7 +277,7 @@ def academician_signup():
     expertise_domain = data.get('expertise_domain', '').strip()
     institute_id = data.get('institute_id')
     if not name or not email or not password:
-        return jsonify({'error': 'Name, email, and password are required.'}), 400
+        return jsonify({'error': 'INO Officer name, email, and password are required.'}), 400
     pwd_hash = hash_password(password)
     conn = get_db()
     cursor = conn.cursor()
@@ -326,23 +293,18 @@ def academician_signup():
             valid_institute_id = None
 
     try:
-        cursor.execute("SELECT id, name FROM scrutiny_officers WHERE LOWER(email) = LOWER(?)", (email,))
+        cursor.execute("SELECT id, name, password_hash FROM scrutiny_officers WHERE LOWER(email) = LOWER(?)", (email,))
         existing = cursor.fetchone()
         if existing:
+            if not verify_password(existing['password_hash'], password):
+                return jsonify({
+                    'error': 'A Level-1 INO Scrutiny Officer account with this email already exists. Please sign in with your existing password.'
+                }), 409
             academician_id = existing['id']
-            cursor.execute(
-                """
-                UPDATE scrutiny_officers
-                SET name = ?, password_hash = ?, institute_id = COALESCE(?, institute_id), expertise_domain = COALESCE(?, expertise_domain)
-                WHERE id = ?
-                """,
-                (name, pwd_hash, valid_institute_id, expertise_domain, academician_id)
-            )
-            conn.commit()
-            set_user_session(academician_id, 'academician', email, name)
+            set_user_session(academician_id, 'academician', email, existing['name'])
             return jsonify({
-                'message': 'Trainer logged in successfully!',
-                'user': {'id': academician_id, 'name': name, 'email': email, 'role': 'academician'}
+                'message': 'Level-1 INO Scrutiny Officer logged in successfully!',
+                'user': {'id': academician_id, 'name': existing['name'], 'email': email, 'role': 'academician'}
             }), 200
 
         cursor.execute(
@@ -353,19 +315,11 @@ def academician_signup():
         academician_id = cursor.lastrowid
         set_user_session(academician_id, 'academician', email, name)
         return jsonify({
-            'message': 'Trainer registered successfully!',
+            'message': 'Level-1 INO Scrutiny Officer registered successfully!',
             'user': {'id': academician_id, 'name': name, 'email': email, 'role': 'academician'}
         }), 201
     except Exception as e:
         conn.rollback()
-        cursor.execute("SELECT id, name FROM scrutiny_officers WHERE LOWER(email) = LOWER(?)", (email,))
-        existing = cursor.fetchone()
-        if existing:
-            set_user_session(existing['id'], 'academician', email, existing['name'])
-            return jsonify({
-                'message': 'Trainer logged in successfully!',
-                'user': {'id': existing['id'], 'name': existing['name'], 'email': email, 'role': 'academician'}
-            }), 200
         return jsonify({'error': f'Registration failed: {str(e)}'}), 500
     finally:
         conn.close()

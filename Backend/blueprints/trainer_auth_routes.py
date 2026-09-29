@@ -31,23 +31,25 @@ def trainer_signup():
             valid_institute_id = None
 
     try:
-        cursor.execute("SELECT id, name FROM scrutiny_officers WHERE LOWER(email) = LOWER(?)", (email,))
+        cursor.execute("SELECT id, name, password_hash FROM scrutiny_officers WHERE LOWER(email) = LOWER(?)", (email,))
         existing = cursor.fetchone()
         if existing:
+            if not verify_password(existing['password_hash'], password):
+                return jsonify({'error': 'A Scrutiny Officer account with this email already exists. Please sign in with your password.'}), 409
             trainer_id = existing['id']
             cursor.execute(
                 """
                 UPDATE scrutiny_officers
-                SET name = ?, password_hash = ?, institute_id = COALESCE(?, institute_id), expertise_domain = COALESCE(?, expertise_domain)
+                SET name = COALESCE(NULLIF(?, ''), name), institute_id = COALESCE(?, institute_id), expertise_domain = COALESCE(NULLIF(?, ''), expertise_domain)
                 WHERE id = ?
                 """,
-                (name, pwd_hash, valid_institute_id, expertise_domain, trainer_id)
+                (name, valid_institute_id, expertise_domain, trainer_id)
             )
             conn.commit()
-            set_user_session(trainer_id, 'academician', email, name)
+            set_user_session(trainer_id, 'academician', email, name or existing['name'])
             return jsonify({
-                'message': 'Trainer logged in successfully!',
-                'user': {'id': trainer_id, 'name': name, 'email': email, 'role': 'academician'}
+                'message': 'Scrutiny Officer logged in successfully!',
+                'user': {'id': trainer_id, 'name': name or existing['name'], 'email': email, 'role': 'academician'}
             }), 200
 
         cursor.execute(
@@ -58,12 +60,12 @@ def trainer_signup():
         trainer_id = cursor.lastrowid
         set_user_session(trainer_id, 'academician', email, name)
         return jsonify({
-            'message': 'Trainer registered successfully!',
+            'message': 'Scrutiny Officer registered successfully!',
             'user': {'id': trainer_id, 'name': name, 'email': email, 'role': 'academician'}
         }), 201
     except Exception as e:
         conn.rollback()
-        return jsonify({'error': f'Trainer registration failed: {str(e)}'}), 500
+        return jsonify({'error': f'Scrutiny Officer registration failed: {str(e)}'}), 500
     finally:
         conn.close()
 
@@ -83,10 +85,10 @@ def trainer_login():
     conn.close()
 
     if not trainer or not verify_password(trainer['password_hash'], password):
-        return jsonify({'error': 'Invalid trainer email or password.'}), 401
+        return jsonify({'error': 'Invalid Scrutiny Officer email or password.'}), 401
 
     set_user_session(trainer['id'], 'academician', trainer['email'], trainer['name'])
     return jsonify({
-        'message': f"Welcome back, Trainer {trainer['name']}!",
+        'message': f"Welcome back, {trainer['name']}!",
         'user': {'id': trainer['id'], 'name': trainer['name'], 'email': trainer['email'], 'role': 'academician'}
     }), 200

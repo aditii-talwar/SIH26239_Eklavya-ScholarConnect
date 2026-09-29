@@ -1,188 +1,74 @@
-# SIH26044 — Project Specification
+# SIH26239 — Project Specification: MoTA ScholarConnect
 
-## Project
-AI-powered Skill Intelligence Platform for Academia–Industry Collaboration
+## Project Title
+**MoTA ScholarConnect** — Unified AI-Powered Scholarship & Fellowship Governance, Verification & Direct Benefit Transfer (DBT) Management System
+
+## Organization & Ministry
+- **Ministry:** Ministry of Tribal Affairs (MoTA), Government of India
+- **Problem Statement ID:** SIH26239
+- **Compliance Standards:** GIGW 3.0 (Guidelines for Indian Government Websites), UIDAI Aadhaar Data Vault Circulars, PFMS SNA SPARSH Just-In-Time DBT Mandate, NSP 2.0 One-Time Registration (OTR)
+
+---
 
 ## Objective
-Build a demo platform that connects students, academicians, institutes and industry through skill mapping, skill-gap analysis, personalized upskilling, skill verification, readiness scoring and competency-based internship/placement matching.
+Design and deploy a centralized, multilingual, AI-assisted national scholarship and fellowship governance portal for Scheduled Tribe (ST) students, Level-1 Institute Nodal Officers (INOs), and Ministry of Tribal Affairs (MoTA) Nodal Administrators. The platform eliminates manual verification delays, prevents duplicate cross-portal claims via SHA-256 Aadhaar tokenization, automates document scrutiny using Google Cloud Vision OCR, and enables real-time multilingual guidance in 12 Indian and Tribal languages via MeitY Bhashini.
 
 ---
 
-# Technology Stack
+## Technology Stack
 
-## Frontend
-- React.js
-- Tailwind CSS
-- JavaScript
+### Frontend
+- **Framework:** React 18 + TypeScript + Vite
+- **Styling:** Tailwind CSS (GIGW 3.0 High-Contrast Light Theme — `#1E3A8A` Navy, `#2563EB` Royal Blue, `#D97706` Amber Gold, `#16A34A` Emerald Green)
+- **Accessibility & Localization:** MeitY Bhashini ULCA NMT + Native Script & Phonetic Devanagari Voice Synthesis (`window.speechSynthesis`) across 12 languages (English, Hindi, Santali `Ol Chiki`, Gondi, Bhili, Ho, Mundari, Odia, Telugu, Marathi, Gujarati, Tamil)
 
-## Backend
-- Python
-- FastAPI
+### Backend
+- **Framework:** Python 3 + Flask 3 (Modular Blueprint Architecture)
+- **Production Server:** Gunicorn WSGI serving REST API (`/api/*`) and SPA static bundle (`Frontend/dist`)
 
-## Database
-- PostgreSQL
+### Database
+- **Engine:** SQLite 3 with Foreign Key Enforcement (`PRAGMA foreign_keys = ON`)
+- **Core Tables (16):** `st_applicants`, `mota_admins`, `scrutiny_officers`, `partner_universities`, `applicant_documents`, `scholarship_schemes`, `scheme_applications`, `eligibility_verifications`, `scheme_rule_configs`, `ai_scrutiny_cache`, `fellowship_disbursements`, `deficiency_communications`, `mota_guideline_schemes`, `guideline_pdf_updates`, `student_checklist_progress`, `ino_deficiency_chats`
 
-## AI / Intelligence
-- Python
-- NLP
-- scikit-learn
+### Digital Public Infrastructure (DPI) & AI Integrations
+- **Google Cloud Vision API (`DOCUMENT_TEXT_DETECTION`):** Real Base64 PDF/Image OCR parsing for barcoded State e-District ST Caste Certificates, Revenue Officer Income Certificates, Marks Sheets, and Official MoTA Circular PDFs
+- **UIDAI Aadhaar e-KYC & SHA-256 Data Vault:** 12-digit Verhoeff-validated Aadhaar OTP + FaceRD Biometric authentication, generating SHA-256 Vault Tokens (`ADV-SHA256-...`), 14-digit NSP 2.0 OTR IDs (`NSP-OTR-2026-...`), and NPCI Bank Mapper seeding checks
+- **MeitY Bhashini (ULCA NMT + TTS):** Real-time translation and native Indian voice read-aloud
 
-## API Communication
-- REST API
-- JSON
-
-## Authentication
-- JWT
+### Authentication & Security
+- **Session Management:** Flask `HttpOnly` signed session cookies with Role-Based Access Control (`@role_required`)
+- **Password Cryptography:** Werkzeug PBKDF2 / Scrypt password hashing with strict duplicate-account protection (`409 Conflict` on existing email signup attempts)
 
 ---
 
-# Core Workflow
+## 5 Central ST Schemes & Varying Statutory Income Criteria
 
-Student Profile / Resume
-        ↓
-AI Skill Extraction
-        ↓
-Skill Normalization
-        ↓
-AI Skill Graph
-        ↓
-Skill-Gap Analysis
-        ↓
-Personalized Roadmap
-        ↓
-Skill Verification
-        ↓
-Readiness Score
-        ↓
-Competency-Based Matching
-        ↓
-Internship / Placement
+| Scheme Code | Official MoTA Scheme Name | Target Group | Statutory Family Income Ceiling | Key Entitlements & DBT Mode |
+| :--- | :--- | :--- | :--- | :--- |
+| **`PRE_MATRIC`** | Pre-Matric Scholarship for ST Students | Classes IX & X (UDISE+ Schools) | **≤ ₹2.25 Lakh / Annum** | ₹3,500/yr (Day) · ₹7,000/yr (Hosteller) + Book Grant via State SNA SPARSH |
+| **`POST_MATRIC`** | Post-Matric Scholarship for ST Students | Class XI–XII, Diploma, UG & PG | **≤ ₹2.50 Lakh / Annum** | 100% Non-Refundable Tuition + ₹1,200–₹4,000/mo Allowance (75:25 / 90:10 Split) |
+| **`TOP_CLASS`** | Central Sector Scheme of Top Class Education | Premier IITs, IIMs, NITs, AIIMS, NLUs (250+ Institutes) | **≤ ₹4.50 Lakh / Annum** | Full Tuition + ₹86,000/yr Living + ₹45,000 Laptop + ₹3,000 Books via SNA SPARSH |
+| **`NOS`** | National Overseas Scholarship for ST Candidates | Master's, Ph.D. & Post-Doc Abroad (Top-1000 QS) | **≤ ₹6.00 Lakh / Annum** | 100% Foreign Tuition + $15,400 USD / £9,900 GBP Maintenance + Airfare |
+| **`NFST`** | National Fellowship for ST Students | M.Phil. & Ph.D. Scholars in India (750 Slots/Yr) | **No Income Ceiling (Open Merit)** | ₹37,000/mo (JRF) · ₹42,000/mo (SRF) + up to 27% HRA + ₹20,500/yr Contingency |
 
 ---
 
-# Main Users
+## End-to-End 8-Stage Digital Governance Workflow
 
-## Student
-- Create profile
-- Upload resume
-- View extracted skills
-- View skill gaps
-- Get personalized roadmap
-- Take assessments
-- View readiness score
-- Discover matched internships
-
-## Institute
-- Monitor student readiness
-- View skill-demand insights
-- Track student performance
-
-## Academician
-- Mentor students
-- View student skill gaps
-- Access industry insights
-- Support industry-aligned learning
-
-## Industry
-- Define required competencies
-- Find suitable candidates
-- View skill-based profiles
-- Post internship opportunities
-
----
-
-# Demo Students
-
-### Het Modi
-Target Role: Backend Developer Intern
-
-Strong Skills:
-- Java
-- DSA
-- OOP
-
-Skill Gaps:
-- Spring Boot
-- REST API
-- Docker
-
-Readiness Score:
-72%
-
----
-
-### Dhyana Joshi
-Target Role: Frontend Developer Intern
-
-Strong Skills:
-- HTML
-- CSS
-- JavaScript
-
-Skill Gaps:
-- React
-- TypeScript
-
-Readiness Score:
-78%
-
----
-
-### Vraj Khatri
-Target Role: Data Analyst Intern
-
-Strong Skills:
-- Python
-- SQL
-
-Skill Gaps:
-- Statistics
-- Power BI
-
-Readiness Score:
-67%
-
----
-
-# Demo Requirements
-
-The demo should prioritize:
-
-1. Student Dashboard
-2. Skill Extraction
-3. Skill-Gap Analysis
-4. Personalized Roadmap
-5. Skill Verification
-6. Readiness Score
-7. Internship Matching
-
-The system should use realistic seeded data.
-
-The AI components may use lightweight NLP, keyword extraction, predefined skill mappings and similarity-based algorithms for the prototype.
-
-Do not over-engineer the demo.
-
----
-
-# UI Direction
-
-Theme:
-- Dark navy
-- Blue / cyan accents
-- Professional
-- Modern
-- Responsive
-
-The UI should feel like a real SaaS/product platform rather than a basic college website.
-
----
-
-# Important Development Rule
-
-Frontend, backend and database should remain modular.
-
-Do not unnecessarily modify another person's component.
-
-All API responses must follow the API contract defined in:
-
-docs/API_CONTRACT.md
+```
+Stage 1: NSP 2.0 OTR & UIDAI Aadhaar FaceRD e-KYC
+        ↓
+Stage 2: Scheme Selection & Varying Income Pre-Check
+        ↓
+Stage 3: DigiLocker / State e-District Certificate Upload (Base64 PDF/Image)
+        ↓
+Stage 4: Google Cloud Vision OCR & Statutory Rule Engine Audit
+        ↓
+Stage 5: Level-1 Institute Nodal Officer (INO) Scrutiny & Auto-Opened Deficiency Chat
+        ↓
+Stage 6: Level-2 State Nodal & SHA-256 Cross-Portal Deduplication
+        ↓
+Stage 7: Digital Sanction Order & Merit List Generation
+        ↓
+Stage 8: PFMS SNA SPARSH Just-In-Time Direct Bank Transfer (NPCI APB)
+```

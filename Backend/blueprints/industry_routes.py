@@ -92,7 +92,7 @@ def get_applicants(posting_id):
         """
         SELECT a.id AS application_id, a.status, a.applied_date,
                s.id AS student_id, s.name, s.email, s.college, s.skills,
-               s.github_url, s.leetcode_url, s.resume_url, s.university_roll_no,
+               s.nsp_otr_id, s.digilocker_url, s.dossier_url, s.university_roll_no,
                s.verification_status
         FROM scheme_applications a
         JOIN st_applicants s ON a.student_id = s.id

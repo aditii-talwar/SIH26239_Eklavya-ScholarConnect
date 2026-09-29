@@ -10,45 +10,47 @@ def admin_signup():
     name = data.get('name', '').strip()
     email = data.get('email', '').strip().lower()
     password = data.get('password', '')
-    admin_tpo_contact = data.get('admin_tpo_contact', '').strip()
+    nodal_contact = data.get('nodal_contact', '').strip()
 
     if not name or not email or not password:
-        return jsonify({'error': 'Organization/Admin name, email, and password are required.'}), 400
+        return jsonify({'error': 'MoTA Nodal Admin name, email, and password are required.'}), 400
 
     pwd_hash = hash_password(password)
     conn = get_db()
     cursor = conn.cursor()
 
     try:
-        cursor.execute("SELECT id, name FROM mota_admins WHERE LOWER(email) = LOWER(?)", (email,))
+        cursor.execute("SELECT id, name, password_hash FROM mota_admins WHERE LOWER(email) = LOWER(?)", (email,))
         existing = cursor.fetchone()
         if existing:
+            if not verify_password(existing['password_hash'], password):
+                return jsonify({'error': 'A MoTA Nodal Admin account with this email already exists. Please sign in with your password.'}), 409
             admin_id = existing['id']
             cursor.execute(
-                "UPDATE mota_admins SET name = ?, password_hash = ?, admin_tpo_contact = COALESCE(?, admin_tpo_contact) WHERE id = ?",
-                (name, pwd_hash, admin_tpo_contact, admin_id)
+                "UPDATE mota_admins SET name = COALESCE(NULLIF(?, ''), name), nodal_contact = COALESCE(NULLIF(?, ''), nodal_contact) WHERE id = ?",
+                (name, nodal_contact, admin_id)
             )
             conn.commit()
-            set_user_session(admin_id, 'institute', email, name)
+            set_user_session(admin_id, 'institute', email, name or existing['name'])
             return jsonify({
-                'message': 'Admin logged in successfully!',
-                'user': {'id': admin_id, 'name': name, 'email': email, 'role': 'institute'}
+                'message': 'MoTA Nodal Admin logged in successfully!',
+                'user': {'id': admin_id, 'name': name or existing['name'], 'email': email, 'role': 'institute'}
             }), 200
 
         cursor.execute(
-            "INSERT INTO mota_admins (name, email, password_hash, admin_tpo_contact) VALUES (?, ?, ?, ?)",
-            (name, email, pwd_hash, admin_tpo_contact)
+            "INSERT INTO mota_admins (name, email, password_hash, nodal_contact) VALUES (?, ?, ?, ?)",
+            (name, email, pwd_hash, nodal_contact)
         )
         conn.commit()
         admin_id = cursor.lastrowid
         set_user_session(admin_id, 'institute', email, name)
         return jsonify({
-            'message': 'Admin registered successfully!',
+            'message': 'MoTA Nodal Admin registered successfully!',
             'user': {'id': admin_id, 'name': name, 'email': email, 'role': 'institute'}
         }), 201
     except Exception as e:
         conn.rollback()
-        return jsonify({'error': f'Admin registration failed: {str(e)}'}), 500
+        return jsonify({'error': f'MoTA Nodal Admin registration failed: {str(e)}'}), 500
     finally:
         conn.close()
 

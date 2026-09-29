@@ -2,8 +2,10 @@
 node_modules/
 Frontend/node_modules/
 
-# Production build
+# Production build & Vite cache
 Frontend/dist/
+Frontend/.vite/
+.vite/
 dist/
 build/
 

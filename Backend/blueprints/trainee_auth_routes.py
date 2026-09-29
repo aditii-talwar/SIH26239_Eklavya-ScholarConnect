@@ -34,30 +34,32 @@ def trainee_signup():
             valid_institute_id = None
 
     try:
-        cursor.execute("SELECT id FROM st_applicants WHERE LOWER(email) = LOWER(?)", (email,))
+        cursor.execute("SELECT id, name, password_hash, university_roll_no FROM st_applicants WHERE LOWER(email) = LOWER(?)", (email,))
         existing = cursor.fetchone()
         if existing:
+            if not verify_password(existing['password_hash'], password):
+                return jsonify({'error': 'An ST applicant account with this email already exists. Please sign in with your password.'}), 409
             trainee_id = existing['id']
             cursor.execute(
                 """
                 UPDATE st_applicants
-                SET name = ?, password_hash = ?, college = COALESCE(?, college), skills = COALESCE(?, skills),
-                    university_roll_no = COALESCE(?, university_roll_no), institute_id = COALESCE(?, institute_id),
-                    desired_role = COALESCE(?, desired_role)
+                SET name = COALESCE(NULLIF(?, ''), name), college = COALESCE(NULLIF(?, ''), college), skills = COALESCE(NULLIF(?, ''), skills),
+                    university_roll_no = COALESCE(NULLIF(?, ''), university_roll_no), institute_id = COALESCE(?, institute_id),
+                    desired_role = COALESCE(NULLIF(?, ''), desired_role)
                 WHERE id = ?
                 """,
-                (name, pwd_hash, college, skills, university_roll_no, valid_institute_id, desired_role, trainee_id)
+                (name, college, skills, university_roll_no or '', valid_institute_id, desired_role, trainee_id)
             )
             conn.commit()
-            set_user_session(trainee_id, 'student', email, name)
+            set_user_session(trainee_id, 'student', email, name or existing['name'])
             return jsonify({
-                'message': 'Trainee logged in successfully!',
+                'message': 'ST Applicant logged in successfully!',
                 'user': {
                     'id': trainee_id,
-                    'name': name,
+                    'name': name or existing['name'],
                     'email': email,
                     'role': 'student',
-                    'university_roll_no': university_roll_no
+                    'university_roll_no': university_roll_no or existing['university_roll_no']
                 }
             }), 200
 
@@ -73,7 +75,7 @@ def trainee_signup():
         set_user_session(trainee_id, 'student', email, name)
 
         return jsonify({
-            'message': 'Trainee registered and logged in successfully!',
+            'message': 'ST Applicant registered and logged in successfully!',
             'user': {
                 'id': trainee_id,
                 'name': name,
@@ -84,7 +86,7 @@ def trainee_signup():
         }), 201
     except Exception as e:
         conn.rollback()
-        return jsonify({'error': f'Trainee registration failed: {str(e)}'}), 500
+        return jsonify({'error': f'ST Applicant registration failed: {str(e)}'}), 500
     finally:
         conn.close()
 
