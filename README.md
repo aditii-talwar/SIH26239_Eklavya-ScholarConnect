@@ -1,4 +1,4 @@
-# MoTA ScholarConnect (SIH26239)
+# Eklavya-ScholarConnect (SIH26239)
 
 **AI-Enabled Scholarship & Fellowship Management System for Scheduled Tribes (ST)** under the **Ministry of Tribal Affairs (MoTA), Government of India** (`tribal.nic.in` · `dbttribal.gov.in`).
 
