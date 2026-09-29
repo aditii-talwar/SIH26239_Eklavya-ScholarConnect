@@ -116,15 +116,30 @@ input::placeholder, textarea::placeholder {
 }
 
 /* Mobile-first responsive safeguards across all viewports (320px+) */
+.grid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
 }
 
+input[type="file"] {
+  max-width: 100%;
+}
+
 @media (max-width: 640px) {
-  .font-mono {
-    overflow-wrap: anywhere;
-    word-break: break-word;
+  .font-mono,
+  p,
+  span,
+  h1,
+  h2,
+  h3,
+  h4,
+  div {
+    overflow-wrap: break-word;
   }
 }
 

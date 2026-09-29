@@ -561,7 +561,7 @@ export const LandingPage: React.FC<
                     <div className="flex flex-wrap items-center gap-3 pt-1 text-xs text-blue-200">
                       <span className="inline-flex items-center gap-1.5 bg-blue-950/70 border border-blue-800/80 px-3 py-1.5 rounded-md">
                         <Icon name="shieldcheck" className="w-4 h-4 text-[#16A34A]" />
-                        <span>DPDP Act 2023 Compliant</span>
+                        <span>UIDAI Aadhaar e-KYC &amp; NSP OTR Verified</span>
                       </span>
                       <span className="inline-flex items-center gap-1.5 bg-blue-950/70 border border-blue-800/80 px-3 py-1.5 rounded-md">
                         <Icon name="checkc" className="w-4 h-4 text-[#16A34A]" />
@@ -587,11 +587,11 @@ export const LandingPage: React.FC<
 
                       <button
                         type="button"
-                        onClick={() => handleTabChange('features')}
+                        onClick={() => handleTabChange('schemes')}
                         className="px-5 py-3 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-sm shadow-md transition-all flex items-center gap-2"
                       >
-                        <Icon name="zap" className="w-4 h-4" />
-                        <span>{ui.tabs.features}</span>
+                        <Icon name="award" className="w-4 h-4" />
+                        <span>{ui.tabs.schemes}</span>
                         <span className="text-xs font-normal text-blue-200">→</span>
                       </button>
 

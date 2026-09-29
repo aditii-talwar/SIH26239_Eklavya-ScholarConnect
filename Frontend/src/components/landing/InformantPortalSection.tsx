@@ -320,11 +320,11 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
   const completionPct = Math.round((completedSteps.length / 8) * 100);
 
   return (
-    <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-5 overflow-x-hidden">
       {/* 1. TOP BANNER: MOTA INFORMANT PORTAL + BHASHINI MULTILINGUAL & STOP LISTENING CONTROLS */}
-      <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 shadow-sm space-y-5 overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 pb-4">
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 min-w-0">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1E3A8A] flex-wrap">
               <span className="px-2.5 py-0.5 rounded bg-[#D97706] text-white text-[10px]">
                 {ui.officialBadge}
@@ -334,16 +334,16 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                 ● Auto-Synced with tribal.nic.in ({lastSyncedTime})
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+            <h2 className="text-lg sm:text-2xl font-bold text-slate-900 break-words">
               {ui.informantTitle}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-3xl">
+            <p className="text-xs sm:text-sm text-slate-600 max-w-3xl break-words">
               {ui.informantSubtitle}{' '}
               <a
                 href="https://tribal.nic.in/ScholarshiP.aspx"
                 target="_blank"
                 rel="noreferrer"
-                className="font-bold text-[#2563EB] underline"
+                className="font-bold text-[#2563EB] underline break-all"
               >
                 tribal.nic.in/ScholarshiP.aspx
               </a>{' '}
@@ -352,7 +352,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                 href="https://dbttribal.gov.in/AllScheme.aspx"
                 target="_blank"
                 rel="noreferrer"
-                className="font-bold text-[#2563EB] underline"
+                className="font-bold text-[#2563EB] underline break-all"
               >
                 dbttribal.gov.in/AllScheme.aspx
               </a>
@@ -360,8 +360,8 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
           </div>
 
           {/* Bhashini API Language Selector + Listen & Stop Listening Buttons */}
-          <div className="bg-slate-900 text-white rounded-xl p-3.5 shrink-0 space-y-2 border border-slate-800">
-            <div className="flex items-center justify-between gap-3">
+          <div className="bg-slate-900 text-white rounded-xl p-3.5 w-full lg:w-auto shrink-0 space-y-2 border border-slate-800">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
               <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
                 🌐 Bhashini API (MeitY ULCA NMT + Voice)
               </span>
@@ -376,7 +376,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                 data-no-translate="true"
                 value={selectedLang}
                 onChange={(e) => handleChangeLang(e.target.value)}
-                className="rounded-md border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs font-bold text-white focus-ring"
+                className="w-full sm:w-auto rounded-md border border-slate-700 bg-slate-800 px-3 py-1.5 text-xs font-bold text-white focus-ring"
               >
                 {BHASHINI_LANGUAGES.map((l) => (
                   <option key={l.code} value={l.code}>
@@ -442,7 +442,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
           </div>
 
           {/* Interactive Expandable Universal Rules */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
             {generalInfo.universal_rules.map((rule, idx) => {
               const isExpanded = expandedRuleId === rule.id;
               return (
@@ -450,7 +450,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                   key={rule.id}
                   type="button"
                   onClick={() => setExpandedRuleId(isExpanded ? null : rule.id)}
-                  className={`p-3.5 rounded-xl border text-left transition flex flex-col justify-between ${
+                  className={`p-3.5 rounded-xl border text-left transition flex flex-col justify-between min-w-0 ${
                     isExpanded
                       ? 'bg-[#1E3A8A] text-white border-[#1E3A8A] shadow-md'
                       : 'bg-slate-50 hover:bg-white border-slate-200 text-slate-900'
@@ -484,28 +484,28 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
       </div>
 
       {/* 2. PART B: SCHOLARSHIP-SPECIFIC INTERACTIVE CHECKLIST & AUTOMATED GUIDELINE WATCHER */}
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 min-w-0 space-y-4">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-6 shadow-sm space-y-5 overflow-hidden">
             {/* Scheme Selector & Interactive Progress Meter */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
-              <div>
+              <div className="min-w-0">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#1E3A8A]">
                   {ui.partBTitle}
                 </span>
-                <h3 className="text-lg font-bold text-slate-900 mt-0.5">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 mt-0.5 break-words">
                   {ui.chooseSchemeHeading}
                 </h3>
               </div>
 
-              <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-xl">
-                <div className="text-right">
+              <div className="flex items-center justify-between sm:justify-end gap-3 bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-xl shrink-0">
+                <div className="text-left sm:text-right">
                   <div className="text-[10px] font-bold uppercase text-slate-500">{ui.activeStepLabel}</div>
                   <div className="text-sm font-extrabold text-[#1E3A8A]">
                     Step {currentStep} of 8 ({completionPct}%)
                   </div>
                 </div>
-                <div className="w-20 h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                <div className="w-20 h-2.5 bg-slate-200 rounded-full overflow-hidden shrink-0">
                   <div
                     className="h-full bg-[#16A34A] transition-all duration-300"
                     style={{ width: `${completionPct}%` }}
@@ -531,17 +531,17 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                       setSelectedSchemeCode(sc.scheme_code);
                       setLatestDiffResult(null);
                     }}
-                    className={`px-3.5 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-2 ${
+                    className={`w-full sm:w-auto justify-between sm:justify-start px-3 py-2 rounded-lg text-xs font-bold border transition flex flex-wrap items-center gap-2 text-left ${
                       isSelected
                         ? 'bg-[#1E3A8A] text-white border-[#1E3A8A] shadow-sm'
                         : 'bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100'
                     }`}
                   >
-                    <span>
+                    <span className="break-words">
                       {sc.scheme_code.replace('_', '-')} · {displaySchemeLabel}
                     </span>
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-mono ${
+                      className={`px-1.5 py-0.5 rounded text-[10px] font-mono shrink-0 ${
                         isSelected
                           ? 'bg-amber-400 text-slate-950 font-extrabold'
                           : 'bg-emerald-100 text-emerald-900'
@@ -559,7 +559,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
               <span className="font-semibold text-slate-700">
                 ✓ Progress saved to your Personal Student Dashboard automatically as you check off each stage.
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <button
                   type="button"
                   onClick={async () => {
@@ -588,13 +588,13 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
 
             {/* Selected Scheme Key Parameters Banner */}
             {activeScheme && (
-              <div className="p-4 rounded-xl bg-slate-900 text-white space-y-3">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-slate-900 text-white space-y-3 overflow-hidden">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div>
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-amber-400">
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-amber-400 break-words">
                       {activeScheme.category} · {activeScheme.version_tag}
                     </div>
-                    <h4 className="text-base font-bold text-white mt-0.5">
+                    <h4 className="text-sm sm:text-base font-bold text-white mt-0.5 break-words">
                       {activeScheme.scheme_name_translated || activeScheme.scheme_name}
                     </h4>
                   </div>
@@ -602,35 +602,35 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                     href={activeScheme.source_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-xs font-semibold px-3 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white shrink-0"
+                    className="self-start sm:self-auto text-xs font-semibold px-3 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white shrink-0"
                   >
                     Official MoTA Portal ↗
                   </a>
                 </div>
 
-                <div className="grid sm:grid-cols-3 gap-2.5 text-xs">
-                  <div className="p-2.5 rounded bg-slate-800 border border-slate-700">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                  <div className="p-2.5 rounded bg-slate-800 border border-slate-700 min-w-0">
                     <div className="text-[10px] text-slate-400 uppercase font-bold">{ui.incomeLabel}</div>
-                    <div className="font-bold text-emerald-400 mt-0.5">
+                    <div className="font-bold text-emerald-400 mt-0.5 break-words">
                       {activeScheme.income_ceiling_lakhs >= 50
                         ? 'No Income Limit (Open Merit)'
                         : `≤ ₹${activeScheme.income_ceiling_lakhs.toFixed(2)} Lakh / Annum`}
                     </div>
                   </div>
-                  <div className="p-2.5 rounded bg-slate-800 border border-slate-700">
+                  <div className="p-2.5 rounded bg-slate-800 border border-slate-700 min-w-0">
                     <div className="text-[10px] text-slate-400 uppercase font-bold">{ui.marksLabel}</div>
-                    <div className="font-bold text-sky-400 mt-0.5">
+                    <div className="font-bold text-sky-400 mt-0.5 break-words">
                       ≥ {activeScheme.min_marks_percent}% Marks · ≤ {activeScheme.age_limit_years} Yrs
                     </div>
                   </div>
-                  <div className="p-2.5 rounded bg-slate-800 border border-slate-700">
+                  <div className="p-2.5 rounded bg-slate-800 border border-slate-700 min-w-0">
                     <div className="text-[10px] text-slate-400 uppercase font-bold">DBT Mode</div>
-                    <div className="font-bold text-amber-300 mt-0.5 truncate" title={activeScheme.dbt_mode}>
+                    <div className="font-bold text-amber-300 mt-0.5 break-words leading-snug">
                       {activeScheme.dbt_mode}
                     </div>
                   </div>
                 </div>
-                <div className="text-xs text-slate-300 bg-slate-800/70 px-3 py-2 rounded border border-slate-700">
+                <div className="text-xs text-slate-300 bg-slate-800/70 px-3 py-2.5 rounded border border-slate-700 break-words leading-relaxed">
                   <strong className="text-white">Financial Entitlements:</strong> {activeScheme.stipend_summary}
                 </div>
               </div>
@@ -649,7 +649,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                   return (
                     <div
                       key={item.step}
-                      className={`p-4 rounded-xl border transition ${
+                      className={`p-3.5 sm:p-4 rounded-xl border transition overflow-hidden ${
                         isDone
                           ? 'bg-emerald-50/60 border-emerald-300'
                           : isCurrent
@@ -657,38 +657,38 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                           : 'bg-white border-slate-200 hover:border-slate-300'
                       }`}
                     >
-                      <div className="flex items-start gap-3">
+                      <div className="flex items-start gap-2.5 sm:gap-3">
                         <input
                           type="checkbox"
                           checked={isDone}
                           onChange={() => handleToggleStep(item.step)}
                           className="mt-1 w-4 h-4 accent-[#16A34A] rounded cursor-pointer shrink-0"
                         />
-                        <div className="flex-1 min-w-0 space-y-1.5">
-                          <div className="flex items-center justify-between gap-2 flex-wrap">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-900 text-white">
+                        <div className="flex-1 min-w-0 space-y-2">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap min-w-0">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-900 text-white shrink-0">
                                 Step {item.step}
                               </span>
-                              <span
-                                onClick={() => handleToggleStep(item.step)}
-                                className="font-bold text-sm text-slate-900 cursor-pointer hover:underline"
-                              >
-                                {displayTitle}
-                              </span>
                               {isCurrent && (
-                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#2563EB] text-white">
+                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#2563EB] text-white shrink-0">
                                   {ui.youAreOnStep}
                                 </span>
                               )}
                               {isDone && (
-                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-700 text-white">
+                                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-700 text-white shrink-0">
                                   {ui.completedBadge}
                                 </span>
                               )}
+                              <span
+                                onClick={() => handleToggleStep(item.step)}
+                                className="w-full sm:w-auto font-bold text-sm text-slate-900 cursor-pointer hover:underline break-words leading-snug"
+                              >
+                                {displayTitle}
+                              </span>
                             </div>
 
-                            <div className="flex items-center gap-1.5">
+                            <div className="flex items-center gap-1.5 flex-wrap shrink-0">
                               {isThisSpeaking ? (
                                 <button
                                   type="button"
@@ -701,7 +701,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => handleSpeakText(`${displayTitle}. ${displayDetail}`, item.step)}
-                                  className="px-2 py-1 rounded border border-slate-300 bg-white hover:bg-slate-100 text-[11px] font-semibold text-slate-700"
+                                  className="px-2.5 py-1 rounded border border-slate-300 bg-white hover:bg-slate-100 text-[11px] font-semibold text-slate-700"
                                 >
                                   {ui.listenBtn}
                                 </button>
@@ -719,31 +719,31 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                             </div>
                           </div>
 
-                          <p className="text-xs text-slate-700 leading-relaxed">{displayDetail}</p>
+                          <p className="text-xs text-slate-700 leading-relaxed break-words">{displayDetail}</p>
 
-                          <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] text-slate-500">
-                            <span>
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2 pt-1 text-[11px] text-slate-500 border-t border-slate-200/60">
+                            <span className="break-words leading-relaxed">
                               <strong className="text-slate-700">Statutory Rule:</strong> {item.statutory_rule}
                             </span>
-                            <span className="font-mono text-[#1E3A8A] font-semibold">{item.stage}</span>
+                            <span className="font-mono text-[#1E3A8A] font-semibold shrink-0">{item.stage}</span>
                           </div>
 
                           {/* Inline Google Vision API Document Verification for this Step */}
                           {activeDocScanStep === item.step && (
-                            <div className="mt-3 p-3.5 rounded-lg bg-slate-900 text-white space-y-2.5">
-                              <div className="flex items-center justify-between">
-                                <span className="text-xs font-bold text-amber-400">
+                            <div className="mt-3 p-3 sm:p-3.5 rounded-lg bg-slate-900 text-white space-y-2.5 overflow-hidden">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-xs font-bold text-amber-400 break-words">
                                   Google Cloud Vision API — Document Verification ({item.required_doc})
                                 </span>
                                 <button
                                   type="button"
                                   onClick={() => setActiveDocScanStep(null)}
-                                  className="text-xs text-slate-400 hover:text-white"
+                                  className="text-xs text-slate-400 hover:text-white shrink-0"
                                 >
                                   Close ✕
                                 </button>
                               </div>
-                              <div className="flex items-center justify-between gap-2 flex-wrap">
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                 <input
                                   type="file"
                                   accept="image/*,.pdf"
@@ -752,7 +752,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                                       `SCANNED CERTIFICATE (${item.required_doc.toUpperCase()}) | BARCODE: #JH-ST-2026-88412 | INCOME: Rs. 1,80,000 | STATUS: VALID`
                                     )
                                   }
-                                  className="text-[11px] text-slate-300"
+                                  className="text-[11px] text-slate-300 w-full sm:w-auto max-w-full"
                                 />
                                 <button
                                   type="button"
@@ -760,13 +760,13 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
                                   onClick={() =>
                                     handleRunVisionDocScan(item.step, item.required_doc, item.stage)
                                   }
-                                  className="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold"
+                                  className="w-full sm:w-auto px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold"
                                 >
                                   {scanningDoc ? 'Verifying via Google Vision…' : 'Verify Document & Complete Step'}
                                 </button>
                               </div>
                               {docScanResult && (
-                                <div className="p-2.5 rounded bg-emerald-950 border border-emerald-700 text-xs text-emerald-200">
+                                <div className="p-2.5 rounded bg-emerald-950 border border-emerald-700 text-xs text-emerald-200 break-words">
                                   <div className="font-bold">
                                     ✓ {docScanResult.vision_engine} ({docScanResult.vision_confidence}% Confidence)
                                   </div>
@@ -792,7 +792,7 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
         </div>
 
         {/* RIGHT COLUMN: 1) Scholarship Eligibility & Entitlement Calculator & 2) Automated Backend Guideline Watcher */}
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {/* 1. Scholarship Eligibility & Entitlement Calculator */}
           <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
             <div>
