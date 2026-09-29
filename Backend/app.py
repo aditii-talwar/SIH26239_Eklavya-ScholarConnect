@@ -56,6 +56,21 @@ def create_app():
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
     def serve(path):
+        if path == "api" or path.startswith("api/"):
+            return jsonify({
+                "error": f"API endpoint '/{path}' not found.",
+                "available_informant_endpoints": [
+                    "/api/informant/guidelines?lang=en|hi|sat|or|mr|bn|gu|te|ta",
+                    "/api/informant/bhashini/translate",
+                    "/api/informant/bhashini/tts",
+                    "/api/informant/guidelines/scan-pdf",
+                    "/api/informant/vision/scan-document",
+                    "/api/informant/student-progress (alias: /api/informant/progress)",
+                    "/api/informant/ino-chats (alias: /api/informant/ino-convo)",
+                    "/api/informant/ino-chats/<id>/message (alias: /api/informant/ino-convo/reply)",
+                    "/api/informant/ino-chats/<id>/resolve (alias: /api/informant/ino-convo/resolve)"
+                ]
+            }), 404
         if path != "" and frontend_dist.exists() and (frontend_dist / path).exists():
             return send_from_directory(str(frontend_dist), path)
         elif frontend_dist.exists() and (frontend_dist / "index.html").exists():

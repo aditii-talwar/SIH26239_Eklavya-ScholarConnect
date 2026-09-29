@@ -787,24 +787,24 @@ const BHASHINI_PHRASE_MAP: Record<string, Record<string, string>> = {
     ' Every ST applicant must generate': ' प्रत्येक अनुसूचित जनजाति आवेदक को बनाना होगा',
   },
   sat: {
-    'Post-Matric Scholarship for ST Students': 'आदिवासी (ST) पाड़हाविया़ को ला़गित् पोस्ट-मैट्रिक छात्रवृत्ति (Post-Matric Scholarship)',
-    'National Fellowship for Higher Education of ST Students': 'आदिवासी (ST) लापाङ सेचेत् ला़गित् नेशनल फेलोशिप (NFST)',
-    'Central Sector Scheme of Top Class Education for ST Students': 'आदिवासी (ST) पाड़हाविया़ को ला़गित् टॉप-क्लास सेचेत् योजना',
-    'National Overseas Scholarship (NOS) for ST Candidates': 'आदिवासी (ST) को ला़गित् दिसा़म बाहरे सेचेत् छात्रवृत्ति (NOS)',
-    'Pre-Matric Scholarship for ST Students (Classes IX & X)': 'आदिवासी (ST) पाड़हाविया़ को ला़गित् प्री-मैट्रिक छात्रवृत्ति (चोना़ 9 आर 10)',
-    'Mandatory NSP One-Time Registration (OTR) & Face Auth': 'ला़कतीयानाक् NSP वन-टाइम रजिस्ट्रेशन (OTR) आर मड़ेयार प्रमाणीकरण',
-    'DigiLocker & State e-District Barcoded Certificates Only': 'डिजीलॉकर आर ई-डिस्ट्रिक्ट बारकोड सर्टिफिकेट गे ला़कतीया',
-    'NPCI Aadhaar-Seeded Bank Account (DBT Enabled)': 'NPCI आधार-जोड़ाव बैंक खाता (DBT ला़गित्)',
-    'Single Central/State Scholarship Rule (Zero Duplication)': 'मित् टाङ गे केंद्रीय/राज्य छात्रवृत्ति नियम',
-    'Level-1 INO Verification & 7-Day Deficiency Resolution Window': 'लेवल-1 INO जाँच आर 7-माहा भितिर कागजात सुधार सुविधा',
-    'Verify ST Category & Family Income': 'आदिवासी (ST) सर्टिफिकेट आर घारोईज आमदानी जाँच मे',
-    'Generate NSP 14-Digit OTR ID & Complete Face e-KYC': 'NSP 14-लेखा OTR आईडी बेनाव मे आर Face e-KYC पुरा़व मे',
-    'Scan & Link Barcoded ST Caste Certificate via Google Vision OCR': 'Google Vision OCR ते बारकोड ST जाति सर्टिफिकेट स्कैन मे',
-    'Scan Current-FY Revenue Income Certificate': 'नितोगाक् सेरमा रेयाक् आमदानी सर्टिफिकेट स्कैन मे',
-    'Upload Previous Exam Marksheet & Fee Receipt': 'पा़हिल इम्तिहान मार्कशीट आर फीस रसीद अपलोड मे',
-    'Confirm AISHE / UDISE+ Institution Code & Bonafide': 'AISHE / UDISE+ कॉलेज/इस्कूल कोड आर बोनाफाइड जाँच मे',
-    'Check NPCI Aadhaar Bank Mapper Status (Active for DBT)': 'NPCI आधार बैंक खाता जोड़ाव स्थिति जाँच मे (DBT ला़गित्)',
-    'Lock Final Application & Track Level-1 INO Scrutiny': 'मुचा़त् नेहोर (Application) लॉक मे आर Level-1 INO जाँच सेत् कोयोक् मे',
+    'Post-Matric Scholarship for ST Students': 'ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱯᱚᱥᱴ-ᱢᱮᱴᱨᱤᱠ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ (Post-Matric Scholarship)',
+    'National Fellowship for Higher Education of ST Students': 'ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱞᱟᱯᱷᱟᱝ ᱥᱮᱪᱮᱫ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛᱤᱭᱟᱹᱨᱤ ᱯᱷᱮᱞᱚᱥᱤᱯ (NFST)',
+    'Central Sector Scheme of Top Class Education for ST Students': 'ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱴᱚᱯ-ᱠᱞᱟᱥ ᱥᱮᱪᱮᱫ ᱡᱚᱡᱚᱱᱟ',
+    'National Overseas Scholarship (NOS) for ST Candidates': 'ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱫᱤᱥᱚᱢ ᱵᱟᱦᱨᱮ ᱥᱮᱪᱮᱫ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ (NOS)',
+    'Pre-Matric Scholarship for ST Students (Classes IX & X)': 'ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱯᱨᱤ-ᱢᱮᱴᱨᱤᱠ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ (ᱪᱟᱱᱚᱪ ᱙ ᱟᱨ ᱑᱐)',
+    'Mandatory NSP One-Time Registration (OTR) & Face Auth': 'ᱞᱟᱹᱠᱛᱤᱭᱟᱱ NSP ᱣᱟᱱ-ᱴᱟᱭᱤᱢ ᱨᱮᱡᱤᱥᱴᱨᱮᱥᱚᱱ (OTR) ᱟᱨ ᱢᱮᱫᱦᱟᱸ ᱯᱨᱚᱢᱟᱱᱤᱠᱚᱨᱚᱱ',
+    'DigiLocker & State e-District Barcoded Certificates Only': 'ᱰᱤᱡᱤᱞᱚᱠᱚᱨ ᱟᱨ ᱤ-ᱰᱤᱥᱴᱨᱤᱠᱴ ᱵᱟᱨᱠᱚᱰ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ ᱜᱮ ᱞᱟᱹᱠᱛᱤᱭᱟ',
+    'NPCI Aadhaar-Seeded Bank Account (DBT Enabled)': 'NPCI ᱟᱫᱷᱟᱨ-ᱡᱚᱲᱟᱣ ᱵᱮᱸᱠ ᱠᱷᱟᱛᱟ (DBT ᱞᱟᱹᱜᱤᱫ)',
+    'Single Central/State Scholarship Rule (Zero Duplication)': 'ᱢᱤᱫᱴᱟᱹᱝ ᱜᱮ ᱠᱮᱸᱫᱽᱨᱤᱭᱚ/ᱯᱚᱱᱚᱛ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ നിയᱢ',
+    'Level-1 INO Verification & 7-Day Deficiency Resolution Window': 'ᱞᱮᱵᱷᱮᱞ-᱑ INO ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱟᱨ ᱗-ᱢᱟᱦᱟᱸ ᱵᱷᱤᱛᱤᱨ ᱠᱟᱜᱚᱡᱽ ᱥᱩᱫᱷᱨᱟᱹᱣ ᱥᱩᱵᱤᱫᱷᱟ',
+    'Verify ST Category & Family Income': 'ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ ᱟᱨ ᱜᱷᱟᱨᱚᱸᱡᱽ ᱟᱨᱡᱟᱣ ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ',
+    'Generate NSP 14-Digit OTR ID & Complete Face e-KYC': 'NSP ᱑᱔-ᱮᱞ ᱨᱮᱭᱟᱜ OTR ᱟᱭᱰᱤ ᱵᱮᱱᱟᱣ ᱢᱮ ᱟᱨ Face e-KYC ᱯᱩᱨᱟᱹᱣ ᱢᱮ',
+    'Scan & Link Barcoded ST Caste Certificate via Google Vision OCR': 'Google Vision OCR ᱛᱮ ᱵᱟᱨᱠᱚᱰ ST ᱡᱟᱹᱛᱤ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ ᱮᱥᱠᱮᱱ ᱢᱮ',
+    'Scan Current-FY Revenue Income Certificate': 'ᱱᱤᱛᱚᱜᱟᱜ ᱥᱮᱨᱢᱟ ᱨᱮᱭᱟᱜ ᱟᱨᱡᱟᱣ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ ᱮᱥᱠᱮᱱ ᱢᱮ',
+    'Upload Previous Exam Marksheet & Fee Receipt': 'ᱯᱟᱹᱦᱤᱞ ᱵᱤᱱᱤᱰ ᱢᱟᱨᱠᱥᱤᱴ ᱟᱨ ᱯᱷᱤᱥ ᱨᱚᱥᱤᱫᱽ ᱞᱟᱫᱮ ᱢᱮ',
+    'Confirm AISHE / UDISE+ Institution Code & Bonafide': 'AISHE / UDISE+ ᱠᱚᱞᱮᱡᱽ/ᱤᱛᱩᱱ ᱟᱥᱲᱟ ᱠᱚᱰ ᱟᱨ ᱵᱚᱱᱟᱯᱷᱟᱭᱤᱰ ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ',
+    'Check NPCI Aadhaar Bank Mapper Status (Active for DBT)': 'NPCI ᱟᱫᱷᱟᱨ ᱵᱮᱸᱠ ᱠᱷᱟᱛᱟ ᱡᱚᱲᱟᱣ ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ (DBT ᱞᱟᱹᱜᱤᱫ)',
+    'Lock Final Application & Track Level-1 INO Scrutiny': 'ᱢᱩᱪᱟᱹᱫ ᱱᱮᱦᱚᱨ (Application) ᱞᱚᱠ ᱢᱮ ᱟᱨ Level-1 INO ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱯᱟᱸᱡᱟᱭ ᱢᱮ',
   },
   or: {
     'Post-Matric Scholarship for ST Students': 'ଅନୁସୂଚିତ ଜନଜାତି (ST) ଛାତ୍ରଛାତ୍ରୀଙ୍କ ପାଇଁ ପୋଷ୍ଟ-ମାଟ୍ରିକ୍ ଛାତ୍ରବୃତ୍ତି',
@@ -1047,42 +1047,42 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     verifyDocBtn: 'दस्तावेज़ सत्यापन (Vision API)',
   },
   sat: {
-    ministryHeader: 'आदिवासी का़मी मंत्रालय | भारत सरकार (Ministry of Tribal Affairs)',
-    portalTitle: 'MoTA स्कॉलरकनेक्ट — आदिवासी छात्रवृत्ति आर फेलोशिप पोर्टल',
-    portalSubtitle: 'जनजातीय कार्य मंत्रालय · पोस्ट-मैट्रिक ST, टॉप क्लास, NFST आर NOS केंद्रीय पोर्टल (SIH26239)',
-    officialBadge: 'सरकारी पोर्टल',
-    loginBtn: 'स्टूडेंट / ऑफिसर लॉगिन',
-    registerBtn: 'नावा OTR रजिस्ट्रेशन',
-    signOutBtn: 'लॉग आउट',
+    ministryHeader: 'ᱟᱫᱤᱵᱟᱥᱤ ᱠᱟᱹᱢᱤ ᱢᱚᱱᱛᱨᱟᱞᱚᱭ | ᱥᱤᱧᱚᱛ ᱥᱚᱨᱠᱟᱨ (Ministry of Tribal Affairs)',
+    portalTitle: 'MoTA ᱮᱥᱠᱚᱞᱟᱨᱠᱚᱱᱮᱠᱴ — ᱟᱫᱤᱵᱟᱥᱤ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱟᱨ ᱯᱷᱮᱞᱚᱥᱤᱯ ᱯᱚᱨᱴᱟᱞ',
+    portalSubtitle: 'ᱟᱫᱤᱵᱟᱥᱤ ᱠᱟᱹᱢᱤ ᱢᱚᱱᱛᱨᱟᱞᱚᱭ · ᱯᱚᱥᱴ-ᱢᱮᱴᱨᱤᱠ ST, ᱴᱚᱯ ᱠᱞᱟᱥ, NFST ᱟᱨ NOS ᱯᱚᱨᱴᱟᱞ (SIH26239)',
+    officialBadge: 'ᱥᱚᱨᱠᱟᱨᱤ ᱯᱚᱨᱴᱟᱞ',
+    loginBtn: 'ᱯᱟᱹᱴᱷᱩᱣᱟᱹ / ᱚᱯᱷᱤᱥᱚᱨ ᱞᱚᱜᱤᱱ',
+    registerBtn: 'ᱱᱟᱶᱟ OTR ᱨᱮᱡᱤᱥᱴᱨᱮᱥᱚᱱ',
+    signOutBtn: 'ᱞᱚᱜᱽ ᱟᱣᱩᱴ',
     tabs: {
-      overview: 'पोर्टल जानकारी आर लाभ',
-      informant: 'MoTA सूचना आर चेकलिस्ट (भाषिणी)',
-      features: 'मुख्य विशेषता आर AI जांच',
-      workflow: '8-चरण डिजिटल कार्यप्रणाली',
-      schemes: 'केंद्रीय आदिवासी (ST) योजना',
-      institutes: 'कॉलेज आर इस्कूल सूची (AISHE)',
+      overview: 'ᱯᱚᱨᱴᱟᱞ ᱵᱤᱵᱚᱨᱚᱱ ᱟᱨ ᱞᱟᱵᱷ',
+      informant: 'MoTA ᱫᱤᱥᱟᱹ ᱩᱫᱩᱜ ᱟᱨ ᱪᱮᱠᱞᱤᱥᱴ (ᱵᱷᱟᱥᱤᱱᱤ)',
+      features: 'ᱢᱩᱬᱩᱛ ᱜᱩᱱ ᱟᱨ AI ᱤᱧᱡᱤᱱ',
+      workflow: '᱘-ᱛᱷᱚᱠ ᱰᱤᱡᱤᱴᱟᱞ ᱠᱟᱹᱢᱤᱦᱚᱨᱟ',
+      schemes: 'ᱠᱮᱸᱫᱽᱨᱤᱭᱚ ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱡᱚᱡᱚᱱᱟ',
+      institutes: 'ᱠᱚᱞᱮᱡᱽ ᱟᱨ ᱤᱛᱩᱱ ᱟᱥᱲᱟ ᱛᱟᱹᱞᱠᱟᱹ (AISHE)',
     },
-    heroTitle: 'आदिवासी (Scheduled Tribe) पाड़हाविया़ को ला़गित् पारदर्शी AI आर DBT छात्रवृत्ति पोर्टल',
+    heroTitle: 'ᱟᱫᱤᱵᱟᱥᱤ (Scheduled Tribe) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱟᱨᱪᱟ AI ᱟᱨ DBT ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱯᱚᱨᱴᱟᱞ',
     heroSubtitle:
-      'MoTA स्कॉलरकनेक्ट दो Google Vision API कागजात जाँच, भाषिणी भाषा अनुवाद, आर PFMS SNA SPARSH सीधा बैंक खाता रे टाका भेजाव रेयाक् सुविधा एमलकाना।',
-    informantTitle: 'MoTA छात्रवृत्ति सूचना पोर्टल आर 8-चरण चेकलिस्ट',
+      'MoTA ᱮᱥᱠᱚᱞᱟᱨᱠᱚᱱᱮᱠᱴ ᱫᱚ Google Vision API ᱠᱟᱜᱚᱡᱽ ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ, ᱵᱷᱟᱥᱤᱱᱤ ᱯᱟᱹᱨᱥᱤ ᱛᱚᱨᱡᱚᱢᱟ, ᱟᱨ PFMS SNA SPARSH ᱥᱚᱡᱷᱮ ᱵᱮᱸᱠ ᱠᱷᱟᱛᱟ ᱨᱮ ᱴᱟᱠᱟ ᱵᱷᱮᱡᱟᱣ ᱨᱮᱭᱟᱜ ᱥᱩᱵᱤᱫᱷᱟ ᱮᱢᱚᱜ ᱠᱟᱱᱟ᱾',
+    informantTitle: 'MoTA ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱥᱩᱪᱚᱱᱟ ᱯᱚᱨᱴᱟᱞ ᱟᱨ ᱘-ᱛᱷᱚᱠ ᱪᱮᱠᱞᱤᱥᱴ',
     informantSubtitle:
-      'tribal.nic.in आर dbttribal.gov.in खोनाक् सहज नियम। नावा सरकारी PDF सर्कुलर दो Google Vision API ते आच् तेगे स्कैन आर अपडेट हुयुक् आ।',
-    partATitle: 'भाग A: सभी आदिवासी छात्रवृत्ति ला़गित् मुख्य नियम',
-    partBTitle: 'भाग B: छात्रवृत्ति-अनुसार 8-चरण चेकलिस्ट',
-    chooseSchemeHeading: 'आमाक् छात्रवृत्ति योजना बाछाव मे आर पुरा़व आकान चरण टिक मे',
-    activeStepLabel: 'नितोगाक् चरण',
-    youAreOnStep: '● नितोगाक् चरण',
-    completedBadge: '✓ पुरा़व एना',
-    listenBtn: '🔊 आंजोम मे (Listen)',
-    stopListeningBtn: '⏹ तिगुन मे (Stop)',
-    eligibilityTitle: 'छात्रवृत्ति पात्रता आर टाका हिसाब कैलकुलेटर',
-    incomeLabel: 'घारोईज सेरमा आमदानी:',
-    marksLabel: 'पा़हिल इम्तिहान नंबर (%):',
-    ageLabel: 'उमेर (Age):',
-    hostellerBtn: '🏢 हॉस्टल पाड़हाविया़',
-    dayScholarBtn: '🏠 ओड़ाक् पाड़हाविया़',
-    verifyDocBtn: 'कागजात जाँच (Vision API)',
+      'tribal.nic.in ᱟᱨ dbttribal.gov.in ᱠᱷᱚᱱ ᱟᱞᱜᱟ ᱱᱤᱭᱚᱢ᱾ ᱱᱟᱶᱟ ᱥᱚᱨᱠᱟᱨᱤ PDF ᱥᱟᱨᱠᱩᱞᱟᱨ ᱫᱚ Google Vision API ᱛᱮ ᱟᱡ ᱛᱮᱜᱮ ᱮᱥᱠᱮᱱ ᱟᱨ ᱟᱯᱰᱮᱴ ᱦᱩᱭᱩᱜᱼᱟ᱾',
+    partATitle: 'ᱦᱟᱹᱴᱤᱧ A: ᱡᱚᱛᱚ ᱟᱫᱤᱵᱟᱥᱤ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱞᱟᱹᱜᱤᱫ ᱢᱩᱬᱩᱛ ᱱᱤᱭᱚᱢ',
+    partBTitle: 'ᱦᱟᱹᱴᱤᱧ B: ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ-ᱞᱮᱠᱟᱛᱮ ᱘-ᱛᱷᱚᱠ ᱪᱮᱠᱞᱤᱥᱴ',
+    chooseSchemeHeading: 'ᱟᱢᱟᱜ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱡᱚᱡᱚᱱᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ᱟᱨ ᱯᱩᱨᱟᱹᱣ ᱟᱠᱟᱱ ᱛᱷᱚᱠ ᱴᱤᱠ ᱢᱮ',
+    activeStepLabel: 'ᱱᱤᱛᱚᱜᱟᱜ ᱛᱷᱚᱠ',
+    youAreOnStep: '● ᱱᱤᱛᱚᱜᱟᱜ ᱛᱷᱚᱠ',
+    completedBadge: '✓ ᱯᱩᱨᱟᱹᱣ ᱮᱱᱟ',
+    listenBtn: '🔊 ᱟᱸᱡᱚᱢ ᱢᱮ (Listen)',
+    stopListeningBtn: '⏹ ᱛᱤᱸᱜᱩᱱ ᱢᱮ (Stop)',
+    eligibilityTitle: 'ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱞᱮᱠᱢᱟᱱ ᱟᱨ ᱴᱟᱠᱟ ᱦᱤᱥᱟᱹᱵᱽ ᱠᱮᱞᱠᱩᱞᱮᱴᱚᱨ',
+    incomeLabel: 'ᱜᱷᱟᱨᱚᱸᱡᱽ ᱥᱮᱨᱢᱟᱠᱤᱭᱟᱹ ᱟᱨᱡᱟᱣ:',
+    marksLabel: 'ᱯᱟᱹᱦᱤᱞ ᱵᱤᱱᱤᱰ ᱱᱚᱢᱵᱚᱨ (%):',
+    ageLabel: 'ᱩᱢᱮᱨ (Age):',
+    hostellerBtn: '🏢 ᱦᱚᱥᱴᱮᱞ ᱯᱟᱹᱴᱷᱩᱣᱟᱹ',
+    dayScholarBtn: '🏠 ᱚᱲᱟᱜ ᱯᱟᱹᱴᱷᱩᱣᱟᱹ',
+    verifyDocBtn: 'ᱠᱟᱜᱚᱡᱽ ᱵᱤᱰᱟᱹᱣ (Vision API)',
   },
   or: {
     ministryHeader: 'ଜନଜାତି ବ୍ୟାପାର ମନ୍ତ୍ରଣାଳୟ | ଭାରତ ସରକାର',
@@ -1318,7 +1318,7 @@ export function getPortalUiStrings(lang: string = 'en'): PortalUiStrings {
   return PORTAL_UI_MAP[lang] || PORTAL_UI_MAP.en;
 }
 
-const NMT_CACHE_PREFIX = 'sc_bhashini_nmt_cache_v3_';
+const NMT_CACHE_PREFIX = 'sc_bhashini_nmt_cache_v4_';
 const nmtMemoryCache: Record<string, Record<string, string>> = {};
 
 export function getBhashiniLangCache(lang: string): Record<string, string> {
@@ -1346,45 +1346,67 @@ export function saveBhashiniLangCache(lang: string) {
   }
 }
 
+const DEVANAGARI_TO_OL_CHIKI_CHAR_MAP: Record<string, string> = {
+  'अ': 'ᱚ', 'आ': 'ᱟ', 'इ': 'ᱤ', 'ई': 'ᱤ', 'उ': 'ᱩ', 'ऊ': 'ᱩ',
+  'ए': 'ᱮ', 'ऐ': 'ᱮ', 'ओ': 'ᱳ', 'औ': 'ᱳ',
+  'ा': 'ᱟ', 'ि': 'ᱤ', 'ी': 'ᱤ', 'ु': 'ᱩ', 'ू': 'ᱩ',
+  'े': 'ᱮ', 'ै': 'ᱮ', 'ो': 'ᱳ', 'ौ': 'ᱳ', 'ृ': 'ᱨᱤ',
+  'क': 'ᱠ', 'ख': 'ᱠᱷ', 'ग': 'ᱜ', 'घ': 'ᱜᱷ', 'ङ': 'ᱝ',
+  'च': 'ᱪ', 'छ': 'ᱪᱷ', 'ज': 'ᱡ', 'झ': 'ᱡᱷ', 'ञ': 'ᱧ',
+  'ट': 'ᱴ', 'ठ': 'ᱴᱷ', 'ड': 'ᱰ', 'ढ': 'ᱰᱷ', 'ण': 'ᱬ',
+  'त': 'ᱛ', 'थ': 'ᱛᱷ', 'द': 'ᱫ', 'ध': 'ᱫᱷ', 'न': 'ᱱ',
+  'प': 'ᱯ', 'फ': 'ᱯᱷ', 'ब': 'ᱵ', 'भ': 'ᱵᱷ', 'म': 'ᱢ',
+  'य': 'ᱭ', 'र': 'ᱨ', 'ल': 'ᱞ', 'व': 'ᱣ',
+  'श': 'ᱥ', 'ष': 'ᱥ', 'स': 'ᱥ', 'ह': 'ᱦ',
+  'ं': 'ᱸ', 'ँ': 'ᱸ', 'ः': 'ᱷ', '़': 'ᱹ', '्': '', '।': '᱾',
+  '०': '᱐', '१': '᱑', '२': '᱒', '३': '᱓', '४': '᱔',
+  '५': '᱕', '६': '᱖', '७': '᱗', '८': '᱘', '९': '᱙',
+};
+
 export function adaptHindiToSanthali(hiText: string): string {
   const santhaliReplacements: Array<[RegExp, string]> = [
-    [/अनुसूचित जनजाति/g, 'आदिवासी (ST)'],
-    [/जनजातीय कार्य मंत्रालय/g, 'आदिवासी का़मी मंत्रालय'],
-    [/छात्रों के लिए/g, 'पाड़हाविया़ को ला़गित्'],
-    [/विद्यार्थियों के लिए/g, 'पाड़हाविया़ को ला़गित्'],
-    [/छात्रों/g, 'पाड़हाविया़ को'],
-    [/विद्यार्थियों/g, 'पाड़हाविया़ को'],
-    [/छात्र/g, 'पाड़हाविया़'],
-    [/के लिए/g, 'ला़गित्'],
-    [/आपका/g, 'आमाक्'],
-    [/आपकी/g, 'आमाक्'],
-    [/अपने/g, 'आमाक्'],
-    [/अपनी/g, 'आमाक्'],
-    [/और/g, 'आर'],
-    [/तथा/g, 'आर'],
-    [/एवं/g, 'आर'],
-    [/में/g, 'रे'],
-    [/सत्यापित करें/g, 'जाँच मे'],
-    [/जाँच करें/g, 'जाँच मे'],
-    [/अपलोड करें/g, 'अपलोड मे'],
-    [/चुनें/g, 'बाछाव मे'],
-    [/भुगतान/g, 'टाका भेजाव'],
-    [/परिवार/g, 'घारोईज'],
-    [/पारिवारिक/g, 'घारोईज'],
-    [/आय/g, 'आमदानी'],
-    [/प्रमाण-पत्र/g, 'सर्टिफिकेट'],
-    [/प्रमाण पत्र/g, 'सर्टिफिकेट'],
-    [/दस्तावेज़/g, 'कागजात'],
+    [/अनुसूचित जनजाति/g, 'ᱟᱫᱤᱵᱟᱥᱤ (ST)'],
+    [/जनजातीय कार्य मंत्रालय/g, 'ᱟᱫᱤᱵᱟᱥᱤ ᱠᱟᱹᱢᱤ ᱢᱚᱱᱛᱨᱟᱞᱚᱭ'],
+    [/छात्रों के लिए/g, 'ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ'],
+    [/विद्यार्थियों के लिए/g, 'ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ'],
+    [/छात्रों/g, 'ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ'],
+    [/विद्यार्थियों/g, 'ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ'],
+    [/छात्रवृत्ति/g, 'ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ'],
+    [/छात्र/g, 'ᱯᱟᱹᱴᱷᱩᱣᱟᱹ'],
+    [/के लिए/g, 'ᱞᱟᱹᱜᱤᱫ'],
+    [/आपका/g, 'ᱟᱢᱟᱜ'],
+    [/आपकी/g, 'ᱟᱢᱟᱜ'],
+    [/अपने/g, 'ᱟᱢᱟᱜ'],
+    [/अपनी/g, 'ᱟᱢᱟᱜ'],
+    [/और/g, 'ᱟᱨ'],
+    [/तथा/g, 'ᱟᱨ'],
+    [/एवं/g, 'ᱟᱨ'],
+    [/में/g, 'ᱨᱮ'],
+    [/सत्यापित करें/g, 'ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ'],
+    [/जाँच करें/g, 'ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ'],
+    [/अपलोड करें/g, 'ᱞᱟᱫᱮ ᱢᱮ'],
+    [/चुनें/g, 'ᱵᱟᱪᱷᱟᱣ ᱢᱮ'],
+    [/भुगतान/g, 'ᱴᱟᱠᱟ ᱵᱷᱮᱡᱟᱣ'],
+    [/परिवार/g, 'ᱜᱷᱟᱨᱚᱸᱡᱽ'],
+    [/पारिवारिक/g, 'ᱜᱷᱟᱨᱚᱸᱡᱽ'],
+    [/आय/g, 'ᱟᱨᱡᱟᱣ'],
+    [/प्रमाण-पत्र/g, 'ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ'],
+    [/प्रमाण पत्र/g, 'ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ'],
+    [/दस्तावेज़/g, 'ᱠᱟᱜᱚᱡᱽ'],
   ];
   let out = hiText;
   for (const [pattern, rep] of santhaliReplacements) {
     out = out.replace(pattern, rep);
   }
-  return out;
+  let olChikiOut = '';
+  for (const ch of out) {
+    olChikiOut += DEVANAGARI_TO_OL_CHIKI_CHAR_MAP[ch] !== undefined ? DEVANAGARI_TO_OL_CHIKI_CHAR_MAP[ch] : ch;
+  }
+  return olChikiOut;
 }
 
 export function isAlreadyTranslatedIndic(text: string): boolean {
-  const hasIndic = /[\u0900-\u0D7F]/.test(text);
+  const hasIndic = /[\u0900-\u0D7F\u1C50-\u1C7F]/.test(text);
   if (!hasIndic) return false;
   const hasLongEnglishRun = /(?:[A-Za-z]{3,}\s+){4,}[A-Za-z]{3,}/.test(text);
   return !hasLongEnglishRun;
@@ -1984,6 +2006,14 @@ export const informantApi = {
 let activeBhashiniAudio: HTMLAudioElement | null = null;
 let currentSpeechSessionId = 0;
 
+/**
+ * Indic Phonetic TTS Bridge for Odia (ଓଡ଼ିଆ) & Santhali Ol Chiki (ᱚᱞ ᱪᱤᱠᱤ):
+ * Standard browser/cloud neural TTS endpoints (e.g. Google Translate TTS) do not expose
+ * standalone `tl=or` or `tl=sat` voice models unless MeitY Bhashini ULCA (`BHASHINI_INFERENCE_KEY`)
+ * is configured on the server. When operating in zero-key fallback mode, we map Odia (U+0B00..U+0B7F)
+ * and Ol Chiki (U+1C50..U+1C7F) graphemes to their closest Indo-Aryan/Munda phonetic syllables
+ * so the neural Hindi (`hi-IN`) voice engine can vocalize the text audibly instead of failing silently.
+ */
 function odiaToDevanagariPhonetic(text: string): string {
   let out = '';
   for (let i = 0; i < text.length; i++) {
@@ -1993,6 +2023,28 @@ function odiaToDevanagariPhonetic(text: string): string {
     } else {
       out += text[i];
     }
+  }
+  return out;
+}
+
+const OL_CHIKI_TO_DEVANAGARI_PHONETIC_MAP: Record<string, string> = {
+  'ᱚ': 'अ', 'ᱛ': 'त', 'ᱜ': 'ग', 'ᱝ': 'ं', 'ᱞ': 'ल', 'ᱟ': 'आ',
+  'ᱠ': 'क', 'ᱡ': 'ज', 'ᱢ': 'म', 'ᱣ': 'व', 'ᱤ': 'इ', 'ᱥ': 'स',
+  'ᱦ': 'ह', 'ᱧ': 'ञ', 'ᱨ': 'र', 'ᱩ': 'उ', 'ᱪ': 'च', 'ᱫ': 'द',
+  'ᱬ': 'ण', 'ᱭ': 'य', 'ᱮ': 'ए', 'ᱯ': 'प', 'ᱰ': 'ड', 'ᱱ': 'न',
+  'ᱲ': 'ड़', 'ᱳ': 'ओ', 'ᱴ': 'ट', 'ᱵ': 'ब', 'ᱶ': 'ँ', 'ᱷ': 'ह',
+  'ᱸ': 'ं', 'ᱹ': '', 'ᱺ': '', 'ᱻ': '', 'ᱼ': '', 'ᱽ': '',
+  '᱾': '।', '᱿': '॥',
+  '᱐': '०', '᱑': '१', '᱒': '२', '᱓': '३', '᱔': '४',
+  '᱕': '५', '᱖': '६', '᱗': '७', '᱘': '८', '᱙': '९',
+};
+
+function olChikiToDevanagariPhonetic(text: string): string {
+  let out = '';
+  for (const ch of text) {
+    out += OL_CHIKI_TO_DEVANAGARI_PHONETIC_MAP[ch] !== undefined
+      ? OL_CHIKI_TO_DEVANAGARI_PHONETIC_MAP[ch]
+      : ch;
   }
   return out;
 }
@@ -2250,7 +2302,12 @@ export async function speakBhashiniText(
     ta: 'ta',
   };
   const ttsTl = ttsLangMap[lang] || 'hi';
-  const queryText = lang === 'or' ? odiaToDevanagariPhonetic(spokenText) : spokenText;
+  const queryText =
+    lang === 'or'
+      ? odiaToDevanagariPhonetic(spokenText)
+      : lang === 'sat'
+      ? olChikiToDevanagariPhonetic(spokenText)
+      : spokenText;
   const chunks = splitIntoTtsChunks(queryText, 140);
 
   const playChunksDirectly = (): Promise<boolean> =>
@@ -2307,17 +2364,25 @@ export async function speakBhashiniText(
   // 4. Offline Fallback: Web Speech API with explicit Indian voice selection
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
-    const fallbackText = lang === 'or' ? odiaToDevanagariPhonetic(spokenText) : spokenText;
+    const voices = window.speechSynthesis.getVoices() || [];
+    const nativeExactVoice = voices.find((v) => v.lang.toLowerCase().startsWith(lang));
+    const fallbackText = nativeExactVoice
+      ? spokenText
+      : lang === 'or'
+      ? odiaToDevanagariPhonetic(spokenText)
+      : lang === 'sat'
+      ? olChikiToDevanagariPhonetic(spokenText)
+      : spokenText;
     const utter = new SpeechSynthesisUtterance(fallbackText);
     const langMeta = BHASHINI_LANGUAGES.find((l) => l.code === lang);
     const targetSpeechLang = langMeta?.speechLang || 'hi-IN';
     utter.lang = targetSpeechLang;
     utter.rate = 0.95;
 
-    const voices = window.speechSynthesis.getVoices();
-    if (voices && voices.length > 0) {
+    if (voices.length > 0) {
       const langPrefix = lang === 'sat' || lang === 'or' ? 'hi' : lang;
       const exactVoice =
+        nativeExactVoice ||
         voices.find((v) => v.lang.toLowerCase().startsWith(langPrefix)) ||
         voices.find((v) => v.lang.toLowerCase().startsWith('hi')) ||
         voices.find((v) => v.lang.toLowerCase().includes('-in'));

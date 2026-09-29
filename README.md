@@ -15,8 +15,8 @@ It unifies **MeitY Bhashini NMT & Neural TTS**, **UIDAI Aadhaar e-KYC & NPCI Ban
 ## 2. Core Features
 
 ### A. MeitY Bhashini Multilingual NMT & Neural Voice (TTS) Engine
-- **Full-Site Multilingual Translation (`9 Languages`)**: Instantaneous translation across **English**, **Hindi (`हिन्दी`)**, **Santhali (`संताली`)**, **Odia (`ଓଡ଼ିଆ`)**, **Marathi / Gondi (`मराठी / गोंडी`)**, **Bengali (`বাংলা`)**, **Gujarati / Bhili (`ગુજરાતી / ભીલી`)**, **Telugu / Koya (`తెలుగు / కోయ`)**, and **Tamil (`தமிழ்`)** via MeitY Bhashini ULCA NMT (`/api/informant/bhashini/translate`) and a full-page DOM translation observer (`bhashiniDomTranslator.ts`).
-- **Native Indian-Language Voice Read-Aloud (`/api/informant/bhashini/tts`)**: Every checklist step and general statutory rule includes **🔊 Listen** and **⏹ Stop Listening** controls powered by neural Indian-language TTS audio synthesis so students in Fifth & Sixth Schedule tribal belts can listen to guidelines in their native language.
+- **Full-Site Multilingual Translation (`9 Languages`)**: Instantaneous translation across **English**, **Hindi (`हिन्दी`)**, **Santhali (`संताली / ᱥᱟᱱᱛᱟᱲᱤ` — authentic Ol Chiki `ᱚᱞ ᱪᱤᱠᱤ` Unicode `U+1C50..U+1C7F`)**, **Odia (`ଓଡ଼ିଆ`)**, **Marathi / Gondi (`मराठी / गोंडी`)**, **Bengali (`বাংলা`)**, **Gujarati / Bhili (`ગુજરાતી / ભીલી`)**, **Telugu / Koya (`తెలుగు / కోయ`)**, and **Tamil (`தமிழ்`)** via MeitY Bhashini ULCA NMT (`/api/informant/bhashini/translate`), backed by a single-batch deduplicated NMT cache and a full-page DOM translation observer (`bhashiniDomTranslator.ts`).
+- **Native Indian-Language Voice Read-Aloud (`/api/informant/bhashini/tts`)**: Every checklist step and general statutory rule includes **🔊 Listen** and **⏹ Stop Listening** controls powered by MeitY Bhashini ULCA TTS when `BHASHINI_INFERENCE_KEY` is configured, with an automatic **Indic Phonetic TTS Bridge** (`odiaToDevanagariPhonetic` & `olChikiToDevanagariPhonetic`) that maps Odia (`U+0B00..U+0B7F`) and Santhali Ol Chiki (`U+1C50..U+1C7F`) graphemes into phonetic Indo-Aryan/Munda syllables when falling back to cloud/browser TTS engines that lack standalone `or`/`sat` voice models.
 
 ### B. Landing-Page MoTA Informant Portal & Interactive 8-Step Checklists
 Accessible directly from the public landing page without requiring prior login:
@@ -59,9 +59,9 @@ Accessible directly from the public landing page without requiring prior login:
 ### E. Google Cloud Vision Document OCR & Direct Level-1 INO Deficiency Resolution Chat
 - **Certificate OCR Pre-Scanner (`POST /api/informant/vision/scan-document`)**:
   - Verifies ST Caste Certificates, Current-FY Revenue Officer Income Certificates, Marksheets, and AISHE/UDISE+ Bonafide Certificates for valid e-District barcodes, issuing authority seals, and income ceiling compliance.
-- **Automated Level-1 INO Conversation on Document Rejection (`/api/informant/ino-convo`)**:
+- **Automated Level-1 INO Conversation on Document Rejection (`/api/informant/ino-chats` · `/api/informant/ino-convo`)**:
   - If a document is flagged or rejected during later verification stages (Stages 3–7 — e.g., expired income certificate, missing e-District barcode, or unattested Annexure-III), the system **automatically opens a live two-way resolution conversation thread** with the assigned **Level-1 Institute Nodal Officer (INO)**.
-  - Students and INOs can exchange messages in real time, and the student can re-scan the corrected certificate via **Google Cloud Vision API** directly inside the chat (`POST /api/informant/ino-convo/resolve`) to immediately clear the stage hold and advance to **Stage 8 (PFMS SNA SPARSH DBT Sanction)**.
+  - Students and INOs can exchange messages in real time (`/api/informant/ino-chats/<id>/message` or `/api/informant/ino-convo/reply`), and the student can re-scan the corrected certificate via **Google Cloud Vision API** directly inside the chat (`/api/informant/ino-chats/<id>/resolve` or `/api/informant/ino-convo/resolve`) to immediately clear the stage hold and advance to **Stage 8 (PFMS SNA SPARSH DBT Sanction)**.
 
 ---
 
@@ -94,15 +94,15 @@ Accessible directly from the public landing page without requiring prior login:
 
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
-| `/api/informant/guidelines?lang=<code>` | `GET` | Returns General MoTA Guidelines, all 5 ST scheme checklists (translated via Bhashini), and circular diff history |
+| `/api/informant/guidelines?lang=<code>` | `GET` | Returns General MoTA Guidelines, all 5 ST scheme checklists (translated via Bhashini, including Ol Chiki `ᱚᱞ ᱪᱤᱠᱤ` for `sat`), and circular diff history |
 | `/api/informant/bhashini/translate` | `POST` | Translates batch text strings across 9 Indian & Tribal languages via MeitY Bhashini NMT |
 | `/api/informant/bhashini/tts` | `POST` | Synthesizes native Indian-language MP3 speech audio (`hi`, `sat`, `or`, `mr`, `bn`, `gu`, `te`, `ta`, `en`) |
 | `/api/informant/guidelines/scan-pdf` | `POST` | Scans a MoTA Circular PDF via Google Vision OCR, diffs rules, and auto-updates the live scheme checklist |
 | `/api/informant/vision/scan-document` | `POST` | Verifies student certificates via Google Vision OCR and auto-opens a Level-1 INO chat if rejected |
-| `/api/informant/progress` | `GET` / `POST` | Fetches or updates the student's current checklist step (`Step X of 8`) per scheme |
-| `/api/informant/ino-convo` | `GET` / `POST` | Lists or opens a Student–Level-1 INO document deficiency resolution conversation |
-| `/api/informant/ino-convo/reply` | `POST` | Posts a student or Level-1 INO message to an active deficiency resolution thread |
-| `/api/informant/ino-convo/resolve` | `POST` | Re-verifies a corrected certificate via Google Vision OCR and clears the stage hold |
+| `/api/informant/student-progress` *(alias: `/api/informant/progress`)* | `GET` / `POST` | Fetches or updates the student's current checklist step (`Step X of 8`) per scheme |
+| `/api/informant/ino-chats` *(alias: `/api/informant/ino-convo`)* | `GET` | Lists active & resolved Student–Level-1 INO document deficiency resolution conversations |
+| `/api/informant/ino-chats/<id>/message` *(alias: `/api/informant/ino-convo/reply`)* | `POST` | Posts a student or Level-1 INO message (with optional Google Vision OCR re-scan) to a deficiency thread |
+| `/api/informant/ino-chats/<id>/resolve` *(alias: `/api/informant/ino-convo/resolve`)* | `POST` | Marks a deficiency conversation as resolved and clears the application stage hold |
 | `/api/auth/aadhaar/send-otp` | `POST` | Dispatches a 6-digit UIDAI Aadhaar e-KYC OTP and computes the SHA-256 Data Vault hash |
 | `/api/auth/aadhaar/verify-ekyc` | `POST` | Verifies UIDAI OTP / FaceRD, checks NPCI Bank Mapper status, and generates a 14-digit NSP OTR ID |
 

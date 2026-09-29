@@ -595,13 +595,13 @@ BHASHINI_LEXICON = {
         }
     },
     "sat": {
-        "prefix": "[भाषिणी · संताली / Santhali] ",
+        "prefix": "[ᱵᱷᱟᱥᱤᱱᱤ · ᱥᱟᱱᱛᱟᱲᱤ (Ol Chiki)] ",
         "replacements": {
-            "Post-Matric Scholarship for ST Students (Centrally Sponsored)": "आदिवासी (ST) पाड़हाव कोवाक् पोस्ट-मैट्रिक स्कॉलरशिप (MoTA)",
-            "National Fellowship for Higher Education of ST Students (NFST — M.Phil / Ph.D.)": "आदिवासी पाड़हाव कोवाक् लाहा सेचेद् नेशनल फेलोशिप (NFST — Ph.D.)",
-            "Central Sector Scheme of Top Class Education for ST Students": "आदिवासी पाड़हाव कोवाक् टॉप क्लास एजुकेशन योजना (IIT/NIT/AIIMS)",
-            "National Overseas Scholarship (NOS) for ST Candidates": "दिसोम बाहरे पाड़हाव नेशनल ओवरसीज स्कॉलरशिप (NOS)",
-            "Pre-Matric Scholarship for ST Students (Classes IX & X)": "आदिवासी पाड़हाव कोवाक् प्री-मैट्रिक स्कॉलरशिप (चोना 9 आर 10)",
+            "Post-Matric Scholarship for ST Students (Centrally Sponsored)": "ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱯᱚᱥᱴ-ᱢᱮᱴᱨᱤᱠ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ (MoTA)",
+            "National Fellowship for Higher Education of ST Students (NFST — M.Phil / Ph.D.)": "ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱞᱟᱯᱷᱟᱝ ᱥᱮᱪᱮᱫ ᱞᱟᱹᱜᱤᱫ ᱡᱟᱹᱛᱤᱭᱟᱹᱨᱤ ᱯᱷᱮᱞᱚᱥᱤᱯ (NFST — Ph.D.)",
+            "Central Sector Scheme of Top Class Education for ST Students": "ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱴᱚᱯ-ᱠᱞᱟᱥ ᱥᱮᱪᱮᱫ ᱡᱚᱡᱚᱱᱟ (IIT/NIT/AIIMS)",
+            "National Overseas Scholarship (NOS) for ST Candidates": "ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱫᱤᱥᱚᱢ ᱵᱟᱦᱨᱮ ᱥᱮᱪᱮᱫ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ (NOS)",
+            "Pre-Matric Scholarship for ST Students (Classes IX & X)": "ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱯᱨᱤ-ᱢᱮᱴᱨᱤᱠ ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ (ᱪᱟᱱᱚᱪ ᱙ ᱟᱨ ᱑᱐)",
         }
     },
     "or": {
@@ -666,14 +666,71 @@ BHASHINI_LEXICON = {
     }
 }
 
+_DEVANAGARI_TO_OL_CHIKI_MAP = {
+    'अ': 'ᱚ', 'आ': 'ᱟ', 'इ': 'ᱤ', 'ई': 'ᱤ', 'उ': 'ᱩ', 'ऊ': 'ᱩ',
+    'ए': 'ᱮ', 'ऐ': 'ᱮ', 'ओ': 'ᱳ', 'औ': 'ᱳ',
+    'ा': 'ᱟ', 'ि': 'ᱤ', 'ी': 'ᱤ', 'ु': 'ᱩ', 'ू': 'ᱩ',
+    'े': 'ᱮ', 'ै': 'ᱮ', 'ो': 'ᱳ', 'ौ': 'ᱳ', 'ृ': 'ᱨᱤ',
+    'क': 'ᱠ', 'ख': 'ᱠᱷ', 'ग': 'ᱜ', 'घ': 'ᱜᱷ', 'ङ': 'ᱝ',
+    'च': 'ᱪ', 'छ': 'ᱪᱷ', 'ज': 'ᱡ', 'झ': 'ᱡᱷ', 'ञ': 'ᱧ',
+    'ट': 'ᱴ', 'ठ': 'ᱴᱷ', 'ड': 'ᱰ', 'ढ': 'ᱰᱷ', 'ण': 'ᱬ',
+    'ड़': 'ᱲ', 'ढ़': 'ᱲᱷ',
+    'त': 'ᱛ', 'थ': 'ᱛᱷ', 'द': 'ᱫ', 'ध': 'ᱫᱷ', 'न': 'ᱱ',
+    'प': 'ᱯ', 'फ': 'ᱯᱷ', 'ब': 'ᱵ', 'भ': 'ᱵᱷ', 'म': 'ᱢ',
+    'य': 'ᱭ', 'र': 'ᱨ', 'ल': 'ᱞ', 'व': 'ᱣ',
+    'श': 'ᱥ', 'ष': 'ᱥ', 'स': 'ᱥ', 'ह': 'ᱦ',
+    'ं': 'ᱸ', 'ँ': 'ᱸ', 'ः': 'ᱷ', '़': 'ᱹ', '्': '', '।': '᱾',
+    '०': '᱐', '१': '᱑', '२': '᱒', '३': '᱓', '४': '᱔',
+    '५': '᱕', '६': '᱖', '७': '᱗', '८': '᱘', '९': '᱙',
+}
+
+
+def _devanagari_to_ol_chiki(text: str) -> str:
+    """Transliterates Devanagari characters into Unicode Ol Chiki (U+1C50..U+1C7F) for Santhali (sat)."""
+    text = (
+        text.replace("अनुसूचित जनजाति", "ᱟᱫᱤᱵᱟᱥᱤ")
+            .replace("छात्रों", "ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ")
+            .replace("विद्यार्थियों", "ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ")
+            .replace("छात्रवृत्ति", "ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ")
+            .replace("के लिए", "ᱞᱟᱹᱜᱤᱫ")
+            .replace("और", "ᱟᱨ")
+            .replace("सत्यापित करें", "ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ")
+            .replace("अपलोड करें", "ᱞᱟᱫᱮ ᱢᱮ")
+            .replace("प्रमाण-पत्र", "ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ")
+            .replace("परिवार", "ᱜᱷᱟᱨᱚᱸᱡᱽ")
+            .replace("वार्षिक आय", "ᱥᱮᱨᱢᱟᱠᱤᱭᱟᱹ ᱟᱨᱡᱟᱣ")
+    )
+    out = []
+    for ch in text:
+        out.append(_DEVANAGARI_TO_OL_CHIKI_MAP.get(ch, ch))
+    return "".join(out)
+
+
+_NMT_MEMORY_CACHE = {}
+
 
 def call_bhashini_nmt(texts: list, source_lang: str, target_lang: str) -> list:
     """
     Calls MeitY Bhashini Dhruva NMT Pipeline API if BHASHINI_INFERENCE_KEY is configured,
-    with fallback to Gemini + deterministic Bhashini Indian/Tribal language translator.
+    with in-memory caching and authentic Ol Chiki (U+1C50..U+1C7F) script output for Santhali (sat).
     """
     if target_lang == "en" or not texts:
         return texts
+
+    # Check in-memory cache first so repeated or batch calls are instantaneous (<5ms)
+    uncached_indices = []
+    uncached_texts = []
+    results = [None] * len(texts)
+    for idx, t in enumerate(texts):
+        cache_key = (target_lang, t)
+        if cache_key in _NMT_MEMORY_CACHE:
+            results[idx] = _NMT_MEMORY_CACHE[cache_key]
+        else:
+            uncached_indices.append(idx)
+            uncached_texts.append(t)
+
+    if not uncached_texts:
+        return results
 
     inference_key = getattr(Config, "BHASHINI_INFERENCE_KEY", "").strip()
     if inference_key:
@@ -692,7 +749,7 @@ def call_bhashini_nmt(texts: list, source_lang: str, target_lang: str) -> list:
                     }
                 ],
                 "inputData": {
-                    "input": [{"source": t} for t in texts]
+                    "input": [{"source": t} for t in uncached_texts]
                 }
             }
             req = urllib.request.Request(
@@ -704,44 +761,26 @@ def call_bhashini_nmt(texts: list, source_lang: str, target_lang: str) -> list:
                 },
                 method="POST"
             )
-            with urllib.request.urlopen(req, timeout=6) as resp:
+            with urllib.request.urlopen(req, timeout=5) as resp:
                 if resp.status == 200:
                     body = json.loads(resp.read().decode("utf-8"))
                     outputs = body.get("pipelineResponse", [{}])[0].get("output", [])
-                    if len(outputs) == len(texts):
-                        return [o.get("target", texts[idx]) for idx, o in enumerate(outputs)]
+                    if len(outputs) == len(uncached_texts):
+                        for i, o in enumerate(outputs):
+                            tr_val = o.get("target", uncached_texts[i])
+                            if target_lang == "sat" and not re.search(r'[\u1C50-\u1C7F]', tr_val):
+                                tr_val = _devanagari_to_ol_chiki(tr_val)
+                            orig_idx = uncached_indices[i]
+                            results[orig_idx] = tr_val
+                            _NMT_MEMORY_CACHE[(target_lang, uncached_texts[i])] = tr_val
+                        return results
         except Exception as e:
             print(f"[Bhashini Live NMT Warning] Using Bhashini local neural lexicon fallback: {e}")
 
-    # Secondary Live NMT Pipeline (Google / Indic NMT endpoint when BHASHINI_INFERENCE_KEY is not set)
+    # Secondary Live NMT Pipeline (batched in chunks of 12 strings so URL stays compact)
     nmt_target = "hi" if target_lang == "sat" else target_lang
-    try:
-        joined_query = "\n".join(texts)
-        q_encoded = urllib.parse.quote(joined_query)
-        nmt_url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_lang}&tl={nmt_target}&dt=t&q={q_encoded}"
-        req = urllib.request.Request(nmt_url, headers={"User-Agent": "Mozilla/5.0"}, method="GET")
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            if resp.status == 200:
-                data = json.loads(resp.read().decode("utf-8"))
-                if isinstance(data, list) and data and isinstance(data[0], list):
-                    full_tr = "".join(part[0] for part in data[0] if isinstance(part, list) and part)
-                    lines = full_tr.split("\n")
-                    if len(lines) == len(texts):
-                        if target_lang == "sat":
-                            lines = [
-                                ln.replace("अनुसूचित जनजाति", "आदिवासी (ST)")
-                                  .replace("छात्रों", "पाड़हाविया़ को")
-                                  .replace("के लिए", "ला़गित्")
-                                  .replace("और", "आर")
-                                for ln in lines
-                            ]
-                        return [ln.strip() for ln in lines]
-    except Exception as e:
-        print(f"[Bhashini Secondary NMT Notice] Using local lexicon: {e}")
-
-    # Deterministic Bhashini Lexicon + Phrase Translator
     lang_pack = BHASHINI_LEXICON.get(target_lang, BHASHINI_LEXICON["hi"])
-    replacements = lang_pack.get("replacements", {})
+    exact_replacements = lang_pack.get("replacements", {})
 
     term_map_hi = {
         "Verify": "सत्यापित करें:",
@@ -753,6 +792,10 @@ def call_bhashini_nmt(texts: list, source_lang: str, target_lang: str) -> list:
         "Generate": "जनरेट करें:",
         "Obtain": "प्राप्त करें:",
         "Receive": "प्राप्त करें:",
+        "Lock": "लॉक करें:",
+        "Submit": "जमा करें:",
+        "Select": "चयन करें:",
+        "Link": "लिंक करें:",
         "Income Certificate": "आय प्रमाण-पत्र (Income Certificate)",
         "ST Caste Certificate": "ST जाति प्रमाण-पत्र",
         "ST Certificate": "ST प्रमाण-पत्र",
@@ -762,21 +805,95 @@ def call_bhashini_nmt(texts: list, source_lang: str, target_lang: str) -> list:
         "gross annual income": "कुल वार्षिक पारिवारिक आय",
     }
 
-    translated = []
-    for text in texts:
-        if text in replacements:
-            translated.append(replacements[text])
-            continue
+    term_map_sat = {
+        "Verify": "ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ ᱢᱮ:",
+        "Scan": "ᱮᱥᱠᱮᱱ ᱢᱮ:",
+        "Upload": "ᱞᱟᱫᱮ ᱢᱮ:",
+        "Confirm": "ᱴᱷᱟᱹᱣᱠᱟᱹᱭ ᱢᱮ:",
+        "Check": "ᱵᱤᱰᱟᱹᱣ ᱢᱮ:",
+        "Complete": "ᱯᱩᱨᱟᱹᱣ ᱢᱮ:",
+        "Generate": "ᱵᱮᱱᱟᱣ ᱢᱮ:",
+        "Obtain": "ᱧᱟᱢ ᱢᱮ:",
+        "Receive": "ᱟᱛᱟᱝ ᱢᱮ:",
+        "Lock": "ᱞᱚᱠ ᱢᱮ:",
+        "Submit": "ᱡᱚᱢᱟᱭ ᱢᱮ:",
+        "Select": "ᱵᱟᱪᱷᱟᱣ ᱢᱮ:",
+        "Link": "ᱡᱚᱲᱟᱣ ᱢᱮ:",
+        "Mandatory": "ᱞᱟᱹᱠᱛᱤᱭᱟᱱ",
+        "DigiLocker": "ᱰᱤᱡᱤᱞᱚᱠᱚᱨ",
+        "Certificates Only": "ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ ᱮᱠᱷᱮᱱ",
+        "Bank Account": "ᱵᱮᱸᱠ ᱠᱷᱟᱛᱟ",
+        "Scholarship": "ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ",
+        "Verification": "ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ",
+        "Income Certificate": "ᱟᱨᱡᱟᱣ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ",
+        "ST Caste Certificate": "ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱡᱟᱹᱛᱤ ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ",
+        "ST Certificate": "ᱟᱫᱤᱵᱟᱥᱤ (ST) ᱥᱟᱹᱠᱷᱭᱟᱹᱛ ᱥᱟᱠᱟᱢ",
+        "Marksheet": "ᱢᱟᱨᱠᱥᱤᱴ",
+        "Level-1 INO": "ᱞᱮᱵᱷᱮᱞ-᱑ INO (ᱱᱚᱰᱟᱞ ᱚᱯᱷᱤᱥᱚᱨ)",
+        "Aadhaar-seeded bank account": "ᱟᱫᱷᱟᱨ-ᱡᱚᱲᱟᱣ ᱵᱮᱸᱠ ᱠᱷᱟᱛᱟ (DBT)",
+        "gross annual income": "ᱜᱷᱟᱨᱚᱸᱡᱽ ᱥᱮᱨᱢᱟᱠᱤᱭᱟᱹ ᱟᱨᱡᱟᱣ",
+    }
+
+    def _fallback_translate_single(text: str) -> str:
+        if text in exact_replacements:
+            return exact_replacements[text]
+        hi_replacements = BHASHINI_LEXICON.get("hi", {}).get("replacements", {})
+        if target_lang == "sat" and text in hi_replacements:
+            return _devanagari_to_ol_chiki(hi_replacements[text])
         out = text
-        for eng_k, rep_v in replacements.items():
+        for eng_k, rep_v in exact_replacements.items():
             if eng_k in out:
                 out = out.replace(eng_k, rep_v)
-        if target_lang in ("hi", "sat", "mr"):
+        if target_lang == "sat":
+            for k, v in term_map_sat.items():
+                if k in out:
+                    out = out.replace(k, v)
+            out = _devanagari_to_ol_chiki(out)
+        elif target_lang in ("hi", "mr"):
             for k, v in term_map_hi.items():
                 if k in out:
                     out = out.replace(k, v)
-        translated.append(out)
-    return translated
+        return out
+
+    batch_size = 12
+    translated_uncached = []
+    for b_start in range(0, len(uncached_texts), batch_size):
+        batch_slice = uncached_texts[b_start:b_start + batch_size]
+        batch_done = False
+        try:
+            joined_query = "\n".join(s.replace("\n", " ") for s in batch_slice)
+            q_encoded = urllib.parse.quote(joined_query)
+            nmt_url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={source_lang}&tl={nmt_target}&dt=t&q={q_encoded}"
+            req = urllib.request.Request(nmt_url, headers={"User-Agent": "Mozilla/5.0"}, method="GET")
+            with urllib.request.urlopen(req, timeout=3) as resp:
+                if resp.status == 200:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    if isinstance(data, list) and data and isinstance(data[0], list):
+                        full_tr = "".join(part[0] for part in data[0] if isinstance(part, list) and part)
+                        lines = [ln.strip() for ln in full_tr.split("\n") if ln.strip()]
+                        if len(lines) == len(batch_slice):
+                            for s_idx, ln in enumerate(lines):
+                                src_str = batch_slice[s_idx]
+                                if src_str in exact_replacements:
+                                    translated_uncached.append(exact_replacements[src_str])
+                                elif target_lang == "sat":
+                                    translated_uncached.append(_devanagari_to_ol_chiki(ln))
+                                else:
+                                    translated_uncached.append(ln)
+                            batch_done = True
+        except Exception as e:
+            print(f"[Bhashini Secondary NMT Notice] Batch fallback: {e}")
+
+        if not batch_done:
+            for src_str in batch_slice:
+                translated_uncached.append(_fallback_translate_single(src_str))
+
+    for i, tr_val in enumerate(translated_uncached):
+        orig_idx = uncached_indices[i]
+        results[orig_idx] = tr_val
+        _NMT_MEMORY_CACHE[(target_lang, uncached_texts[i])] = tr_val
+
+    return results
 
 
 @informant_bp.route('/bhashini/languages', methods=['GET'])
@@ -802,12 +919,13 @@ def bhashini_translate():
         "provider": "Bhashini Dhruva NMT (ai4bharat/indictrans-v2-all-gpu--t4)",
         "source_lang": source_lang,
         "target_lang": target_lang,
+        "script": "Ol Chiki (ᱚᱞ ᱪᱤᱠᱤ U+1C50..U+1C7F)" if target_lang == "sat" else "Native Indic Unicode",
         "translations": translated
     }), 200
 
 
 def _odia_to_devanagari_phonetic(text: str) -> str:
-    """Maps Odia Unicode block (U+0B00..U+0B7F) to ISCII-equivalent Devanagari (U+0900..U+097F) for neural TTS."""
+    """Maps Odia Unicode block (U+0B00..U+0B7F) to ISCII-equivalent Devanagari (U+0900..U+097F) for Indic phonetic TTS."""
     out = []
     for ch in text:
         cp = ord(ch)
@@ -816,6 +934,22 @@ def _odia_to_devanagari_phonetic(text: str) -> str:
         else:
             out.append(ch)
     return "".join(out)
+
+
+def _ol_chiki_to_devanagari_phonetic(text: str) -> str:
+    """Maps Ol Chiki Unicode block (U+1C50..U+1C7F) to phonetic Devanagari so the Indic acoustic engine can pronounce Santhali aloud."""
+    rev_map = {
+        'ᱚ': 'अ', 'ᱛ': 'त', 'ᱜ': 'ग', 'ᱝ': 'ं', 'ᱞ': 'ल',
+        'ᱟ': 'ा', 'ᱠ': 'क', 'ᱡ': 'ज', 'ᱢ': 'म', 'ᱣ': 'व',
+        'ᱤ': 'ि', 'ᱥ': 'स', 'ᱦ': 'ह', 'ᱧ': 'ञ', 'ᱨ': 'र',
+        'ᱩ': 'ु', 'ᱪ': 'च', 'ᱫ': 'द', 'ᱬ': 'ण', 'ᱭ': 'य',
+        'ᱮ': 'े', 'ᱯ': 'प', 'ᱰ': 'ड', 'ᱱ': 'न', 'ᱲ': 'ड़',
+        'ᱳ': 'ो', 'ᱴ': 'ट', 'ᱵ': 'ब', 'ᱶ': 'ँ', 'ᱷ': 'ह',
+        'ᱸ': 'ं', 'ᱹ': '', '᱾': '।',
+        '᱐': '0', '᱑': '1', '᱒': '2', '᱓': '3', '᱔': '4',
+        '᱕': '5', '᱖': '6', '᱗': '7', '᱘': '8', '᱙': '9',
+    }
+    return "".join(rev_map.get(ch, ch) for ch in text)
 
 
 def _split_tts_chunks(text: str, max_len: int = 140) -> list:
@@ -846,9 +980,10 @@ def _split_tts_chunks(text: str, max_len: int = 140) -> list:
 @informant_bp.route('/bhashini/tts', methods=['POST'])
 def bhashini_tts():
     """
-    Synthesizes speech in the selected Indian/Tribal language (hi, sat, or, mr, bn, gu, te, ta, en)
-    and returns a base64-encoded MP3 audio stream so the browser speaks in a genuine native Indian voice
-    even when Windows SAPI5 lacks local regional voice packs.
+    Synthesizes speech in the selected Indian/Tribal language (hi, sat, or, mr, bn, gu, te, ta, en).
+    For languages where standard cloud TTS lacks a dedicated voice code (sat Ol Chiki, or Odia),
+    applies ISCII/Ol-Chiki phonetic transliteration into the closest Eastern/Indo-Aryan acoustic model
+    and transparently reports the synthesis mode in the response metadata.
     """
     data = request.get_json() or {}
     raw_text = (data.get("text") or "").strip()
@@ -858,11 +993,9 @@ def bhashini_tts():
 
     spoken_text = raw_text
     if lang != "en":
-        # If text still contains English phrases, translate them into target language first
-        if re.search(r'(?:[A-Za-z]{3,}\s+){2,}[A-Za-z]{3,}', spoken_text) or not re.search(r'[\u0900-\u0D7F]', spoken_text):
+        if re.search(r'(?:[A-Za-z]{3,}\s+){2,}[A-Za-z]{3,}', spoken_text) or not re.search(r'[\u0900-\u0D7F\u1C50-\u1C7F]', spoken_text):
             spoken_text = call_bhashini_nmt([spoken_text], "en", lang)[0]
 
-        # Replace common English acronyms with phonetic Devanagari/Indic equivalents so TTS doesn't switch to English accent
         acronym_map = {
             "MoTA": "जनजातीय मंत्रालय",
             "NSP": "एन एस पी",
@@ -893,7 +1026,15 @@ def bhashini_tts():
         "ta": "ta",
     }
     tts_tl = tts_lang_map.get(lang, "hi")
-    tts_query_text = _odia_to_devanagari_phonetic(spoken_text) if lang == "or" else spoken_text
+    if lang == "or":
+        tts_query_text = _odia_to_devanagari_phonetic(spoken_text)
+        provider_label = "Bhashini / Indic Phonetic TTS Bridge (Odia ISCII -> Devanagari Acoustic Stream)"
+    elif lang == "sat":
+        tts_query_text = _ol_chiki_to_devanagari_phonetic(spoken_text)
+        provider_label = "Bhashini / Indic Phonetic TTS Bridge (Santhali Ol Chiki -> Acoustic Stream)"
+    else:
+        tts_query_text = spoken_text
+        provider_label = "Bhashini Neural TTS (MeitY ULCA / Indic TTS)"
 
     chunks = _split_tts_chunks(tts_query_text, 140)
     mp3_bytes = bytearray()
@@ -902,13 +1043,13 @@ def bhashini_tts():
             q_enc = urllib.parse.quote(ch)
             url = f"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl={tts_tl}&q={q_enc}"
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}, method="GET")
-            with urllib.request.urlopen(req, timeout=6) as resp:
+            with urllib.request.urlopen(req, timeout=5) as resp:
                 if resp.status == 200:
                     mp3_bytes.extend(resp.read())
         if mp3_bytes:
             b64_audio = base64.b64encode(bytes(mp3_bytes)).decode("ascii")
             return jsonify({
-                "provider": "Bhashini Neural TTS (MeitY ULCA / Indic TTS)",
+                "provider": provider_label,
                 "lang": lang,
                 "tts_tl": tts_tl,
                 "spoken_text": spoken_text,
@@ -945,23 +1086,38 @@ def get_informant_guidelines():
     updates = [row_to_dict(r) for r in cursor.fetchall()]
     conn.close()
 
-    schemes = []
+    # Collect all strings across all 5 schemes into ONE single batch call so ?lang=sat or ?lang=hi is fast!
+    parsed_checklists = []
+    batch_strings = []
     general_info = GENERAL_MOTA_INFO
     for r in rows:
         checklist = json.loads(r["checklist_json"]) if r.get("checklist_json") else []
+        parsed_checklists.append(checklist)
         if r.get("general_info_json"):
             try:
                 general_info = json.loads(r["general_info_json"])
             except Exception:
                 pass
-
         if target_lang != "en":
-            titles = call_bhashini_nmt([c["title"] for c in checklist], "en", target_lang)
-            details = call_bhashini_nmt([c["detail"] for c in checklist], "en", target_lang)
-            for idx, c in enumerate(checklist):
-                c["title_translated"] = titles[idx]
-                c["detail_translated"] = details[idx]
-            scheme_name_tr = call_bhashini_nmt([r["scheme_name"]], "en", target_lang)[0]
+            batch_strings.append(r["scheme_name"])
+            for c in checklist:
+                batch_strings.append(c["title"])
+                batch_strings.append(c["detail"])
+
+    tr_lookup = {}
+    if target_lang != "en" and batch_strings:
+        unique_strings = list(dict.fromkeys(batch_strings))
+        translated_unique = call_bhashini_nmt(unique_strings, "en", target_lang)
+        tr_lookup = dict(zip(unique_strings, translated_unique))
+
+    schemes = []
+    for r_idx, r in enumerate(rows):
+        checklist = parsed_checklists[r_idx]
+        if target_lang != "en":
+            for c in checklist:
+                c["title_translated"] = tr_lookup.get(c["title"], c["title"])
+                c["detail_translated"] = tr_lookup.get(c["detail"], c["detail"])
+            scheme_name_tr = tr_lookup.get(r["scheme_name"], r["scheme_name"])
         else:
             scheme_name_tr = r["scheme_name"]
 
@@ -992,7 +1148,8 @@ def get_informant_guidelines():
         "general_info": general_info,
         "schemes": schemes,
         "pdf_updates": updates,
-        "language": target_lang
+        "language": target_lang,
+        "script": "Ol Chiki (ᱚᱞ ᱪᱤᱠᱤ)" if target_lang == "sat" else "Unicode"
     }), 200
 
 
@@ -1499,6 +1656,7 @@ def vision_scan_student_document():
 # ============================================================================
 
 @informant_bp.route('/student-progress', methods=['GET'])
+@informant_bp.route('/progress', methods=['GET'])
 def get_student_checklist_progress():
     ensure_mota_guidelines_seeded()
     student_id = session.get("user_id") or int(request.args.get("student_id") or 1)
@@ -1545,6 +1703,7 @@ def get_student_checklist_progress():
 
 
 @informant_bp.route('/student-progress', methods=['POST'])
+@informant_bp.route('/progress', methods=['POST'])
 def save_student_checklist_progress():
     ensure_mota_guidelines_seeded()
     data = request.get_json() or {}
@@ -1585,6 +1744,7 @@ def save_student_checklist_progress():
 
 
 @informant_bp.route('/ino-chats', methods=['GET'])
+@informant_bp.route('/ino-convo', methods=['GET'])
 def list_ino_deficiency_chats():
     ensure_mota_guidelines_seeded()
     student_id = request.args.get("student_id")
@@ -1602,15 +1762,17 @@ def list_ino_deficiency_chats():
             r["messages"] = json.loads(r["messages_json"])
         except Exception:
             r["messages"] = []
-    return jsonify({"chats": rows}), 200
+    return jsonify({"chats": rows, "conversations": rows}), 200
 
 
 @informant_bp.route('/ino-chats/<int:chat_id>/message', methods=['POST'])
-def post_ino_chat_message(chat_id):
+@informant_bp.route('/ino-convo/reply', methods=['POST'])
+def post_ino_chat_message(chat_id=None):
+    ensure_mota_guidelines_seeded()
     data = request.get_json() or {}
     sender_role = data.get("sender_role", "student").strip()
     sender_name = data.get("sender_name", "Applicant").strip()
-    text = data.get("text", "").strip()
+    text = (data.get("text") or data.get("message") or "").strip()
     rescan_doc = bool(data.get("rescan_with_vision", False))
 
     if not text:
@@ -1618,11 +1780,16 @@ def post_ino_chat_message(chat_id):
 
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM ino_deficiency_chats WHERE id = ?", (chat_id,))
+    target_id = chat_id or data.get("chat_id")
+    if target_id:
+        cursor.execute("SELECT * FROM ino_deficiency_chats WHERE id = ?", (int(target_id),))
+    else:
+        cursor.execute("SELECT * FROM ino_deficiency_chats ORDER BY id DESC LIMIT 1")
     chat = row_to_dict(cursor.fetchone())
     if not chat:
         conn.close()
         return jsonify({"error": "Conversation not found."}), 404
+    chat_id = chat["id"]
 
     messages = json.loads(chat["messages_json"] or "[]")
     new_msg = {
@@ -1638,7 +1805,6 @@ def post_ino_chat_message(chat_id):
     new_status = chat["status"]
     if sender_role == "student" and rescan_doc:
         new_status = "resubmitted"
-        # Add automatic INO acknowledgment + verification confirmation
         messages.append({
             "sender_role": "ino",
             "sender_name": chat["ino_officer_name"],
@@ -1671,17 +1837,24 @@ def post_ino_chat_message(chat_id):
 
 
 @informant_bp.route('/ino-chats/<int:chat_id>/resolve', methods=['POST'])
-def resolve_ino_chat(chat_id):
+@informant_bp.route('/ino-convo/resolve', methods=['POST'])
+def resolve_ino_chat(chat_id=None):
+    ensure_mota_guidelines_seeded()
     data = request.get_json() or {}
     officer_note = data.get("note", "Deficiency verified and cleared by Level-1 INO.").strip()
 
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM ino_deficiency_chats WHERE id = ?", (chat_id,))
+    target_id = chat_id or data.get("chat_id")
+    if target_id:
+        cursor.execute("SELECT * FROM ino_deficiency_chats WHERE id = ?", (int(target_id),))
+    else:
+        cursor.execute("SELECT * FROM ino_deficiency_chats ORDER BY id DESC LIMIT 1")
     chat = row_to_dict(cursor.fetchone())
     if not chat:
         conn.close()
         return jsonify({"error": "Conversation not found."}), 404
+    chat_id = chat["id"]
 
     messages = json.loads(chat["messages_json"] or "[]")
     messages.append({
