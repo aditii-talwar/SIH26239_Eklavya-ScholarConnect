@@ -267,13 +267,13 @@ export const PortalShell: React.FC<PortalShellProps> = ({
                   window.location.hash = '';
                   go('landing');
                 }}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold bg-slate-900 text-white hover:bg-red-700 border border-blue-700 transition"
+                className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-md text-[11px] sm:text-xs font-semibold bg-slate-900 text-white hover:bg-red-700 border border-blue-700 transition shrink-0"
               >
                 Sign out
               </button>
             )}
 
-            <div className="relative hidden sm:block w-48">
+            <div className="relative hidden md:block w-48">
               <Icon name="search" className="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-blue-200" />
               <input
                 placeholder="Search Application / AISHE…"
@@ -357,7 +357,7 @@ export const PortalShell: React.FC<PortalShellProps> = ({
                 {currentUser ? currentUser.name[0].toUpperCase() : <Icon name="user" className="w-4 h-4" />}
               </button>
               {userMenuOpen && (
-                <div className="absolute right-0 mt-2 w-60 bg-white text-slate-900 rounded-lg shadow-lg border border-slate-200 p-2 z-50">
+                <div className="absolute right-0 mt-2 w-60 max-w-[calc(100vw-2rem)] bg-white text-slate-900 rounded-lg shadow-lg border border-slate-200 p-2 z-50">
                   {currentUser ? (
                     <>
                       <div className="px-3 py-2 border-b border-slate-200">
@@ -398,9 +398,40 @@ export const PortalShell: React.FC<PortalShellProps> = ({
             </div>
           </div>
         </div>
+
+        {/* Mobile & Tablet Horizontal Scrollable Portal Tab Bar (Visible on screens < 1024px without Desktop Mode) */}
+        <div className="lg:hidden bg-[#0F172A] border-t border-slate-800 px-2 py-1.5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <button
+            type="button"
+            onClick={() => go('landing')}
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[11px] font-semibold bg-slate-800 text-amber-300 border border-slate-700 shrink-0"
+          >
+            <Icon name="home" className="w-3.5 h-3.5" />
+            <span>National Home</span>
+          </button>
+          {tabs.map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              onClick={() => {
+                setActive(t.key);
+                setMobileNav(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded text-[11px] font-semibold whitespace-nowrap shrink-0 transition ${
+                active === t.key
+                  ? 'bg-[#2563EB] text-white shadow-sm'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <Icon name={t.icon} className="w-3.5 h-3.5 shrink-0" />
+              <span>{t.label}</span>
+            </button>
+          ))}
+        </div>
       </header>
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 min-w-0">
         {/* Sidebar */}
         <aside
           className={
@@ -462,7 +493,7 @@ export const PortalShell: React.FC<PortalShellProps> = ({
         )}
 
         {/* Main Content */}
-        <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto w-full">
+        <main className="flex-1 min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl mx-auto w-full overflow-x-hidden">
           {children}
         </main>
       </div>

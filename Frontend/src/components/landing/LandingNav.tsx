@@ -182,7 +182,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({
 
       {/* TIER 2: PRIMARY NAVIGATION BAR (Deep Navy #1E3A8A) */}
       <div className="bg-[#1E3A8A] text-white border-b border-[#0F172A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-2.5 sm:gap-4">
           {/* Portal Branding */}
           <button
             type="button"
@@ -191,52 +191,52 @@ export const LandingNav: React.FC<LandingNavProps> = ({
               go('landing');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center gap-3 text-left focus-ring rounded-md"
+            className="flex items-center gap-2.5 sm:gap-3 text-left focus-ring rounded-md min-w-0 flex-1 sm:flex-initial"
           >
-            <div className="w-10 h-10 rounded-md bg-[#0F172A] border border-blue-700 text-[#D97706] flex items-center justify-center shrink-0 shadow-sm">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-md bg-[#0F172A] border border-blue-700 text-[#D97706] flex items-center justify-center shrink-0 shadow-sm">
               <Icon name="landmark" className="w-5 h-5" />
             </div>
-            <div>
-              <div className="text-base sm:text-lg font-bold text-white leading-tight flex items-center gap-2 flex-wrap">
-                <span>{ui.portalTitle}</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#16A34A] text-white">
+            <div className="min-w-0">
+              <div className="text-sm sm:text-lg font-bold text-white leading-tight flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <span className="truncate">{ui.portalTitle}</span>
+                <span className="px-1.5 sm:px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-[#16A34A] text-white shrink-0">
                   {ui.officialBadge}
                 </span>
               </div>
-              <div className="text-xs text-blue-100 font-medium mt-0.5">
+              <div className="text-[11px] sm:text-xs text-blue-100 font-medium mt-0.5 line-clamp-1">
                 {ui.portalSubtitle}
               </div>
             </div>
           </button>
 
-          {/* Role Access & Auth Controls (Single Unified Gateway in Header) */}
-          <div className="flex items-center gap-2 flex-wrap">
+          {/* Role Access & Auth Controls (Always Visible on Mobile & Desktop) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap shrink-0">
             {currentUser ? (
-              <div className="flex items-center gap-2 pl-1">
-                <span className="text-xs font-semibold text-white bg-[#16A34A] px-2.5 py-1 rounded-md">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="text-[11px] sm:text-xs font-semibold text-white bg-[#16A34A] px-2 sm:px-2.5 py-1 rounded-md max-w-[130px] sm:max-w-none truncate">
                   {currentUser.name}
                 </span>
                 <button
                   type="button"
                   onClick={logout}
-                  className="px-3 py-1.5 rounded-md border border-blue-600 bg-[#0F172A] text-xs font-semibold text-white hover:bg-red-700 transition-colors"
+                  className="px-2.5 sm:px-3 py-1.5 rounded-md border border-blue-600 bg-[#0F172A] text-[11px] sm:text-xs font-semibold text-white hover:bg-red-700 transition-colors"
                 >
                   {ui.signOutBtn}
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2 pl-1">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   type="button"
                   onClick={() => openAuth('login')}
-                  className="px-3.5 py-1.5 rounded-md bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold shadow-sm border border-blue-400 transition-colors"
+                  className="px-2.5 sm:px-3.5 py-1.5 rounded-md bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-[11px] sm:text-xs font-semibold shadow-sm border border-blue-400 transition-colors"
                 >
                   {ui.loginBtn}
                 </button>
                 <button
                   type="button"
                   onClick={() => openAuth('register')}
-                  className="hidden sm:inline-flex px-3 py-1.5 rounded-md bg-[#D97706] hover:bg-amber-700 text-white text-xs font-semibold transition-colors"
+                  className="inline-flex px-2.5 sm:px-3 py-1.5 rounded-md bg-[#D97706] hover:bg-amber-700 text-white text-[11px] sm:text-xs font-semibold transition-colors"
                 >
                   {ui.registerBtn}
                 </button>
@@ -246,7 +246,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-md border border-blue-700 text-white"
+              className="md:hidden p-1.5 rounded-md border border-blue-700 text-white bg-[#0F172A]/60"
               aria-label="Toggle Menu"
             >
               <Icon name={mobileOpen ? 'x' : 'menu'} className="w-4 h-4" />
@@ -254,11 +254,15 @@ export const LandingNav: React.FC<LandingNavProps> = ({
           </div>
         </div>
 
-        {/* Main Navigation Tabs Bar (#0F172A / #1E3A8A) */}
+        {/* Main Navigation Tabs Bar (#0F172A / #1E3A8A) — Always visible & horizontally scrollable on mobile */}
         {setActiveTab && (
           <div className="bg-[#0F172A] text-white border-t border-slate-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <nav className={`${mobileOpen ? 'flex flex-col py-2' : 'hidden md:flex'} items-center gap-1 overflow-x-auto no-scrollbar`}>
+            <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+              <nav
+                className={`${
+                  mobileOpen ? 'flex flex-col py-2' : 'flex flex-row'
+                } items-stretch md:items-center gap-1 overflow-x-auto no-scrollbar`}
+              >
                 {GOV_NAV_TABS.map((tab) => {
                   const isActive = activeTab === tab.key;
                   const translatedLabel = ui.tabs[tab.key] || tab.label;
@@ -271,7 +275,7 @@ export const LandingNav: React.FC<LandingNavProps> = ({
                         setMobileOpen(false);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className={`flex items-center gap-2 px-3.5 py-2.5 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${
+                      className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 sm:py-2.5 text-[11px] sm:text-xs font-semibold whitespace-nowrap border-b-2 transition-colors shrink-0 ${
                         isActive
                           ? 'bg-[#1E3A8A] text-white border-[#D97706]'
                           : 'text-slate-300 border-transparent hover:bg-slate-800 hover:text-white'

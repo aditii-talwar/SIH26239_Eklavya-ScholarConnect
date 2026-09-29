@@ -65,19 +65,19 @@ export const ResumeScoreCard: React.FC<{ student: Student; onNavigate?: (tab: st
       </div>
 
       <div className="space-y-2 mb-3 text-xs">
-        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex items-center justify-between gap-2">
+        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-2">
           <span className="font-semibold text-slate-700">AISHE Institution Code:</span>
           <span className="font-bold text-emerald-700">Matched (JNU New Delhi - AISHE U-0109)</span>
         </div>
-        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex items-center justify-between gap-2">
+        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-2">
           <span className="font-semibold text-slate-700">Income Certificate (Google Vision OCR):</span>
           <span className="font-bold text-emerald-700">₹1,80,000 / Annum (Under Ceiling)</span>
         </div>
-        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex items-center justify-between gap-2">
+        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-2">
           <span className="font-semibold text-slate-700">Caste Certificate Validation:</span>
           <span className="font-bold text-emerald-700">State e-District API Verified (#JH-ST-2026-88412)</span>
         </div>
-        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex items-center justify-between gap-2">
+        <div className="p-2.5 rounded-md bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-2">
           <span className="font-semibold text-slate-700">Aadhaar NPCI Seeding Status:</span>
           <span className="font-bold text-emerald-700">Active Bank Account (SNA SPARSH Ready)</span>
         </div>

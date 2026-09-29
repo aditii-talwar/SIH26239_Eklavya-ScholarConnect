@@ -137,7 +137,7 @@ function MainContent() {
       {page !== 'landing' && (
         <div
           data-no-translate="true"
-          className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-[#0F172A] text-white px-3.5 py-2 shadow-xl border border-slate-700 text-xs"
+          className="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-50 flex items-center gap-1.5 sm:gap-2 rounded-full bg-[#0F172A]/95 backdrop-blur text-white px-2.5 py-1.5 sm:px-3.5 sm:py-2 shadow-xl border border-slate-700 text-[11px] sm:text-xs"
         >
           <span className="font-bold text-amber-400">🌐 Bhashini:</span>
           <select

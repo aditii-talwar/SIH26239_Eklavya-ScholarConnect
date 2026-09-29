@@ -108,8 +108,23 @@ input, select, textarea, button {
 input, select, textarea {
   color: #0F172A;
   background-color: #FFFFFF;
+  max-width: 100%;
 }
 
 input::placeholder, textarea::placeholder {
   color: #94A3B8;
 }
+
+/* Mobile-first responsive safeguards across all viewports (320px+) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+@media (max-width: 640px) {
+  .font-mono {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
