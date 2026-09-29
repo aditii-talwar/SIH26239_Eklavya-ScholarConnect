@@ -739,31 +739,6 @@ export const LandingPage: React.FC<
               </div>
             </section>
 
-            {/* PRIVACY & ACCESS CONTROL CALLOUT (Pure statutory notice, no duplicate buttons!) */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-              <div className="bg-blue-50/70 border border-blue-200 rounded-xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center shrink-0">
-                    <Icon name="lock" className="w-5 h-5 text-amber-300" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-slate-900">
-                      Digital Personal Data Protection (DPDP Act 2023) Notice
-                    </h3>
-                    <p className="text-xs text-slate-600 mt-0.5 max-w-3xl leading-relaxed">
-                      To safeguard the privacy of Scheduled Tribe applicants, individual scholarship applications, Aadhaar tokens, income certificates, and scrutiny records are <strong>never published on the public landing page</strong>. Individual application statuses are accessible exclusively to the respective student after login, and verification dossiers are available only to authorized Institute Nodal Officers (INOs).
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#1E3A8A] text-white text-xs font-semibold shadow-sm">
-                    <Icon name="shieldcheck" className="w-4 h-4 text-emerald-400" />
-                    <span>Role-Based Access Control</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-
             {/* OVERVIEW CONTENT: WHO IT HELPS & SNAPSHOTS */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-8 pb-8">
               {/* 1A. Who It Helps & Platform Value Proposition */}
