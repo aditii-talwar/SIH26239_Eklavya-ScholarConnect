@@ -38,16 +38,25 @@ const AISHE_INSTITUTE_REGISTRY: InstituteRegistryItem[] = [
     code: 'AISHE U-0357',
     type: 'Higher Education (NIT / Central Institution)',
     name: 'National Institute of Technology (NIT) Rourkela',
-    state: 'Odisha',
+    state: 'Odisha (Fifth Schedule)',
     inoOfficer: 'Dr. P. K. Rout (Level-1 INO)',
     inoContact: 'ino.stcell@nitrkl.ac.in | +91-661-246-2021',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0281',
+    type: 'Higher Education (Central Tribal University)',
+    name: 'Indira Gandhi National Tribal University (IGNTU) Amarkantak',
+    state: 'Madhya Pradesh (Fifth Schedule)',
+    inoOfficer: 'Prof. A. K. Shukla (Level-1 INO)',
+    inoContact: 'ino.dbt@igntu.ac.in | +91-7629-269701',
     kycStatus: 'Active & Aadhaar e-Signed',
   },
   {
     code: 'AISHE U-0284',
     type: 'Higher Education (NIT / Central Institution)',
     name: 'Maulana Azad National Institute of Technology (MANIT) Bhopal',
-    state: 'Madhya Pradesh',
+    state: 'Madhya Pradesh (Fifth Schedule)',
     inoOfficer: 'Dr. R. K. Mandloi (Level-1 INO)',
     inoContact: 'nodalofficer.nsp@manit.ac.in | +91-755-405-1000',
     kycStatus: 'Active & Aadhaar e-Signed',
@@ -56,7 +65,7 @@ const AISHE_INSTITUTE_REGISTRY: InstituteRegistryItem[] = [
     code: 'UDISE+ 22140501204',
     type: 'Secondary / Senior Secondary (EMRS Model School)',
     name: 'Eklavya Model Residential School (EMRS) Bastar',
-    state: 'Chhattisgarh',
+    state: 'Chhattisgarh (Fifth Schedule)',
     inoOfficer: 'Shri V. K. Kashyap (Principal / INO)',
     inoContact: 'emrs.bastar@tribal.cg.gov.in | +91-7782-224109',
     kycStatus: 'Active & Aadhaar e-Signed',
@@ -65,7 +74,7 @@ const AISHE_INSTITUTE_REGISTRY: InstituteRegistryItem[] = [
     code: 'AISHE U-0202',
     type: 'Higher Education (Deemed University / Engineering)',
     name: 'Birla Institute of Technology (BIT) Mesra, Ranchi',
-    state: 'Jharkhand',
+    state: 'Jharkhand (Fifth Schedule)',
     inoOfficer: 'Dr. A. K. Tiwary (Level-1 INO)',
     inoContact: 'ino.welfare@bitmesra.ac.in | +91-651-227-5444',
     kycStatus: 'Active & Aadhaar e-Signed',
@@ -74,9 +83,189 @@ const AISHE_INSTITUTE_REGISTRY: InstituteRegistryItem[] = [
     code: 'AISHE U-0688',
     type: 'Higher Education (AIIMS / Medical Sciences)',
     name: 'All India Institute of Medical Sciences (AIIMS) Bhubaneswar',
-    state: 'Odisha',
+    state: 'Odisha (Fifth Schedule)',
     inoOfficer: 'Dr. S. Mohapatra (Dean & Level-1 INO)',
     inoContact: 'dean.academic@aiimsbhubaneswar.edu.in | +91-674-247-6789',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0345',
+    type: 'Higher Education (Central University · 90:10 NE Split)',
+    name: 'North-Eastern Hill University (NEHU), Shillong',
+    state: 'Meghalaya (Sixth Schedule)',
+    inoOfficer: 'Prof. B. Myrboh (Level-1 INO)',
+    inoContact: 'ino.scholarship@nehu.ac.in | +91-364-272-1012',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0053',
+    type: 'Higher Education (IIT / National Importance · 90:10 NE Split)',
+    name: 'Indian Institute of Technology (IIT) Guwahati',
+    state: 'Assam (Sixth Schedule / NE)',
+    inoOfficer: 'Dr. D. Sharma (Level-1 INO)',
+    inoContact: 'ino.acad@iitg.ac.in | +91-361-258-2190',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0346',
+    type: 'Higher Education (Central University · 90:10 NE Split)',
+    name: 'Mizoram University (MZU), Aizawl',
+    state: 'Mizoram (Sixth Schedule)',
+    inoOfficer: 'Prof. L. Z. Chhangte (Level-1 INO)',
+    inoContact: 'ino.mzu@mzu.edu.in | +91-389-233-0654',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0348',
+    type: 'Higher Education (Central University · 90:10 NE Split)',
+    name: 'Nagaland University, Lumami / Kohima',
+    state: 'Nagaland (Article 371A ST Region)',
+    inoOfficer: 'Dr. T. Zeliang (Level-1 INO)',
+    inoContact: 'ino.stfellowship@nagalanduniversity.ac.in | +91-369-226-8270',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0041',
+    type: 'Higher Education (Central University · 90:10 NE Split)',
+    name: 'Rajiv Gandhi University (RGU), Doimukh, Itanagar',
+    state: 'Arunachal Pradesh (NE Region)',
+    inoOfficer: 'Prof. N. T. Rikam (Level-1 INO)',
+    inoContact: 'ino.rgu@rgu.ac.in | +91-360-227-7253',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0493',
+    type: 'Higher Education (NIT / Central Institution · 90:10 NE Split)',
+    name: 'National Institute of Technology (NIT) Agartala',
+    state: 'Tripura (Sixth Schedule)',
+    inoOfficer: 'Dr. A. Debbarma (Level-1 INO)',
+    inoContact: 'ino.nsp@nita.ac.in | +91-381-254-6630',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0338',
+    type: 'Higher Education (Central University · 90:10 NE Split)',
+    name: 'Manipur University, Canchipur, Imphal',
+    state: 'Manipur (Hill & Valley ST)',
+    inoOfficer: 'Dr. R. K. Kamei (Level-1 INO)',
+    inoContact: 'ino.welfare@manipuruniv.ac.in | +91-385-243-5143',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0428',
+    type: 'Higher Education (Central University · 90:10 Himalayan Split)',
+    name: 'Sikkim University, Gangtok',
+    state: 'Sikkim (Himalayan ST Region)',
+    inoOfficer: 'Dr. K. T. Lepcha (Level-1 INO)',
+    inoContact: 'ino.scholarships@cus.ac.in | +91-3592-251-438',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0891',
+    type: 'Higher Education (State Tribal University)',
+    name: 'Govind Guru Tribal University (GGTU), Banswara',
+    state: 'Rajasthan (Fifth Schedule)',
+    inoOfficer: 'Prof. M. L. Meena (Level-1 INO)',
+    inoContact: 'ino.tribal@ggtu.ac.in | +91-2962-256-552',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0149',
+    type: 'Higher Education (NIT / Central Institution)',
+    name: 'Sardar Vallabhbhai National Institute of Technology (SVNIT) Surat',
+    state: 'Gujarat (Fifth Schedule)',
+    inoOfficer: 'Dr. H. B. Rathod (Level-1 INO)',
+    inoContact: 'ino.svnit@svnit.ac.in | +91-261-220-1545',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0184',
+    type: 'Higher Education (IIT / National Importance · 90:10 Himalayan Split)',
+    name: 'Indian Institute of Technology (IIT) Mandi',
+    state: 'Himachal Pradesh (Fifth Schedule)',
+    inoOfficer: 'Dr. V. S. Negi (Level-1 INO)',
+    inoContact: 'ino.dean@iitmandi.ac.in | +91-1905-267-015',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0560',
+    type: 'Higher Education (IIT / National Importance · 90:10 Himalayan Split)',
+    name: 'Indian Institute of Technology (IIT) Roorkee',
+    state: 'Uttarakhand (Himalayan Region)',
+    inoOfficer: 'Prof. R. S. Tolia (Level-1 INO)',
+    inoContact: 'ino.dosa@iitr.ac.in | +91-1332-285-245',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-1048',
+    type: 'Higher Education (Central Tribal University)',
+    name: 'Central Tribal University of Andhra Pradesh (CTUAP), Vizianagaram',
+    state: 'Andhra Pradesh (Fifth Schedule)',
+    inoOfficer: 'Prof. T. V. Kattimani (Level-1 INO)',
+    inoContact: 'ino.ctuap@ctuap.ac.in | +91-8922-296-052',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0025',
+    type: 'Higher Education (NIT / Central Institution)',
+    name: 'National Institute of Technology (NIT) Warangal',
+    state: 'Telangana (Fifth Schedule)',
+    inoOfficer: 'Dr. K. Venkata Rao (Level-1 INO)',
+    inoContact: 'ino.scholarships@nitw.ac.in | +91-870-246-2010',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0220',
+    type: 'Higher Education (Research Institute of Eminence)',
+    name: 'Indian Institute of Science (IISc) Bengaluru',
+    state: 'Karnataka',
+    inoOfficer: 'Prof. G. Rangarajan (Level-1 INO)',
+    inoContact: 'ino.nfst@iisc.ac.in | +91-80-2293-2210',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0456',
+    type: 'Higher Education (IIT / National Importance)',
+    name: 'Indian Institute of Technology (IIT) Madras',
+    state: 'Tamil Nadu',
+    inoOfficer: 'Prof. M. S. Sivakumar (Level-1 INO)',
+    inoContact: 'ino.deanstudents@iitm.ac.in | +91-44-2257-8050',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0263',
+    type: 'Higher Education (NIT / Central Institution)',
+    name: 'National Institute of Technology (NIT) Calicut',
+    state: 'Kerala',
+    inoOfficer: 'Dr. S. Chandran (Level-1 INO)',
+    inoContact: 'ino.welfare@nitc.ac.in | +91-495-228-6106',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0573',
+    type: 'Higher Education (IIT / National Importance)',
+    name: 'Indian Institute of Technology (IIT) Kharagpur',
+    state: 'West Bengal',
+    inoOfficer: 'Prof. B. Murmu (Level-1 INO)',
+    inoContact: 'ino.acad@iitkgp.ac.in | +91-3222-282-052',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-0109',
+    type: 'Higher Education (Central University / NFST Nodal Host)',
+    name: 'Jawaharlal Nehru University (JNU), New Delhi',
+    state: 'Delhi (NCT) / National Host',
+    inoOfficer: 'Prof. R. K. Meena (Level-1 INO)',
+    inoContact: 'ino.fellowship@jnu.ac.in | +91-11-2670-4055',
+    kycStatus: 'Active & Aadhaar e-Signed',
+  },
+  {
+    code: 'AISHE U-1102',
+    type: 'Higher Education (UT Public University)',
+    name: 'University of Ladakh (Leh & Kargil Campuses)',
+    state: 'Ladakh / Jammu & Kashmir (UT)',
+    inoOfficer: 'Dr. T. Namgyal (Level-1 INO)',
+    inoContact: 'ino.ladakh@universityofladakh.org.in | +91-1982-260-812',
     kycStatus: 'Active & Aadhaar e-Signed',
   },
 ];
@@ -1474,12 +1663,38 @@ export const LandingPage: React.FC<
                     onChange={(e) => setStateFilter(e.target.value)}
                     className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-xs sm:text-sm text-slate-900 focus-ring"
                   >
-                    <option value="All">All States / UTs</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Odisha">Odisha</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="All">All 36 States / UTs (Pan-India AISHE &amp; UDISE+)</option>
+                    <optgroup label="Fifth Schedule Heartland &amp; Central Belt (75:25 Split)">
+                      <option value="Jharkhand">Jharkhand</option>
+                      <option value="Odisha">Odisha</option>
+                      <option value="Madhya Pradesh">Madhya Pradesh</option>
+                      <option value="Chhattisgarh">Chhattisgarh</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Rajasthan">Rajasthan</option>
+                      <option value="Gujarat">Gujarat</option>
+                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+                      <option value="Telangana">Telangana</option>
+                      <option value="Himachal Pradesh">Himachal Pradesh (90:10 Split)</option>
+                    </optgroup>
+                    <optgroup label="North-East &amp; Sixth Schedule States (90:10 Split)">
+                      <option value="Meghalaya">Meghalaya</option>
+                      <option value="Assam">Assam</option>
+                      <option value="Mizoram">Mizoram</option>
+                      <option value="Nagaland">Nagaland</option>
+                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value="Tripura">Tripura</option>
+                      <option value="Manipur">Manipur</option>
+                      <option value="Sikkim">Sikkim</option>
+                    </optgroup>
+                    <optgroup label="Southern, Eastern, Northern &amp; Union Territories">
+                      <option value="Uttarakhand">Uttarakhand (90:10 Split)</option>
+                      <option value="West Bengal">West Bengal</option>
+                      <option value="Karnataka">Karnataka</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Delhi">Delhi (NCT)</option>
+                      <option value="Ladakh">Ladakh &amp; Jammu &amp; Kashmir (UT)</option>
+                    </optgroup>
                   </select>
                 </div>
               </div>

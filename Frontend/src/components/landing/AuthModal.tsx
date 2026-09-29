@@ -223,19 +223,42 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
       return;
     }
 
-    // 3. Authenticated Scheduled Tribe (ST) Record
+    // 3. Authenticated Scheduled Tribe (ST) Record across all Indian States & UTs (Article 342)
     const tribeMap: Record<string, string> = {
-      Jharkhand: 'Santhal / Munda (Scheduled Tribe under Presidential Order 1950)',
-      Odisha: 'Gond / Khond (Scheduled Tribe under Presidential Order 1950)',
-      'Madhya Pradesh': 'Bhil / Bhilala (Scheduled Tribe under Presidential Order 1950)',
-      Chhattisgarh: 'Halba / Bhattra (Scheduled Tribe under Presidential Order 1950)',
-      Maharashtra: 'Warli / Katkari (Scheduled Tribe under Presidential Order 1950)',
-      Rajasthan: 'Meena / Bhil (Scheduled Tribe under Presidential Order 1950)',
-      Gujarat: 'Rathawa / Gamit (Scheduled Tribe under Presidential Order 1950)',
-      Assam: 'Bodo / Mishing (Scheduled Tribe under Presidential Order 1950)',
+      Jharkhand: 'Santhal / Munda / Oraon (Scheduled Tribe under Presidential Order 1950)',
+      Odisha: 'Gond / Khond / Saora (Scheduled Tribe under Presidential Order 1950)',
+      'Madhya Pradesh': 'Bhil / Gond / Baiga (Scheduled Tribe under Presidential Order 1950)',
+      Chhattisgarh: 'Halba / Gond / Kamar (Scheduled Tribe under Presidential Order 1950)',
+      Maharashtra: 'Warli / Bhil / Katkari (Scheduled Tribe under Presidential Order 1950)',
+      Rajasthan: 'Meena / Bhil / Garasia (Scheduled Tribe under Presidential Order 1950)',
+      Gujarat: 'Bhil / Rathawa / Gamit (Scheduled Tribe under Presidential Order 1950)',
+      Assam: 'Bodo / Mishing / Karbi (Scheduled Tribe under Presidential Order 1950)',
+      Meghalaya: 'Khasi / Garo / Jaintia (Sixth Schedule ST — Presidential Order 1950)',
+      Mizoram: 'Mizo (Lushei) / Chakma / Mara (Sixth Schedule ST — Presidential Order 1950)',
+      Nagaland: 'Naga / Angami / Ao / Konyak (Article 371A ST — Presidential Order 1970)',
+      'Arunachal Pradesh': 'Nyishi / Adi / Apatani / Galo (Scheduled Tribe under Presidential Order)',
+      Manipur: 'Tangkhul / Rongmei / Thadou (Scheduled Tribe under Presidential Order 1950)',
+      Tripura: 'Tripuri / Reang (Bru) / Jamatia (Sixth Schedule ST — Presidential Order 1950)',
+      Sikkim: 'Bhutia / Lepcha / Limboo (Scheduled Tribe under Sikkim ST Order 1978)',
+      'Himachal Pradesh': 'Gaddi / Kinnaura / Lahaula (Fifth Schedule ST — Presidential Order 1950)',
+      Uttarakhand: 'Tharu / Bhotia / Jaunsari (Scheduled Tribe under UP/UK ST Order 1967)',
+      'Andhra Pradesh': 'Konda Dora / Chenchu / Savara (Fifth Schedule ST — Presidential Order 1950)',
+      Telangana: 'Koya / Lambada / Gond (Fifth Schedule ST — Presidential Order 1950)',
+      'West Bengal': 'Santhal / Oraon / Toto (Scheduled Tribe under Presidential Order 1950)',
+      Karnataka: 'Nayaka / Soliga / Jenukuruba (Scheduled Tribe under Presidential Order 1950)',
+      'Tamil Nadu': 'Irular / Toda / Malayali (Scheduled Tribe under Presidential Order 1950)',
+      Kerala: 'Paniya / Kurichchan / Kattunayakan (Scheduled Tribe under Presidential Order 1950)',
+      Bihar: 'Santhal / Tharu / Oraon (Scheduled Tribe under Presidential Order 1950)',
+      'Uttar Pradesh': 'Tharu / Gond / Kharwar (Scheduled Tribe under UP ST Order 1967)',
+      Goa: 'Gawda / Kunbi / Velip (Scheduled Tribe under Goa ST Order 2003)',
+      'Jammu and Kashmir': 'Gujjar / Bakerwal / Gaddi (Scheduled Tribe under J&K ST Order 1989)',
+      Ladakh: 'Balti / Boto / Changpa (Scheduled Tribe under Ladakh ST Order)',
+      'Andaman and Nicobar Islands': 'Nicobarese / Great Andamanese / Onge (Andaman & Nicobar ST Order 1959)',
+      Lakshadweep: 'Lakshadweep Indigenous Muslim ST (Laccadive, Minicoy & Amindivi Islands Order)',
+      'Dadra and Nagar Haveli and Daman and Diu': 'Varli / Dubla / Dhodia (Dadra & Nagar Haveli ST Order 1962)',
     };
 
-    const detectedTribe = tribeMap[stateToTest] || 'Recognized Scheduled Tribe (Presidential Order 1950)';
+    const detectedTribe = tribeMap[stateToTest] || 'Recognized Scheduled Tribe (Presidential Order under Article 342)';
 
     setCasteVerificationStatus('verified_st');
     setCasteVerificationResult({
@@ -1001,7 +1024,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
 
                     {/* Issuing State Dropdown */}
                     <div>
-                      <label className="text-xs font-semibold text-slate-700">Issuing State (e-District Authority) *</label>
+                      <label className="text-xs font-semibold text-slate-700">Issuing State / UT (e-District Authority) *</label>
                       <select
                         value={casteState}
                         onChange={(e) => {
@@ -1013,19 +1036,46 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
                         }}
                         className="w-full mt-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus-ring bg-white text-slate-900 font-medium"
                       >
-                        <option value="Jharkhand">Jharkhand (JharSewa / e-District)</option>
-                        <option value="Odisha">Odisha (e-District / Odisha One)</option>
-                        <option value="Madhya Pradesh">Madhya Pradesh (MP e-District / Samagra)</option>
-                        <option value="Chhattisgarh">Chhattisgarh (e-District CG)</option>
-                        <option value="Maharashtra">Maharashtra (Aaple Sarkar)</option>
-                        <option value="Rajasthan">Rajasthan (e-Mitra / Jan Aadhaar)</option>
-                        <option value="Gujarat">Gujarat (Digital Gujarat Portal)</option>
-                        <option value="Assam">Assam (Sewasetu / e-District)</option>
-                        <option value="Meghalaya">Meghalaya (e-District Portal)</option>
-                        <option value="Andhra Pradesh">Andhra Pradesh (Meeseva)</option>
-                        <option value="Telangana">Telangana (MeeSeva)</option>
-                        <option value="West Bengal">West Bengal (OBC/SC/ST Certificate Portal)</option>
-                        <option value="Other State">Other State / UT Revenue Department</option>
+                        <optgroup label="Fifth Schedule Heartland &amp; Central Belt (75:25 Split)">
+                          <option value="Jharkhand">Jharkhand (JharSewa / e-District)</option>
+                          <option value="Odisha">Odisha (e-District / Odisha One)</option>
+                          <option value="Madhya Pradesh">Madhya Pradesh (MP e-District / Samagra)</option>
+                          <option value="Chhattisgarh">Chhattisgarh (e-District CG)</option>
+                          <option value="Maharashtra">Maharashtra (Aaple Sarkar)</option>
+                          <option value="Rajasthan">Rajasthan (e-Mitra / Jan Aadhaar)</option>
+                          <option value="Gujarat">Gujarat (Digital Gujarat Portal)</option>
+                          <option value="Andhra Pradesh">Andhra Pradesh (Meeseva / Grama Ward Sachivalayam)</option>
+                          <option value="Telangana">Telangana (MeeSeva)</option>
+                          <option value="Himachal Pradesh">Himachal Pradesh (HP e-District · 90:10 Split)</option>
+                        </optgroup>
+                        <optgroup label="North-East &amp; Sixth Schedule States (90:10 Split)">
+                          <option value="Meghalaya">Meghalaya (Meghalaya e-District Portal)</option>
+                          <option value="Assam">Assam (SewaSetu / Assam e-District)</option>
+                          <option value="Mizoram">Mizoram (e-District Mizoram)</option>
+                          <option value="Nagaland">Nagaland (Nagaland e-District Portal)</option>
+                          <option value="Arunachal Pradesh">Arunachal Pradesh (Arunachal e-Services)</option>
+                          <option value="Tripura">Tripura (e-District Tripura)</option>
+                          <option value="Manipur">Manipur (Manipur e-District Portal)</option>
+                          <option value="Sikkim">Sikkim (Sikkim e-District · 90:10 Split)</option>
+                        </optgroup>
+                        <optgroup label="Southern, Eastern &amp; Northern States">
+                          <option value="Uttarakhand">Uttarakhand (Apuni Sarkar e-District · 90:10 Split)</option>
+                          <option value="West Bengal">West Bengal (Backward Classes Welfare Portal)</option>
+                          <option value="Karnataka">Karnataka (Nadakacheri / Seva Sindhu)</option>
+                          <option value="Tamil Nadu">Tamil Nadu (TN e-Sevai Portal)</option>
+                          <option value="Kerala">Kerala (e-District Kerala)</option>
+                          <option value="Bihar">Bihar (RTPS ServicePlus Bihar)</option>
+                          <option value="Uttar Pradesh">Uttar Pradesh (UP e-Sathi / e-District)</option>
+                          <option value="Goa">Goa (Goa Online e-District)</option>
+                        </optgroup>
+                        <optgroup label="Union Territories (100% Central Share)">
+                          <option value="Ladakh">Ladakh (UT Ladakh e-Services)</option>
+                          <option value="Jammu and Kashmir">Jammu &amp; Kashmir (JanSugam / e-UNNAT)</option>
+                          <option value="Andaman and Nicobar Islands">Andaman &amp; Nicobar Islands (e-District A&amp;N)</option>
+                          <option value="Lakshadweep">Lakshadweep (e-District Lakshadweep)</option>
+                          <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra &amp; Nagar Haveli and Daman &amp; Diu</option>
+                          <option value="Other State">Other State / UT Revenue Department</option>
+                        </optgroup>
                       </select>
                     </div>
 
@@ -1091,7 +1141,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
                             handleVerifyCasteCertificate('JH/ST/2023/84920', 'Jharkhand');
                           }}
                           className="px-2 py-1 rounded border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-medium text-[11px] flex items-center gap-1"
-                          title="Santhal Tribe · Jharkhand · Verified ST"
+                          title="Santhal Tribe · Jharkhand (Fifth Schedule) · Verified ST"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                           <span>JH ST: Santhal (Pass)</span>
@@ -1104,10 +1154,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
                             handleVerifyCasteCertificate('OD/ST/2024/49102', 'Odisha');
                           }}
                           className="px-2 py-1 rounded border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-medium text-[11px] flex items-center gap-1"
-                          title="Gond Tribe · Odisha · Verified ST"
+                          title="Gond Tribe · Odisha (Fifth Schedule) · Verified ST"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                           <span>OD ST: Gond (Pass)</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCasteState('Meghalaya');
+                            setCasteCertNo('ML/ST/2024/61208');
+                            handleVerifyCasteCertificate('ML/ST/2024/61208', 'Meghalaya');
+                          }}
+                          className="px-2 py-1 rounded border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-medium text-[11px] flex items-center gap-1"
+                          title="Khasi Tribe · Meghalaya (North-East Sixth Schedule) · Verified ST"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                          <span>ML ST: Khasi (NE Pass)</span>
                         </button>
                         <button
                           type="button"
