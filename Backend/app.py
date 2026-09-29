@@ -7,12 +7,8 @@ from models import init_db
 
 # Import MoTA ScholarConnect (SIH26239) Blueprints
 from blueprints.auth_routes import auth_bp
-from blueprints.trainee_auth_routes import trainee_auth_bp
-from blueprints.trainer_auth_routes import trainer_auth_bp
-from blueprints.admin_auth_routes import admin_auth_bp
 from blueprints.student_routes import student_bp
 from blueprints.academician_routes import academician_bp
-from blueprints.industry_routes import industry_bp
 from blueprints.institute_routes import institute_bp
 from blueprints.informant_routes import informant_bp, ensure_mota_guidelines_seeded
 
@@ -40,13 +36,9 @@ def create_app():
         print(f"[Seed Warning] Auto-seeding skipped: {e}")
 
     # Register MoTA ScholarConnect Auth & Stakeholder Portal Blueprints
-    app.register_blueprint(trainee_auth_bp)
-    app.register_blueprint(trainer_auth_bp)
-    app.register_blueprint(admin_auth_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(student_bp)
     app.register_blueprint(academician_bp)
-    app.register_blueprint(industry_bp)
     app.register_blueprint(institute_bp)
     app.register_blueprint(informant_bp)
 

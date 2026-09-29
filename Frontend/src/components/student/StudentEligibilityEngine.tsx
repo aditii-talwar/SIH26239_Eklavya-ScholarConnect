@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, PageHeader, Tag } from '../common/UIComponents';
-import { SkillTestModal } from './SkillTestModal';
-import { Student, TrainerQuestionnaire } from '../../types';
+import { EligibilityCheckModal } from './EligibilityCheckModal';
+import { Student, SchemeRuleQuestionnaire } from '../../types';
 import { getStoredQuestionnaires } from '../../data/mockData';
 
-export const StudentSkills: React.FC<{
+export const StudentEligibilityEngine: React.FC<{
   student: Student;
   onUpdateSkill?: (skillName: string, score: number) => void;
 }> = ({ student, onUpdateSkill }) => {
@@ -13,7 +13,7 @@ export const StudentSkills: React.FC<{
   );
   const [testSkill, setTestSkill] = useState<string | null>(null);
   const [newSkillInput, setNewSkillInput] = useState('');
-  const [questionnaires, setQuestionnaires] = useState<TrainerQuestionnaire[]>([]);
+  const [questionnaires, setQuestionnaires] = useState<SchemeRuleQuestionnaire[]>([]);
 
   useEffect(() => {
     setQuestionnaires(getStoredQuestionnaires());
@@ -63,7 +63,7 @@ export const StudentSkills: React.FC<{
                 </div>
                 <div className="font-display font-semibold text-sm text-black mb-1">{q.title}</div>
                 <div className="text-xs text-[var(--text-muted)]">
-                  Nodal Officer: <span className="font-medium text-black">{q.trainerName}</span>
+                  Nodal Officer: <span className="font-medium text-black">{q.officerName}</span>
                 </div>
                 <div className="text-[11px] text-[var(--text-muted)] mt-1">
                   {q.questionCount} Rule Checks · {q.durationMins} mins · Threshold: {q.passingScore}%
@@ -184,7 +184,7 @@ export const StudentSkills: React.FC<{
         </div>
       </Card>
 
-      <SkillTestModal
+      <EligibilityCheckModal
         open={!!testSkill}
         onClose={() => setTestSkill(null)}
         skill={testSkill}

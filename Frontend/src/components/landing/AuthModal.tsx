@@ -369,11 +369,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
         if (selectedInstituteId !== 'other' && selectedInstituteId) {
           payload.institute_id = parseInt(selectedInstituteId, 10);
         }
-      } else if (role === 'industry') {
-        payload.company_name = name;
       } else if (role === 'institute') {
         payload.name = name;
-        payload.admin_tpo_contact = adminTpoContact;
+        payload.nodal_contact = adminTpoContact;
       } else if (role === 'academician') {
         payload.name = name;
         payload.department = department;

@@ -200,19 +200,19 @@ def get_skill_questions(skill_name):
 @student_bp.route('/assessments/<skill_name>/submit', methods=['POST'])
 @role_required('student')
 def submit_skill_test(skill_name):
-    """Grades trainee MCQ answers, assigns verified competency score percentage, and stores in SQLite."""
+    """Grades ST applicant eligibility rule check answers, assigns verified compliance score percentage, and stores in SQLite."""
     student_id = session['user_id']
     data = request.get_json() or {}
     answers = data.get('answers', {})
     total_questions = data.get('total_questions', 10)
 
     result = gemini_service.grade_assessment(student_id, skill_name, answers, total_questions=total_questions)
-    return jsonify({'message': f"Assessment for {skill_name} completed!", 'result': result}), 200
+    return jsonify({'message': f"Eligibility rule verification for {skill_name} completed!", 'result': result}), 200
 
 @student_bp.route('/postings/<int:posting_id>/fit-score', methods=['GET'])
 @role_required('student')
 def get_job_fit_score(posting_id):
-    """Returns AI semantic competency alignment score and gap analysis for this training course."""
+    """Returns AI semantic eligibility alignment score and gap analysis for this MoTA scheme."""
     student_id = session['user_id']
     result = gemini_service.get_or_generate_fit_score(student_id, posting_id)
     return jsonify(result), 200
@@ -220,7 +220,7 @@ def get_job_fit_score(posting_id):
 @student_bp.route('/postings/<int:posting_id>/recommendations', methods=['GET'])
 @role_required('student')
 def get_job_course_recommendations(posting_id):
-    """Returns targeted learning roadmaps to bridge competency gaps."""
+    """Returns targeted verification steps to complete MoTA scheme requirements."""
     student_id = session['user_id']
     result = gemini_service.get_or_generate_courses(student_id, posting_id)
     return jsonify(result), 200
@@ -235,7 +235,7 @@ def ai_resume_analyzer():
     student_id = session['user_id']
     data = request.get_json() or {}
     resume_text = data.get('resume_text', '').strip()
-    target_role = data.get('target_role', 'Scientific Officer / Trainee').strip()
+    target_role = data.get('target_role', 'National Fellowship for ST (NFST — Ph.D.)').strip()
     if not resume_text:
         return jsonify({'error': 'Please provide profile text or skills to analyze.'}), 400
 

@@ -41,7 +41,7 @@ export const AcademicianPortal: React.FC<{ go: (page: string) => void }> = ({ go
                 field: p.required_skills || 'MoTA Scheme Guidelines',
                 materialType: 'Study Material',
                 durationOrSize: 'Official MoTA Circular',
-                trainerName: currentUser.name || 'Dr. Rajeshwar Meena (Nodal Scrutiny Officer)',
+                officerName: currentUser.name || 'Dr. Rajeshwar Meena (Nodal Scrutiny Officer)',
                 uploadedAt: 'Sep 2026',
                 desc: p.description,
                 discussions: [],

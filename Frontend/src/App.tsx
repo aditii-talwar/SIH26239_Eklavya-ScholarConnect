@@ -4,7 +4,6 @@ import { AuthModal } from './components/landing/AuthModal';
 import { StudentPortal } from './components/student/StudentPortal';
 import { AcademicianPortal } from './components/academician/AcademicianPortal';
 import { UniversityPortal } from './components/university/UniversityPortal';
-import { IndustryPortal } from './components/industry/IndustryPortal';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { BHASHINI_LANGUAGES } from './api/informant';
 import { useBhashiniDomTranslator } from './utils/bhashiniDomTranslator';
@@ -72,7 +71,6 @@ function MainContent() {
       student: 'student',
       academician: 'academician',
       university: 'university',
-      industry: 'industry',
     };
     const h = '#' + (map[page] || '');
     if (window.location.hash !== h) {
@@ -127,8 +125,6 @@ function MainContent() {
     body = <AcademicianPortal go={go} />;
   } else if (page === 'university') {
     body = <UniversityPortal go={go} />;
-  } else if (page === 'industry') {
-    body = <IndustryPortal go={go} />;
   }
 
   return (

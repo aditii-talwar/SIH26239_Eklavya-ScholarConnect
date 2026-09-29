@@ -10,7 +10,7 @@ import {
   ProgressBar,
   Modal,
 } from '../common/UIComponents';
-import { Academician, ResearchPaper, TrainerQuestionnaire, CourseFeedbackItem } from '../../types';
+import { Academician, ResearchPaper, SchemeRuleQuestionnaire, CourseFeedbackItem } from '../../types';
 import { academicianApi } from '../../api/academician';
 import { informantApi, InoDeficiencyChat } from '../../api/informant';
 import { useAuth } from '../../context/AuthContext';
@@ -27,7 +27,7 @@ import {
 // ============================================================================
 export const AcademicianOverview: React.FC<{ acad: Academician }> = ({ acad }) => {
   const [editingProfile, setEditingProfile] = useState(false);
-  const [trainerName, setTrainerName] = useState(acad.name);
+  const [officerName, setOfficerName] = useState(acad.name);
   const [designation, setDesignation] = useState(
     acad.designation || 'Principal Nodal Scrutiny Officer (Director Level)'
   );
@@ -100,7 +100,7 @@ export const AcademicianOverview: React.FC<{ acad: Academician }> = ({ acad }) =
     const updated = await informantApi.sendInoChatMessage(
       activeChatId,
       'ino',
-      `${trainerName} (Level-1 INO)`,
+      `${officerName} (Level-1 INO)`,
       inoReplyText.trim(),
       false
     );
@@ -128,11 +128,11 @@ export const AcademicianOverview: React.FC<{ acad: Academician }> = ({ acad }) =
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 rounded-full bg-mutedsage/70 flex items-center justify-center font-display text-xl font-bold shrink-0">
-              {trainerName[0]}
+              {officerName[0]}
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-display text-xl font-semibold text-black">{trainerName}</span>
+                <span className="font-display text-xl font-semibold text-black">{officerName}</span>
                 <Tag tone="sage">{designation}</Tag>
               </div>
               <div className="text-xs sm:text-sm text-[var(--text-muted)] font-medium">{division}</div>
@@ -332,8 +332,8 @@ export const AcademicianOverview: React.FC<{ acad: Academician }> = ({ acad }) =
             <div>
               <label className="text-xs font-semibold text-[var(--text-muted)]">Officer Name</label>
               <input
-                value={trainerName}
-                onChange={(e) => setTrainerName(e.target.value)}
+                value={officerName}
+                onChange={(e) => setOfficerName(e.target.value)}
                 className="w-full mt-1 rounded-xl border border-[#E2E8F0] px-3 py-2 text-sm bg-white text-black"
               />
             </div>
@@ -419,7 +419,7 @@ export const AcademicianPublish: React.FC<{
       materialType,
       durationOrSize,
       resourceUrl,
-      trainerName: author,
+      officerName: author,
       uploadedAt: 'Just now',
       desc: desc || `${materialType} on ${field} published to the MoTA Scheme Guidelines Repository.`,
       discussions: [],
@@ -641,7 +641,7 @@ export const AcademicianDiscuss: React.FC<{
     const text = reply[fbId]?.trim();
     if (!text) return;
     const updated = feedbacks.map((fb) =>
-      fb.id === fbId ? { ...fb, trainerReply: text } : fb
+      fb.id === fbId ? { ...fb, officerReply: text } : fb
     );
     setFeedbacks(updated);
     saveStoredFeedbacks(updated);
@@ -673,25 +673,25 @@ export const AcademicianDiscuss: React.FC<{
                 <Tag tone="blue">{fb.targetType === 'Course' ? 'Scheme Scrutiny' : 'Annexure / QPR'}</Tag>
               </div>
               <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
-                {fb.trainerReply ? ' Deficiency Cleared' : ' Awaiting Officer Order'}
+                {fb.officerReply ? ' Deficiency Cleared' : ' Awaiting Officer Order'}
               </span>
             </div>
 
             <div className="flex items-start gap-2.5">
               <div className="w-7 h-7 rounded-full bg-mutedsage/60 flex items-center justify-center text-xs font-bold shrink-0">
-                {fb.traineeName[0]}
+                {fb.applicantName[0]}
               </div>
               <div>
                 <div className="text-xs font-semibold text-black">
-                  {fb.traineeName} <span className="text-[var(--text-muted)] font-normal">· {fb.date}</span>
+                  {fb.applicantName} <span className="text-[var(--text-muted)] font-normal">· {fb.date}</span>
                 </div>
                 <p className="text-sm text-[var(--text-muted)] mt-0.5">"{fb.comment}"</p>
               </div>
             </div>
 
-            {fb.trainerReply && (
+            {fb.officerReply && (
               <div className="p-3 rounded-xl bg-sagedeep/10 border border-sagedeep/20 text-xs text-[#0F172A]">
-                <strong className="text-sagedeep">Nodal Scrutiny Officer Order:</strong> {fb.trainerReply}
+                <strong className="text-sagedeep">Nodal Scrutiny Officer Order:</strong> {fb.officerReply}
               </div>
             )}
 
@@ -749,7 +749,7 @@ export const AcademicianDiscuss: React.FC<{
 export const AcademicianOpportunities: React.FC = () => {
   const { currentUser } = useAuth();
   const [postings, setPostings] = useState<any[]>([]);
-  const [questionnaires, setQuestionnaires] = useState<TrainerQuestionnaire[]>(() => getStoredQuestionnaires());
+  const [questionnaires, setQuestionnaires] = useState<SchemeRuleQuestionnaire[]>(() => getStoredQuestionnaires());
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [showQuizModal, setShowQuizModal] = useState(false);
 
@@ -789,11 +789,11 @@ export const AcademicianOpportunities: React.FC = () => {
   const handleCreateQuestionnaire = (e: React.FormEvent) => {
     e.preventDefault();
     if (!quizTitle.trim()) return;
-    const newQ: TrainerQuestionnaire = {
+    const newQ: SchemeRuleQuestionnaire = {
       id: 'q-' + Date.now(),
       title: quizTitle.trim(),
       subject: quizSubject.trim(),
-      trainerName: currentUser?.name || 'Dr. Rajeshwar Meena',
+      officerName: currentUser?.name || 'Dr. Rajeshwar Meena',
       deadline: quizDeadline,
       questionCount: Number(quizQuestions) || 8,
       durationMins: Number(quizDuration) || 5,

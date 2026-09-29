@@ -4,7 +4,7 @@ import { Icon } from '../common/Icon';
 import { studentApi } from '../../api/student';
 import { BackendAssessmentQuestion } from '../../types';
 
-interface SkillTestModalProps {
+interface EligibilityCheckModalProps {
   open: boolean;
   onClose: () => void;
   skill: string | null;
@@ -15,7 +15,7 @@ type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
 type QuestionCount = 5 | 10 | 15;
 type TimeMode = 'auto' | 'sprint' | 'deep' | 'relaxed' | 'untimed';
 
-export const SkillTestModal: React.FC<SkillTestModalProps> = ({ open, onClose, skill, onSuccess }) => {
+export const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ open, onClose, skill, onSuccess }) => {
   const [step, setStep] = useState<'intro' | 'q' | 'result'>('intro');
   const [selectedLevel, setSelectedLevel] = useState<DifficultyLevel>('intermediate');
   const [questionCount, setQuestionCount] = useState<QuestionCount>(5);

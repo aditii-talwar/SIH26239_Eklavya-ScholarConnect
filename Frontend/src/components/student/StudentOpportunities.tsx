@@ -85,7 +85,7 @@ export const StudentOpportunities: React.FC = () => {
     const list = getStoredFeedbacks();
     const newFb = {
       id: 'fb-' + Date.now(),
-      traineeName: currentUser?.name || 'Kareena Murmu (MOTA-NFST-2026-1042)',
+      applicantName: currentUser?.name || 'Kareena Murmu (MOTA-NFST-2026-1042)',
       targetTitle: feedbackCourse.title,
       targetType: 'Course' as const,
       rating,

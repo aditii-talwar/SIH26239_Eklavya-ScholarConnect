@@ -5,7 +5,7 @@ import { Student, ProjectItem } from '../../types';
 import { studentApi } from '../../api/student';
 import { useAuth } from '../../context/AuthContext';
 
-export const StudentProjects: React.FC<{ student: Student }> = ({ student }) => {
+export const StudentDigiLockerVault: React.FC<{ student: Student }> = ({ student }) => {
   const [projects, setProjects] = useState<ProjectItem[]>(student.projects);
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState('');

@@ -4,7 +4,7 @@ import { Icon } from '../common/Icon';
 import { ROADMAP } from '../../data/mockData';
 import { Student, RoadmapItem } from '../../types';
 
-interface StudentRoadmapProps {
+interface StudentVerificationGuideProps {
   student?: Student;
   onNavigate?: (tab: string) => void;
 }
@@ -69,7 +69,7 @@ const SCHEME_WORKFLOWS: Record<string, { name: string; tag: string; items: Roadm
   },
 };
 
-export const StudentRoadmap: React.FC<StudentRoadmapProps> = ({ onNavigate }) => {
+export const StudentVerificationGuide: React.FC<StudentVerificationGuideProps> = ({ onNavigate }) => {
   const [selectedTrack, setSelectedTrack] = useState<string>('nfst');
   const activeTrackData = SCHEME_WORKFLOWS[selectedTrack] || SCHEME_WORKFLOWS.nfst;
 
@@ -160,7 +160,7 @@ export const StudentRoadmap: React.FC<StudentRoadmapProps> = ({ onNavigate }) =>
   );
 };
 
-export const StudentDaily: React.FC<{ student: Student }> = ({ student }) => {
+export const StudentDbtLedger: React.FC<{ student: Student }> = ({ student }) => {
   const [log, setLog] = useState(student.dailyLog);
   const [topic, setTopic] = useState('');
   const [hours, setHours] = useState('Q2 FY 2025–26');

@@ -57,7 +57,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         academician: 'Dr. Rajeshwar Meena (Level-1 INO)',
         institute: 'Shri A. K. Sharma (MoTA Director)',
         student: 'Kareena Murmu',
-        industry: 'Tata Trusts Tribal Fellowship Partner',
       };
       const demoUser: User = {
         id: 101,

@@ -80,7 +80,7 @@ export const StudentApplications: React.FC<{ onBrowseOpportunities?: () => void 
     if (!activeFeedbackCourse || !comment.trim()) return;
     const newEntry: CourseFeedbackItem = {
       id: 'fb-' + Date.now(),
-      traineeName: currentUser?.name || 'Kareena Murmu (MOTA-NFST-2026-1042)',
+      applicantName: currentUser?.name || 'Kareena Murmu (MOTA-NFST-2026-1042)',
       targetTitle: activeFeedbackCourse,
       targetType: 'Course',
       rating,
@@ -315,18 +315,18 @@ export const StudentApplications: React.FC<{ onBrowseOpportunities?: () => void 
                   <Tag tone="blue">{fb.targetType === 'Course' ? 'Level-1 INO Scrutiny' : 'Annexure / QPR'}</Tag>
                 </div>
                 <span className="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-md">
-                  {fb.trainerReply ? 'Deficiency Resolved' : 'Under INO Review'}
+                  {fb.officerReply ? 'Deficiency Resolved' : 'Under INO Review'}
                 </span>
               </div>
               <p className="text-xs text-slate-700 leading-relaxed">
                 <strong>Applicant Submission:</strong> "{fb.comment}"
               </p>
               <div className="text-[11px] text-slate-500 flex items-center justify-between pt-1">
-                <span>Submitted by {fb.traineeName} · {fb.date}</span>
+                <span>Submitted by {fb.applicantName} · {fb.date}</span>
               </div>
-              {fb.trainerReply && (
+              {fb.officerReply && (
                 <div className="mt-2 p-3 rounded-md bg-blue-50 border border-blue-200 text-xs text-slate-900">
-                  <strong className="text-[#1E3A8A]">Nodal Scrutiny Officer Order:</strong> {fb.trainerReply}
+                  <strong className="text-[#1E3A8A]">Nodal Scrutiny Officer Order:</strong> {fb.officerReply}
                 </div>
               )}
             </div>

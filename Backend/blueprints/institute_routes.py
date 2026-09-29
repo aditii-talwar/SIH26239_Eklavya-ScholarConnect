@@ -22,7 +22,7 @@ def get_public_institutes_list():
 @institute_bp.route('/verifications/pending', methods=['GET'])
 @role_required('institute')
 def get_pending_verifications():
-    """List trainees claiming affiliation with this division awaiting approval."""
+    """List ST applicants claiming affiliation with this division awaiting verification."""
     institute_id = session['user_id']
     conn = get_db()
     cursor = conn.cursor()
@@ -48,7 +48,7 @@ def get_pending_verifications():
 @institute_bp.route('/verifications/<int:student_id>', methods=['POST'])
 @role_required('institute')
 def verify_student(student_id):
-    """Approve or reject a trainee's official verification."""
+    """Approve or reject an ST applicant's official nodal verification."""
     institute_id = session['user_id']
     data = request.get_json() or {}
     new_status = data.get('status', '').strip().lower()
@@ -63,7 +63,7 @@ def verify_student(student_id):
     student = row_to_dict(cursor.fetchone())
     if not student:
         conn.close()
-        return jsonify({'error': 'Trainee not found or not affiliated with your organization.'}), 404
+        return jsonify({'error': 'ST Applicant not found or not affiliated with your institution.'}), 404
 
     cursor.execute(
         "UPDATE st_applicants SET verification_status = ?, verified_at = CURRENT_TIMESTAMP WHERE id = ?",
@@ -73,7 +73,7 @@ def verify_student(student_id):
     conn.close()
 
     return jsonify({
-        'message': f"Trainee {student['name']} (ID: {student.get('university_roll_no')}) has been {new_status}!",
+        'message': f"ST Applicant {student['name']} (ID: {student.get('university_roll_no')}) has been {new_status}!",
         'student_id': student_id,
         'verification_status': new_status
     }), 200

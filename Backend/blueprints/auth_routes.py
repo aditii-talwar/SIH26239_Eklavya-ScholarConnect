@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify, session
+import os
 import random
 import time
 from models import get_db
@@ -13,26 +14,24 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 @auth_bp.route('/students/signup', methods=['POST'])
 def student_signup():
-    # request.get_json() unboxes the incoming JSON cardboard box!
     data = request.get_json() or {}
     name = data.get('name', '').strip()
     email = data.get('email', '').strip().lower()
     password = data.get('password', '')
-    college = data.get('college', '').strip()
+    college = data.get('college', '').strip() or data.get('organization', '').strip()
     skills = data.get('skills', '').strip()
     university_roll_no = data.get('university_roll_no', '').strip() or None
     institute_id = data.get('institute_id')
+    desired_role = data.get('desired_role', 'Post-Matric ST Scholarship & NFST Applicant').strip()
 
     if not name or not email or not password:
         return jsonify({'error': 'Name, email, and password are required.'}), 400
 
-    # Scramble the password using our security blender!
     pwd_hash = hash_password(password)
 
     conn = get_db()
     cursor = conn.cursor()
 
-    # Validate institute_id exists in admins table, otherwise set to None
     valid_institute_id = None
     if institute_id:
         try:
@@ -52,24 +51,35 @@ def student_signup():
                     'error': 'An account with this email is already registered on MoTA ScholarConnect. Please sign in with your existing password.'
                 }), 409
             student_id = existing['id']
-            set_user_session(student_id, 'student', email, existing['name'])
+            cursor.execute(
+                """
+                UPDATE st_applicants
+                SET name = COALESCE(NULLIF(?, ''), name), college = COALESCE(NULLIF(?, ''), college), skills = COALESCE(NULLIF(?, ''), skills),
+                    university_roll_no = COALESCE(NULLIF(?, ''), university_roll_no), institute_id = COALESCE(?, institute_id),
+                    desired_role = COALESCE(NULLIF(?, ''), desired_role)
+                WHERE id = ?
+                """,
+                (name, college, skills, university_roll_no or '', valid_institute_id, desired_role, student_id)
+            )
+            conn.commit()
+            set_user_session(student_id, 'student', email, name or existing['name'])
             return jsonify({
                 'message': 'ST Scholar Beneficiary logged in successfully!',
                 'user': {
                     'id': student_id,
-                    'name': existing['name'],
+                    'name': name or existing['name'],
                     'email': email,
                     'role': 'student',
-                    'university_roll_no': existing['university_roll_no']
+                    'university_roll_no': university_roll_no or existing['university_roll_no']
                 }
             }), 200
 
         cursor.execute(
             """
-            INSERT INTO st_applicants (name, email, password_hash, college, skills, university_roll_no, institute_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO st_applicants (name, email, password_hash, college, skills, university_roll_no, institute_id, desired_role)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (name, email, pwd_hash, college, skills, university_roll_no, valid_institute_id)
+            (name, email, pwd_hash, college, skills, university_roll_no, valid_institute_id, desired_role)
         )
         conn.commit()
         student_id = cursor.lastrowid
@@ -107,15 +117,15 @@ def student_login():
 
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM st_applicants WHERE email = ?", (email,))
+    cursor.execute("SELECT * FROM st_applicants WHERE LOWER(email) = LOWER(?)", (email,))
     student = cursor.fetchone()
     conn.close()
 
     if not student:
-        for tbl, r_name, name_col in [('scrutiny_officers', 'academician', 'name'), ('partner_universities', 'industry', 'company_name'), ('mota_admins', 'institute', 'name')]:
+        for tbl, r_name, name_col in [('scrutiny_officers', 'academician', 'name'), ('mota_admins', 'institute', 'name')]:
             conn_other = get_db()
             cur_other = conn_other.cursor()
-            cur_other.execute(f"SELECT * FROM {tbl} WHERE email = ?", (email,))
+            cur_other.execute(f"SELECT * FROM {tbl} WHERE LOWER(email) = LOWER(?)", (email,))
             other_user = cur_other.fetchone()
             conn_other.close()
             if other_user and verify_password(other_user['password_hash'], password):
@@ -141,70 +151,8 @@ def student_login():
         }
     }), 200
 
-@auth_bp.route('/industries/signup', methods=['POST'])
-def industry_signup():
-    data = request.get_json() or {}
-    company_name = data.get('company_name', '').strip()
-    email = data.get('email', '').strip().lower()
-    password = data.get('password', '')
-    if not company_name or not email or not password:
-        return jsonify({'error': 'Partner University / Division name, email, and password are required.'}), 400
-    pwd_hash = hash_password(password)
-    conn = get_db()
-    cursor = conn.cursor()
-    try:
-        cursor.execute("SELECT id, company_name, password_hash FROM partner_universities WHERE LOWER(email) = LOWER(?)", (email,))
-        existing = cursor.fetchone()
-        if existing:
-            if not verify_password(existing['password_hash'], password):
-                return jsonify({
-                    'error': 'An institutional account with this email already exists. Please sign in with your existing password.'
-                }), 409
-            industry_id = existing['id']
-            set_user_session(industry_id, 'industry', email, existing['company_name'])
-            return jsonify({
-                'message': 'Empaneled University Division logged in successfully!',
-                'user': {'id': industry_id, 'name': existing['company_name'], 'email': email, 'role': 'industry'}
-            }), 200
-
-        cursor.execute(
-            "INSERT INTO partner_universities (company_name, email, password_hash) VALUES (?, ?, ?)",
-            (company_name, email, pwd_hash)
-        )
-        conn.commit()
-        industry_id = cursor.lastrowid
-        set_user_session(industry_id, 'industry', email, company_name)
-        return jsonify({
-            'message': 'Empaneled University Division registered successfully!',
-            'user': {'id': industry_id, 'name': company_name, 'email': email, 'role': 'industry'}
-        }), 201
-    except Exception as e:
-        conn.rollback()
-        return jsonify({'error': f'Registration failed: {str(e)}'}), 500
-    finally:
-        conn.close()
-
-@auth_bp.route('/industries/login', methods=['POST'])
-def industry_login():
-    data = request.get_json() or {}
-    email = data.get('email', '').strip().lower()
-    password = data.get('password', '')
-    if not email or not password:
-        return jsonify({'error': 'Email and password are required.'}), 400
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM partner_universities WHERE email = ?", (email,))
-    industry = cursor.fetchone()
-    conn.close()
-    if not industry or not verify_password(industry['password_hash'], password):
-        return jsonify({'error': 'Invalid email or password.'}), 401
-    set_user_session(industry['id'], 'industry', industry['email'], industry['company_name'])
-    return jsonify({
-        'message': f"Welcome back, {industry['company_name']}!",
-        'user': {'id': industry['id'], 'name': industry['company_name'], 'email': industry['email'], 'role': 'industry'}
-    }), 200
-
 @auth_bp.route('/institutes/signup', methods=['POST'])
+@auth_bp.route('/admins/signup', methods=['POST'])
 def institute_signup():
     data = request.get_json() or {}
     name = data.get('name', '').strip()
@@ -249,6 +197,7 @@ def institute_signup():
         conn.close()
 
 @auth_bp.route('/institutes/login', methods=['POST'])
+@auth_bp.route('/admins/login', methods=['POST'])
 def institute_login():
     data = request.get_json() or {}
     email = data.get('email', '').strip().lower()
@@ -257,7 +206,7 @@ def institute_login():
         return jsonify({'error': 'Email and password are required.'}), 400
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM mota_admins WHERE email = ?", (email,))
+    cursor.execute("SELECT * FROM mota_admins WHERE LOWER(email) = LOWER(?)", (email,))
     institute = cursor.fetchone()
     conn.close()
     if not institute or not verify_password(institute['password_hash'], password):
@@ -333,7 +282,7 @@ def academician_login():
         return jsonify({'error': 'Email and password are required.'}), 400
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM scrutiny_officers WHERE email = ?", (email,))
+    cursor.execute("SELECT * FROM scrutiny_officers WHERE LOWER(email) = LOWER(?)", (email,))
     academician = cursor.fetchone()
     conn.close()
     if not academician or not verify_password(academician['password_hash'], password):
@@ -516,6 +465,9 @@ def verify_otp():
 import hashlib
 
 AADHAAR_OTP_STORE = {}
+# UIDAI Stage-1 Developer Sandbox test OTP (active when UIDAI_AUA_LICENSE_KEY is not provisioned)
+UIDAI_SANDBOX_OTP = os.environ.get('UIDAI_SANDBOX_OTP', '482910')
+UIDAI_LIVE_AUA_KEY = os.environ.get('UIDAI_AUA_LICENSE_KEY', '').strip()
 
 @auth_bp.route('/aadhaar/send-otp', methods=['POST'])
 def send_aadhaar_otp():
@@ -534,12 +486,15 @@ def send_aadhaar_otp():
         'expires_at': time.time() + 600
     }
 
-    return jsonify({
+    resp = {
         'message': f'UIDAI e-KYC OTP dispatched to mobile linked with Aadhaar {masked_aadhaar}.',
         'masked_aadhaar': masked_aadhaar,
-        'demo_otp': otp_code,
-        'uidai_txn_id': f"UIDAI-EKYC-{int(time.time())}-{last4}"
-    }), 200
+        'uidai_txn_id': f"UIDAI-EKYC-{int(time.time())}-{last4}",
+        'uidai_environment': 'UIDAI_PRODUCTION_AUA' if UIDAI_LIVE_AUA_KEY else 'UIDAI_STAGE1_SANDBOX'
+    }
+    if not UIDAI_LIVE_AUA_KEY:
+        resp['demo_otp'] = otp_code
+    return jsonify(resp), 200
 
 
 @auth_bp.route('/aadhaar/verify-ekyc', methods=['POST'])
@@ -562,7 +517,8 @@ def verify_aadhaar_ekyc():
     if auth_modality == 'otp':
         if not otp or len(otp) < 4:
             return jsonify({'error': 'Please enter the 6-digit UIDAI Aadhaar OTP.'}), 400
-        if record and record.get('otp') != otp and otp != '482910':
+        valid_sandbox = (not UIDAI_LIVE_AUA_KEY) and (otp == UIDAI_SANDBOX_OTP)
+        if record and record.get('otp') != otp and not valid_sandbox:
             return jsonify({'error': 'Invalid UIDAI Aadhaar OTP. Please check the code or click Auto-Fill OTP.'}), 400
 
     sha_digest = (
@@ -777,23 +733,23 @@ def get_notifications():
             (user_id,)
         )
         st = cursor.fetchone()
-        inst_label = (st['inst_name'] if st and st['inst_name'] else (st['college'] if st and st['college'] else 'your organization'))
+        inst_label = (st['inst_name'] if st and st['inst_name'] else (st['college'] if st and st['college'] else 'your institution'))
 
         if st:
             status = st['verification_status'] or 'unverified'
             if status == 'verified':
                 notifications.append({
                     "id": "notif-st-ver",
-                    "text": f"Official Trainee ID verified by {inst_label}! Verified trainee badge active on your profile.",
-                    "tag": "Admin Verified",
+                    "text": f"NSP OTR & ST Caste Certificate verified by {inst_label}! Active beneficiary badge enabled on your dossier.",
+                    "tag": "INO Verified",
                     "type": "success",
                     "time": "Verified"
                 })
             elif status == 'pending':
-                roll_disp = f" (ID: {st['university_roll_no']})" if st['university_roll_no'] else ""
+                roll_disp = f" (OTR/ID: {st['university_roll_no']})" if st['university_roll_no'] else ""
                 notifications.append({
                     "id": "notif-st-ver-pending",
-                    "text": f"Your trainee approval request{roll_disp} is currently under review by {inst_label}.",
+                    "text": f"Your ST scholarship dossier{roll_disp} is currently under Level-1 INO scrutiny at {inst_label}.",
                     "tag": "Verification",
                     "type": "warning",
                     "time": "Pending"
@@ -801,7 +757,7 @@ def get_notifications():
             else:
                 notifications.append({
                     "id": "notif-st-ver-prompt",
-                    "text": "Submit your official Trainee ID in Profile to request Admin approval.",
+                    "text": "Submit your 14-digit NSP OTR ID & barcoded ST Certificate in Profile for Level-1 INO verification.",
                     "tag": "Action Required",
                     "type": "info",
                     "time": "Prompt"
@@ -811,21 +767,21 @@ def get_notifications():
             if r_score and float(r_score) > 0:
                 notifications.append({
                     "id": "notif-st-resume",
-                    "text": f"Gemini Competency Audit: Profile rated {float(r_score):.1f}/10 for {st['desired_role'] or 'Trainee'}.",
-                    "tag": "AI Competency",
+                    "text": f"Google Vision & AI Dossier Audit: Rated {float(r_score):.1f}/10 for {st['desired_role'] or 'ST Scholarship'}.",
+                    "tag": "Dossier Audit",
                     "type": "success",
                     "time": "Updated"
                 })
             else:
                 notifications.append({
                     "id": "notif-st-resume-prompt",
-                    "text": "Analyze your competency profile with Gemini AI in the AI Competency Hub to identify skill gaps.",
-                    "tag": "AI Hub",
+                    "text": "Scan your ST Caste & Income Certificates with Google Cloud Vision OCR to pre-verify eligibility.",
+                    "tag": "Vision OCR",
                     "type": "info",
                     "time": "Recommended"
                 })
 
-        # 2. Verified Competency Scores
+        # 2. Verified Eligibility Checks
         cursor.execute(
             """
             SELECT skill_name, percentage, assessed_at 
@@ -839,13 +795,13 @@ def get_notifications():
         for idx, sk in enumerate(skill_rows):
             notifications.append({
                 "id": f"notif-st-skill-{idx}",
-                "text": f"Verified competency earned: {sk['skill_name']} MCQ assessment passed with {sk['percentage']}% score.",
-                "tag": "Certified",
+                "text": f"Statutory Rule Check passed: {sk['skill_name']} verified with {sk['percentage']}% compliance score.",
+                "tag": "Eligible",
                 "type": "success",
                 "time": "Verified"
             })
 
-        # 3. Course Enrollments
+        # 3. Scheme Applications
         cursor.execute(
             """
             SELECT a.status, a.applied_date, p.title, ind.company_name, aca.name as prof_name
@@ -860,17 +816,17 @@ def get_notifications():
         )
         app_rows = cursor.fetchall()
         for idx, app in enumerate(app_rows):
-            org = app['company_name'] or app['prof_name'] or 'Trainer'
+            org = app['company_name'] or app['prof_name'] or 'MoTA Nodal Cell'
             status_text = app['status'].capitalize()
             notifications.append({
                 "id": f"notif-st-app-{idx}",
-                "text": f"Enrollment in '{app['title']}' with {org} is marked as '{status_text}'.",
-                "tag": "Enrollment",
+                "text": f"Application for '{app['title']}' under {org} is marked as '{status_text}'.",
+                "tag": "Scheme Status",
                 "type": "info",
                 "time": "Recent"
             })
 
-        # 4. Recent Training Courses
+        # 4. Recent MoTA Schemes
         cursor.execute(
             """
             SELECT p.title, p.posting_type, ind.company_name 
@@ -881,57 +837,14 @@ def get_notifications():
         )
         post_rows = cursor.fetchall()
         for idx, pst in enumerate(post_rows):
-            comp = pst['company_name'] or 'Trainer Library'
+            comp = pst['company_name'] or 'Ministry of Tribal Affairs (MoTA)'
             notifications.append({
                 "id": f"notif-st-post-{idx}",
-                "text": f"New {pst['posting_type'].capitalize()} module added: '{pst['title']}' by {comp}.",
-                "tag": "Course",
+                "text": f"Active MoTA scheme notification: '{pst['title']}' published by {comp}.",
+                "tag": "Scheme",
                 "type": "info",
                 "time": "New"
             })
-
-    elif role == 'industry':
-        cursor.execute(
-            """
-            SELECT s.name, s.college, p.title, a.applied_date
-            FROM scheme_applications a
-            JOIN scholarship_schemes p ON a.posting_id = p.id
-            JOIN st_applicants s ON a.student_id = s.id
-            WHERE p.industry_id = ?
-            ORDER BY a.applied_date DESC LIMIT 3
-            """,
-            (user_id,)
-        )
-        applicant_rows = cursor.fetchall()
-        for idx, app in enumerate(applicant_rows):
-            clg = f" from {app['college']}" if app['college'] else ""
-            notifications.append({
-                "id": f"notif-ind-app-{idx}",
-                "text": f"New trainee enrollment: {app['name']}{clg} enrolled in '{app['title']}'.",
-                "tag": "Enrollments",
-                "type": "success",
-                "time": "Recent"
-            })
-
-        cursor.execute("SELECT COUNT(DISTINCT student_id) as count FROM eligibility_verifications WHERE percentage >= 70")
-        verified_count = cursor.fetchone()['count'] or 0
-        notifications.append({
-            "id": "notif-ind-talent",
-            "text": f"{verified_count} certified trainees have earned >=70% on subject MCQ assessments.",
-            "tag": "Competency Pool",
-            "type": "info",
-            "time": "Live"
-        })
-
-        cursor.execute("SELECT COUNT(*) as count FROM scholarship_schemes WHERE industry_id = ?", (user_id,))
-        active_posts = cursor.fetchone()['count'] or 0
-        notifications.append({
-            "id": "notif-ind-posts",
-            "text": f"You have {active_posts} active training modules live.",
-            "tag": "Courses",
-            "type": "info",
-            "time": "Status"
-        })
 
     elif role == 'academician':
         cursor.execute(
@@ -949,16 +862,16 @@ def get_notifications():
         for idx, app in enumerate(applicant_rows):
             notifications.append({
                 "id": f"notif-aca-app-{idx}",
-                "text": f"Trainee {app['name']} enrolled in your course '{app['title']}'.",
-                "tag": "Training",
+                "text": f"ST Scholar {app['name']} submitted dossier for '{app['title']}'.",
+                "tag": "INO Scrutiny",
                 "type": "success",
                 "time": "Recent"
             })
 
         notifications.append({
             "id": "notif-aca-status",
-            "text": "Trainer study materials and MCQ questionnaires are live across MoTA ScholarConnect.",
-            "tag": "Trainer Library",
+            "text": "MoTA statutory scheme guidelines and eligibility rules are synced across ScholarConnect.",
+            "tag": "MoTA Circulars",
             "type": "info",
             "time": "Active"
         })
@@ -976,7 +889,7 @@ def get_notifications():
         if pending_count > 0:
             notifications.append({
                 "id": "notif-inst-pending",
-                "text": f"{pending_count} trainee approval request(s) awaiting review in User & Role Management.",
+                "text": f"{pending_count} ST applicant dossier(s) awaiting nodal verification in Beneficiary Governance.",
                 "tag": "Pending Action",
                 "type": "warning",
                 "time": "Urgent"
@@ -984,16 +897,16 @@ def get_notifications():
 
         notifications.append({
             "id": "notif-inst-verified",
-            "text": f"{verified_count} of {total_students} registered trainees have been approved by your division.",
-            "tag": "Approvals",
+            "text": f"{verified_count} of {total_students} registered ST scholars have been verified for SNA SPARSH DBT.",
+            "tag": "Sanctions",
             "type": "success",
             "time": "Overview"
         })
 
         notifications.append({
             "id": "notif-inst-tpo",
-            "text": "Organizational Capacity Building & Competency Readiness Index updated with latest MCQ scores.",
-            "tag": "Admin Analytics",
+            "text": "PFMS SNA SPARSH Direct Benefit Transfer (DBT) Utilization & Sanction Analytics updated.",
+            "tag": "DBT Analytics",
             "type": "info",
             "time": "Today"
         })

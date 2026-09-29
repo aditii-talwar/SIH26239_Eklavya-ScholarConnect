@@ -611,7 +611,7 @@ export const UniversityCompetencyMapping: React.FC = () => {
 
                 <div className="pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-xs">
                   <span className="text-[var(--text-muted)]">
-                    {tr.experienceYears || 14} yrs service · {tr.rating || 4.9}  · {tr.traineesTrained || 420}+ dossiers audited
+                    {tr.experienceYears || 14} yrs service · {tr.rating || 4.9}  · {tr.dossiersAudited || 420}+ dossiers audited
                   </span>
                   <Button
                     variant={isAssigned ? 'sagesolid' : 'primary'}

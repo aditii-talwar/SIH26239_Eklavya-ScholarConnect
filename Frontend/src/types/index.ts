@@ -1,4 +1,4 @@
-export type UserRole = 'student' | 'academician' | 'institute' | 'industry';
+export type UserRole = 'student' | 'academician' | 'institute';
 
 export interface User {
   id: number;
@@ -15,11 +15,10 @@ export interface User {
   prior_experience?: string;
   github_url?: string;
   leetcode_url?: string;
-  industry_domain?: string;
   city?: string;
   website_url?: string;
   contact_person?: string;
-  admin_tpo_contact?: string;
+  nodal_contact?: string;
   department?: string;
   profile_url?: string;
 }
@@ -117,7 +116,7 @@ export interface FieldUpdate {
   title: string;
   summary: string;
   materialType?: 'Recorded Lecture' | 'Presentation' | 'Study Material';
-  trainerName?: string;
+  officerName?: string;
   durationOrSize?: string;
   resourceUrl?: string;
   addedDate?: string;
@@ -162,7 +161,7 @@ export interface ResearchPaper {
   materialType?: 'Recorded Lecture' | 'Presentation' | 'Study Material' | string;
   durationOrSize?: string;
   resourceUrl?: string;
-  trainerName?: string;
+  officerName?: string;
   uploadedAt?: string;
   discussions: PaperDiscussion[];
 }
@@ -176,15 +175,15 @@ export interface Academician {
   subjects?: string[];
   experienceYears?: number;
   rating?: number;
-  traineesTrained?: number;
+  dossiersAudited?: number;
   papers: ResearchPaper[];
 }
 
-export interface TrainerQuestionnaire {
+export interface SchemeRuleQuestionnaire {
   id: string;
   title: string;
   subject: string;
-  trainerName: string;
+  officerName: string;
   deadline: string;
   questionCount: number;
   durationMins: number;
@@ -205,13 +204,13 @@ export interface HomepageUpdateItem {
 
 export interface CourseFeedbackItem {
   id: string;
-  traineeName: string;
+  applicantName: string;
   targetTitle: string;
-  targetType: 'Course' | 'Trainer Library Material';
+  targetType: 'Course' | 'Scrutiny Circular';
   rating: number;
   comment: string;
   date: string;
-  trainerReply?: string;
+  officerReply?: string;
 }
 
 export interface NotificationItem {

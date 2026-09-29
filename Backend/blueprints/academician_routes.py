@@ -21,15 +21,15 @@ def create_posting():
     data = request.get_json() or {}
 
     title = data.get('title', '').strip() or data.get('opportunity_title', '').strip()
-    description = data.get('description', '').strip() or 'Training module and capacity building resource for trainees.'
-    required_skills = data.get('required_skills', '').strip() or data.get('skills', '').strip() or 'Research, Problem Solving'
+    description = data.get('description', '').strip() or 'MoTA Scholarship & Fellowship scheme circular and statutory eligibility notice.'
+    required_skills = data.get('required_skills', '').strip() or data.get('skills', '').strip() or 'ST Certificate, Income Ceiling Compliance'
     posting_type = data.get('posting_type', '').strip().lower()
 
     if not title:
-        return jsonify({'error': 'Course / study material title is required.'}), 400
+        return jsonify({'error': 'Scheme / circular title is required.'}), 400
 
     if not posting_type or posting_type not in ALLOWED_ACADEMIC_POSTING_TYPES:
-        posting_type = 'training'
+        posting_type = 'fellowship'
 
     conn = get_db()
     cursor = conn.cursor()
@@ -45,7 +45,7 @@ def create_posting():
     conn.close()
 
     return jsonify({
-        'message': 'Training course / material posted successfully!',
+        'message': 'MoTA scheme circular / notice posted successfully!',
         'posting': {'id': posting_id, 'title': title, 'posting_type': posting_type}
     }), 201
 
@@ -90,7 +90,7 @@ def give_mentorship_feedback(student_id):
     student = row_to_dict(cursor.fetchone())
     if not student:
         conn.close()
-        return jsonify({'error': 'Trainee not found.'}), 404
+        return jsonify({'error': 'ST Applicant not found.'}), 404
 
     cursor.execute(
         """

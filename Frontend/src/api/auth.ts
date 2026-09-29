@@ -4,10 +4,9 @@ import { User, UserRole } from '../types';
 export const authApi = {
   async login(role: UserRole, email: string, password: string): Promise<{ message: string; user: User }> {
     const rolePaths: Record<UserRole, string> = {
-      student: '/api/auth/trainees/login',
-      academician: '/api/auth/trainers/login',
-      institute: '/api/auth/admins/login',
-      industry: '/api/auth/admins/login',
+      student: '/api/auth/students/login',
+      academician: '/api/auth/academicians/login',
+      institute: '/api/auth/institutes/login',
     };
     return request(rolePaths[role], {
       method: 'POST',
@@ -17,10 +16,9 @@ export const authApi = {
 
   async signup(role: UserRole, payload: Record<string, any>): Promise<{ message: string; user: User }> {
     const rolePaths: Record<UserRole, string> = {
-      student: '/api/auth/trainees/signup',
-      academician: '/api/auth/trainers/signup',
-      institute: '/api/auth/admins/signup',
-      industry: '/api/auth/admins/signup',
+      student: '/api/auth/students/signup',
+      academician: '/api/auth/academicians/signup',
+      institute: '/api/auth/institutes/signup',
     };
     return request(rolePaths[role], {
       method: 'POST',

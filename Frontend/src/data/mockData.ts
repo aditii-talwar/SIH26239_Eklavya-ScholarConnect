@@ -9,7 +9,7 @@ import {
   ResearchPaper,
   Academician,
   NotificationItem,
-  TrainerQuestionnaire,
+  SchemeRuleQuestionnaire,
   HomepageUpdateItem,
   CourseFeedbackItem,
 } from '../types';
@@ -115,7 +115,7 @@ export const FIELD_UPDATES: FieldUpdate[] = [
     title: 'National Fellowship for Scheduled Tribes (NFST) 2026-27 — Official Guidelines & JRF/SRF Norms',
     summary: 'Complete MoTA scheme document covering 750 annual fellowship slots, PVTG reservation, JRF (@ ₹37,000/mo) to SRF (@ ₹42,000/mo) upgradation, HRA, and ₹25,000 annual contingency norms.',
     materialType: 'Study Material',
-    trainerName: 'Dr. Rajeshwar Meena (MoTA NFST Division)',
+    officerName: 'Dr. Rajeshwar Meena (MoTA NFST Division)',
     durationOrSize: '38 Pages · Official MoTA PDF',
     resourceUrl: 'https://tribal.nic.in/',
     addedDate: 'Sep 24, 2026',
@@ -126,7 +126,7 @@ export const FIELD_UPDATES: FieldUpdate[] = [
     title: 'National Overseas Scholarship (NOS) 2026-27 — Master’s & Ph.D. Abroad Rulebook',
     summary: 'Detailed eligibility rules for 20 annual awards (17 ST + 3 PVTG), eligible QS Top-500 foreign universities, USD $15,400/yr maintenance allowance, tuition coverage, and visa/surety bond formats.',
     materialType: 'Presentation',
-    trainerName: 'Shri Vikramaditya Negi (MoTA NOS Wing)',
+    officerName: 'Shri Vikramaditya Negi (MoTA NOS Wing)',
     durationOrSize: '28 Slides · NOS Briefing Deck',
     resourceUrl: 'https://overseas.tribal.gov.in/',
     addedDate: 'Sep 22, 2026',
@@ -137,7 +137,7 @@ export const FIELD_UPDATES: FieldUpdate[] = [
     title: 'Standard Operating Procedure: Uploading DigiLocker ST, Income & Domicile Certificates',
     summary: 'Video walkthrough for ST applicants on scanning barcoded caste certificates, valid current-financial-year Tehsildar income certificates (< ₹6.00 LPA), and resolving AI OCR deficiency flags.',
     materialType: 'Recorded Lecture',
-    trainerName: 'Dr. Anusuya Korram (Scrutiny & Verification Cell)',
+    officerName: 'Dr. Anusuya Korram (Scrutiny & Verification Cell)',
     durationOrSize: '24 mins · Applicant Walkthrough Video',
     resourceUrl: 'https://fellowship.tribal.gov.in/',
     addedDate: 'Sep 20, 2026',
@@ -148,7 +148,7 @@ export const FIELD_UPDATES: FieldUpdate[] = [
     title: 'Post-Selection Fellowship Management: Annexures I–VI, HRA, Contingency & QPR Submission',
     summary: 'Step-by-step guide for selected NFST/NOS fellows on uploading Verification & Continuation Certificates, Quarterly Progress Reports (QPR), and tracking Aadhaar-seeded PFMS DBT tranches.',
     materialType: 'Study Material',
-    trainerName: 'Dr. ChuniBala Tudu (MoTA PFMS DBT Cell)',
+    officerName: 'Dr. ChuniBala Tudu (MoTA PFMS DBT Cell)',
     durationOrSize: '44 Pages · Fellow Handbook PDF',
     resourceUrl: 'https://pfms.nic.in/',
     addedDate: 'Sep 18, 2026',
@@ -159,7 +159,7 @@ export const FIELD_UPDATES: FieldUpdate[] = [
     title: 'How to Respond to Scrutiny Deficiency Memos & Resubmit Clarified Documents',
     summary: 'Presentation guide explaining common scrutiny queries (blurred Tehsildar seal, CGPA-to-percentage conversion formula sheet missing, Ph.D. synopsis format) and 7-day SLA resubmission.',
     materialType: 'Presentation',
-    trainerName: 'Dr. Rajeshwar Meena (MoTA NFST Division)',
+    officerName: 'Dr. Rajeshwar Meena (MoTA NFST Division)',
     durationOrSize: '22 Slides · Deficiency Guide',
     resourceUrl: 'https://tribal.nic.in/',
     addedDate: 'Sep 15, 2026',
@@ -440,7 +440,7 @@ export const PAPERS: ResearchPaper[] = [
     materialType: 'Study Material',
     durationOrSize: '38 Pages · Official MoTA PDF',
     resourceUrl: 'https://tribal.nic.in/',
-    trainerName: 'Dr. Rajeshwar Meena (Nodal Scrutiny Officer)',
+    officerName: 'Dr. Rajeshwar Meena (Nodal Scrutiny Officer)',
     uploadedAt: 'Sep 24, 2026',
     desc: 'Official Ministry of Tribal Affairs guidelines detailing eligibility (ST category, PG >= 55%, Ph.D. admission), 750 slots, PVTG priority, and JRF/SRF PFMS disbursement norms.',
     discussions: [
@@ -461,7 +461,7 @@ export const PAPERS: ResearchPaper[] = [
     materialType: 'Presentation',
     durationOrSize: '28 Slides · NOS Scrutiny Deck',
     resourceUrl: 'https://overseas.tribal.gov.in/',
-    trainerName: 'Dr. Rajeshwar Meena (Nodal Scrutiny Officer)',
+    officerName: 'Dr. Rajeshwar Meena (Nodal Scrutiny Officer)',
     uploadedAt: 'Sep 22, 2026',
     desc: 'Comprehensive deck on NOS eligibility: minimum 60% marks, age < 35 years, total family income from all sources <= ₹6.00 LPA, and unconditional offer from QS Top-500 university.',
     discussions: [
@@ -482,7 +482,7 @@ export const PAPERS: ResearchPaper[] = [
     materialType: 'Study Material',
     durationOrSize: '44 Pages · Fellow DBT Manual',
     resourceUrl: 'https://fellowship.tribal.gov.in/',
-    trainerName: 'Dr. ChuniBala Tudu (PFMS DBT Officer)',
+    officerName: 'Dr. ChuniBala Tudu (PFMS DBT Officer)',
     uploadedAt: 'Sep 20, 2026',
     desc: 'Templates and instructions for submitting Verification-cum-Continuation Certificate, HRA Certificate, and Annual Contingency Utilization Certificate for uninterrupted DBT.',
     discussions: [
@@ -508,7 +508,7 @@ export const ACADEMICIANS: Academician[] = [
     subjects: ['ST Certificate Verification', 'Post-Graduation Marks', 'Research Proposal Merit', 'Deficiency Adjudication'],
     experienceYears: 16,
     rating: 4.9,
-    traineesTrained: 1420,
+    dossiersAudited: 1420,
     papers: [PAPERS[0], PAPERS[1]],
   },
   {
@@ -520,7 +520,7 @@ export const ACADEMICIANS: Academician[] = [
     subjects: ['Income Ceiling Compliance', 'ST Certificate Verification', 'DigiLocker API Audit', 'Duplicate Detection'],
     experienceYears: 12,
     rating: 4.9,
-    traineesTrained: 1180,
+    dossiersAudited: 1180,
     papers: [],
   },
   {
@@ -532,7 +532,7 @@ export const ACADEMICIANS: Academician[] = [
     subjects: ['Unconditional Foreign Offer', 'QS Top-500 Verification', 'PVTG Priority Quota', 'Composite Merit Index'],
     experienceYears: 14,
     rating: 4.8,
-    traineesTrained: 890,
+    dossiersAudited: 890,
     papers: [],
   },
   {
@@ -544,17 +544,17 @@ export const ACADEMICIANS: Academician[] = [
     subjects: ['PFMS DBT Ready', 'Quarterly Progress Report (QPR)', 'JRF to SRF Upgradation', 'Contingency & HRA Audit'],
     experienceYears: 11,
     rating: 4.9,
-    traineesTrained: 1650,
+    dossiersAudited: 1650,
     papers: [PAPERS[2]],
   },
 ];
 
-export const DEFAULT_QUESTIONNAIRES: TrainerQuestionnaire[] = [
+export const DEFAULT_QUESTIONNAIRES: SchemeRuleQuestionnaire[] = [
   {
     id: 'q-1',
     title: 'NFST 2026-27 Mandatory Automated Eligibility & Document Scrutiny Rule-Set',
     subject: 'ST Certificate Verification',
-    trainerName: 'Dr. Rajeshwar Meena',
+    officerName: 'Dr. Rajeshwar Meena',
     deadline: '2026-10-15',
     questionCount: 8,
     durationMins: 5,
@@ -566,7 +566,7 @@ export const DEFAULT_QUESTIONNAIRES: TrainerQuestionnaire[] = [
     id: 'q-2',
     title: 'National Overseas Scholarship (NOS) Income Ceiling (<= ₹6.00 LPA) & QS-500 Rule-Set',
     subject: 'Income Ceiling Compliance',
-    trainerName: 'Dr. Anusuya Korram',
+    officerName: 'Dr. Anusuya Korram',
     deadline: '2026-10-20',
     questionCount: 8,
     durationMins: 5,
@@ -578,7 +578,7 @@ export const DEFAULT_QUESTIONNAIRES: TrainerQuestionnaire[] = [
     id: 'q-3',
     title: 'Academic Merit (PG >= 55%) & Ph.D. Research Proposal Screening Checklist',
     subject: 'Post-Graduation Marks',
-    trainerName: 'Shri Vikramaditya Negi',
+    officerName: 'Shri Vikramaditya Negi',
     deadline: '2026-10-25',
     questionCount: 8,
     durationMins: 5,
@@ -630,29 +630,29 @@ export const DEFAULT_HOMEPAGE_UPDATES: HomepageUpdateItem[] = [
 export const DEFAULT_FEEDBACKS: CourseFeedbackItem[] = [
   {
     id: 'fb-1',
-    traineeName: 'Kareena Murmu (MOTA-NFST-2026-1042)',
+    applicantName: 'Kareena Murmu (MOTA-NFST-2026-1042)',
     targetTitle: 'National Fellowship for Scheduled Tribes (NFST) — Ph.D. & M.Phil. (2026-27 Cycle)',
     targetType: 'Course',
     rating: 5,
     comment: 'Uploaded my JNU Registrar CGPA-to-percentage conversion certificate (82.4%) and DigiLocker-verified Santhal ST certificate. Requesting Stage-4 scrutiny clearance.',
     date: 'Sep 24, 2026',
-    trainerReply: 'Verified & Cleared by Nodal Scrutiny Officer Dr. Rajeshwar Meena: Both ST Barcode #JH-ST-2026-88412 and JNU conversion sheet match 100%. Application moved to Merit Selected.',
+    officerReply: 'Verified & Cleared by Nodal Scrutiny Officer Dr. Rajeshwar Meena: Both ST Barcode #JH-ST-2026-88412 and JNU conversion sheet match 100%. Application moved to Merit Selected.',
   },
   {
     id: 'fb-2',
-    traineeName: 'Birsa Oraon (MOTA-NOS-2026-2089)',
+    applicantName: 'Birsa Oraon (MOTA-NOS-2026-2089)',
     targetTitle: 'National Overseas Scholarship (NOS) for ST Students — Master’s & Ph.D. Abroad',
     targetType: 'Course',
     rating: 4,
     comment: 'Resubmitted current Financial Year 2025-26 Tehsildar Family Income Certificate (₹3,10,000/yr) along with unconditional Ph.D. offer letter from University of Oxford.',
     date: 'Sep 23, 2026',
-    trainerReply: 'Deficiency Resolved: Fresh Tehsildar digital signature verified via e-District API. Forwarded to NOS Screening Committee.',
+    officerReply: 'Deficiency Resolved: Fresh Tehsildar digital signature verified via e-District API. Forwarded to NOS Screening Committee.',
   },
   {
     id: 'fb-3',
-    traineeName: 'Phulo Baskey (MOTA-NFST-2026-1192)',
+    applicantName: 'Phulo Baskey (MOTA-NFST-2026-1192)',
     targetTitle: 'Post-Selection PFMS DBT & Quarterly Progress Report (QPR) Annexures I to VI',
-    targetType: 'Trainer Library Material',
+    targetType: 'Scrutiny Circular',
     rating: 5,
     comment: 'Submitted Q2 Continuation Certificate (Annexure-III) signed by HOD & Dean at Central University of Jharkhand for JRF release.',
     date: 'Sep 21, 2026',
@@ -681,7 +681,7 @@ export function saveStoredLibrary(items: ResearchPaper[]) {
   } catch {}
 }
 
-export function getStoredQuestionnaires(): TrainerQuestionnaire[] {
+export function getStoredQuestionnaires(): SchemeRuleQuestionnaire[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.QUESTIONNAIRES);
     if (raw) return JSON.parse(raw);
@@ -689,7 +689,7 @@ export function getStoredQuestionnaires(): TrainerQuestionnaire[] {
   return DEFAULT_QUESTIONNAIRES;
 }
 
-export function saveStoredQuestionnaires(items: TrainerQuestionnaire[]) {
+export function saveStoredQuestionnaires(items: SchemeRuleQuestionnaire[]) {
   try {
     localStorage.setItem(STORAGE_KEYS.QUESTIONNAIRES, JSON.stringify(items));
   } catch {}

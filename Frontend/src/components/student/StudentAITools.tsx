@@ -848,7 +848,7 @@ export const StudentField: React.FC = () => {
       title: p.title,
       summary: p.desc,
       materialType: (p.materialType as any) || 'Study Material',
-      trainerName: p.trainerName || 'Dr. Rajeshwar Meena (MoTA Nodal Officer)',
+      officerName: p.officerName || 'Dr. Rajeshwar Meena (MoTA Nodal Officer)',
       durationOrSize: p.durationOrSize || 'Official MoTA Circular',
       resourceUrl: p.resourceUrl || 'https://tribal.nic.in/',
       addedDate: p.uploadedAt || 'Sep 2026',
@@ -865,7 +865,7 @@ export const StudentField: React.FC = () => {
       !search.trim() ||
       r.title.toLowerCase().includes(search.toLowerCase()) ||
       r.field.toLowerCase().includes(search.toLowerCase()) ||
-      (r.trainerName || '').toLowerCase().includes(search.toLowerCase());
+      (r.officerName || '').toLowerCase().includes(search.toLowerCase());
     return matchesType && matchesSearch;
   });
 
@@ -876,9 +876,9 @@ export const StudentField: React.FC = () => {
     saveStoredFeedbacks([
       {
         id: 'fb-' + Date.now(),
-        traineeName: currentUser?.name || 'Kareena Murmu (MOTA-NFST-2026-1042)',
+        applicantName: currentUser?.name || 'Kareena Murmu (MOTA-NFST-2026-1042)',
         targetTitle: feedbackTarget,
-        targetType: 'Trainer Library Material',
+        targetType: 'Scrutiny Circular',
         rating,
         comment: comment.trim(),
         date: 'Just now',
@@ -956,7 +956,7 @@ export const StudentField: React.FC = () => {
                 </div>
                 <div className="font-display font-semibold text-base text-black mb-1">{f.title}</div>
                 <div className="text-xs text-[var(--text-muted)] mb-2">
-                  Published by <span className="font-semibold text-black">{f.trainerName}</span> · {f.addedDate}
+                  Published by <span className="font-semibold text-black">{f.officerName}</span> · {f.addedDate}
                 </div>
                 <p className="text-xs text-[var(--text-muted)] leading-relaxed">{f.summary}</p>
               </div>

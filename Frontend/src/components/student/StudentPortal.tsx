@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { PortalShell } from '../common/PortalShell';
 import { StudentOverview } from './StudentOverview';
-import { StudentSkills } from './StudentSkills';
-import { StudentRoadmap, StudentDaily } from './StudentRoadmap';
+import { StudentEligibilityEngine } from './StudentEligibilityEngine';
+import { StudentVerificationGuide, StudentDbtLedger } from './StudentVerificationGuide';
 import { StudentAITools, StudentField } from './StudentAITools';
 import { StudentOpportunities } from './StudentOpportunities';
 import { StudentApplications } from './StudentApplications';
-import { StudentProjects } from './StudentProjects';
+import { StudentDigiLockerVault } from './StudentDigiLockerVault';
 import { StudentProfile } from './StudentProfile';
-import { SkillTestModal } from './SkillTestModal';
+import { EligibilityCheckModal } from './EligibilityCheckModal';
 import { Student, SkillItem } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { studentApi } from '../../api/student';
@@ -237,11 +237,11 @@ export const StudentPortal: React.FC<{ go: (page: string) => void }> = ({ go }) 
       case 'overview':
         return <StudentOverview student={student} onNavigate={(t) => setActive(t)} />;
       case 'skills':
-        return <StudentSkills student={student} onUpdateSkill={handleUpdateSkill} />;
+        return <StudentEligibilityEngine student={student} onUpdateSkill={handleUpdateSkill} />;
       case 'roadmap':
-        return <StudentRoadmap student={student} onNavigate={(t) => setActive(t)} />;
+        return <StudentVerificationGuide student={student} onNavigate={(t) => setActive(t)} />;
       case 'daily':
-        return <StudentDaily student={student} />;
+        return <StudentDbtLedger student={student} />;
       case 'aitools':
         return <StudentAITools student={student} onUpdateResume={handleUpdateResume} />;
       case 'field':
@@ -251,7 +251,7 @@ export const StudentPortal: React.FC<{ go: (page: string) => void }> = ({ go }) 
       case 'applications':
         return <StudentApplications onBrowseOpportunities={() => setActive('opportunities')} />;
       case 'projects':
-        return <StudentProjects student={student} />;
+        return <StudentDigiLockerVault student={student} />;
       case 'profile':
         return (
           <StudentProfile
@@ -307,7 +307,7 @@ export const StudentPortal: React.FC<{ go: (page: string) => void }> = ({ go }) 
 
       {renderView()}
 
-      <SkillTestModal
+      <EligibilityCheckModal
         open={!!onboardingSkill}
         skill={onboardingSkill}
         onClose={() => setOnboardingSkill(null)}
