@@ -1,4 +1,4 @@
-# Eklavya-ScholarConnect (SIH26239)
+# Eklavya-ScholarConnect — MoTA Scholarship & Fellowship Portal (SIH26239)
 
 **AI-Enabled Scholarship & Fellowship Management System for Scheduled Tribes (ST)** under the **Ministry of Tribal Affairs (MoTA), Government of India** (`tribal.nic.in` · `dbttribal.gov.in`).
 
@@ -6,7 +6,7 @@
 
 ## 1. Overview
 
-**MoTA ScholarConnect** is an end-to-end digital governance, multilingual informant, and Direct Benefit Transfer (DBT) lifecycle platform built for Scheduled Tribe (ST) students, **Level-1 Institute Nodal Officers (INOs)**, and **Ministry / State Nodal Administrators**.
+**Eklavya-ScholarConnect** is an end-to-end digital governance, multilingual informant, and Direct Benefit Transfer (DBT) lifecycle platform built for Scheduled Tribe (ST) students, **Level-1 Institute Nodal Officers (INOs)**, and **Ministry / State Nodal Administrators**.
 
 It unifies **MeitY Bhashini NMT & Neural TTS**, **UIDAI Aadhaar e-KYC & NPCI Bank Mapper**, **API Setu State e-District Verification**, **Google Cloud Vision API Document & Circular Intelligence**, **Autonomous MoTA Guideline Diff & Sync**, and **Direct Student–INO Deficiency Resolution Conversations** across all **5 Central MoTA ST Schemes**.
 

@@ -937,7 +937,7 @@ export const LandingPage: React.FC<
                     Target Stakeholders &amp; Who It Helps
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-                    Who Does ScholarConnect Help &amp; How?
+                    Who Does Eklavya-ScholarConnect Help &amp; How?
                   </h2>
                   <p className="text-xs sm:text-sm text-slate-600">
                     Designed specifically to resolve the acute delays, administrative bottlenecks, and fund leakage risks across India’s tribal scholarship administration.
@@ -1821,7 +1821,7 @@ export const LandingPage: React.FC<
               </div>
               <div>
                 <div className="text-sm font-bold text-white">
-                  MoTA ScholarConnect — Scholarship &amp; Fellowship Management System
+                  Eklavya-ScholarConnect — MoTA Scholarship &amp; Fellowship Management System
                 </div>
                 <div className="text-xs text-slate-400">
                   Ministry of Tribal Affairs · Government of India (SIH26239)

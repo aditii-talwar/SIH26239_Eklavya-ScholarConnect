@@ -227,7 +227,7 @@ export const PortalShell: React.FC<PortalShellProps> = ({
             </div>
             <div>
               <div className="text-sm sm:text-base font-bold tracking-tight leading-tight text-white">
-                MoTA ScholarConnect
+                Eklavya-ScholarConnect
               </div>
               <div className="text-[11px] text-blue-200 font-medium hidden sm:block">
                 {meta.label}
