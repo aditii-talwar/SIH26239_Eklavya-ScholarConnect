@@ -342,7 +342,7 @@ def _dispatch_email_via_apps_script_or_smtp(to_email: str, subject: str, html_co
                 'to': to_email,
                 'subject': subject,
                 'htmlBody': html_content,
-                'senderName': 'Eklavya-ScholarConnect (MoTA · SIH26239)'
+                'senderName': 'Eklavya ScholarConnect (MoTA · SIH26239)'
             }).encode('utf-8')
             req = urllib.request.Request(
                 apps_script_url,
@@ -372,7 +372,7 @@ def _dispatch_email_via_apps_script_or_smtp(to_email: str, subject: str, html_co
     try:
         msg = MIMEMultipart('alternative')
         msg['Subject'] = subject
-        msg['From'] = f"Eklavya-ScholarConnect <{smtp_email}>"
+        msg['From'] = f"Eklavya ScholarConnect <{smtp_email}>"
         msg['To'] = to_email
         msg.attach(MIMEText(html_content, 'html'))
 
@@ -393,10 +393,10 @@ def _dispatch_email_via_apps_script_or_smtp(to_email: str, subject: str, html_co
 
 def send_real_email_otp(to_email: str, otp_code: str) -> bool:
     """Attempts to dispatch an actual verification OTP email via Google Apps Script (HTTPS 443) or SMTP."""
-    subject = f"{otp_code} is your Eklavya-ScholarConnect (MoTA) Verification Code"
+    subject = f"{otp_code} is your Eklavya ScholarConnect (MoTA) Verification Code"
     html_content = f"""
     <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #E1D6AE; border-radius: 12px; background-color: #FDFBF7;">
-        <h2 style="color: #2C3524; margin-bottom: 8px;">Eklavya-ScholarConnect Verification</h2>
+        <h2 style="color: #2C3524; margin-bottom: 8px;">Eklavya ScholarConnect Verification</h2>
         <p style="color: #6B7660; font-size: 14px;">Use the following 6-digit code to verify your account registration:</p>
         <div style="margin: 24px 0; padding: 14px; background: #2C3524; color: #F2E8CF; font-size: 28px; font-weight: bold; letter-spacing: 6px; text-align: center; border-radius: 8px;">
             {otp_code}

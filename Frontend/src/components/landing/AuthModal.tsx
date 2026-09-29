@@ -494,14 +494,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
       return forgotStep === 'request' ? 'Reset your MoTA portal password' : 'Set new password';
     }
     if (authView === 'login') {
-      return 'Log in to Eklavya-ScholarConnect (MoTA)';
+      return 'Log in to Eklavya ScholarConnect (MoTA)';
     }
     if (role === 'student') {
       return otpStep
         ? 'ST Scholar Registration — Step 2: Email OTP'
         : 'ST Scholar Registration & Government Verification (API Setu)';
     }
-    return otpStep ? 'Verify your email' : 'Register on Eklavya-ScholarConnect (MoTA)';
+    return otpStep ? 'Verify your email' : 'Register on Eklavya ScholarConnect (MoTA)';
   };
 
   return (

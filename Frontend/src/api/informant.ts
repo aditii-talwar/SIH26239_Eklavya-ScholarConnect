@@ -972,7 +972,7 @@ export interface PortalUiStrings {
 const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   en: {
     ministryHeader: 'Ministry of Tribal Affairs | Government of India',
-    portalTitle: 'Eklavya-ScholarConnect — MoTA Scholarship & Fellowship Management System',
+    portalTitle: 'Eklavya ScholarConnect — MoTA Scholarship & Fellowship Management System',
     portalSubtitle: 'Ministry of Tribal Affairs · Post-Matric ST, Top Class, NFST & NOS Central Governance Portal (SIH26239)',
     officialBadge: 'Official Portal',
     loginBtn: 'Official / Stakeholder Login',
@@ -988,7 +988,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'Empowering Scheduled Tribe Scholars with Transparent, AI-Powered DBT Scholarship Governance',
     heroSubtitle:
-      'Eklavya-ScholarConnect transforms tribal scholarship administration across India. Combining instant Google Vision API document verification, Bhashini multilingual guidelines, explainable statutory rule engines, and PFMS SNA SPARSH just-in-time direct benefit transfers—ensuring zero fund delay and complete empowerment for every ST student.',
+      'Eklavya ScholarConnect transforms tribal scholarship administration across India. Combining instant Google Vision API document verification, Bhashini multilingual guidelines, explainable statutory rule engines, and PFMS SNA SPARSH just-in-time direct benefit transfers—ensuring zero fund delay and complete empowerment for every ST student.',
     informantTitle: 'MoTA Scholarship Informant & Step-by-Step Student Checklist',
     informantSubtitle:
       'Official simplified guidelines from tribal.nic.in & dbttribal.gov.in. Newly issued Ministry circulars are automatically scanned via Google Cloud Vision API, compared against existing rules, and updated in real time.',
@@ -1010,7 +1010,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   hi: {
     ministryHeader: 'जनजातीय कार्य मंत्रालय | भारत सरकार',
-    portalTitle: 'एकलव्य-स्कॉलरकनेक्ट (Eklavya-ScholarConnect) — MoTA छात्रवृत्ति प्रणाली',
+    portalTitle: 'एकलव्य स्कॉलरकनेक्ट (Eklavya ScholarConnect) — MoTA छात्रवृत्ति प्रणाली',
     portalSubtitle: 'जनजातीय कार्य मंत्रालय · पोस्ट-मैट्रिक ST, टॉप क्लास, NFST एवं NOS केंद्रीय गवर्नेंस पोर्टल (SIH26239)',
     officialBadge: 'आधिकारिक पोर्टल',
     loginBtn: 'आधिकारिक / हितधारक लॉगिन',
@@ -1026,7 +1026,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'पारदर्शी एवं AI-संचालित DBT छात्रवृत्ति प्रशासन द्वारा अनुसूचित जनजाति (ST) छात्रों का सशक्तिकरण',
     heroSubtitle:
-      'एकलव्य-स्कॉलरकनेक्ट (Eklavya-ScholarConnect) भारत भर में जनजातीय छात्रवृत्ति प्रशासन को सरल और पारदर्शी बनाता है। Google Vision API दस्तावेज़ सत्यापन, भाषिणी बहुभाषी मार्गदर्शिका, वैधानिक नियम इंजन और PFMS SNA SPARSH प्रत्यक्ष लाभ अंतरण (DBT) के साथ प्रत्येक ST छात्र को समय पर छात्रवृत्ति सुनिश्चित करता है।',
+      'एकलव्य स्कॉलरकनेक्ट (Eklavya ScholarConnect) भारत भर में जनजातीय छात्रवृत्ति प्रशासन को सरल और पारदर्शी बनाता है। Google Vision API दस्तावेज़ सत्यापन, भाषिणी बहुभाषी मार्गदर्शिका, वैधानिक नियम इंजन और PFMS SNA SPARSH प्रत्यक्ष लाभ अंतरण (DBT) के साथ प्रत्येक ST छात्र को समय पर छात्रवृत्ति सुनिश्चित करता है।',
     informantTitle: 'MoTA छात्रवृत्ति सूचना पोर्टल एवं चरणबद्ध छात्र चेकलिस्ट',
     informantSubtitle:
       'tribal.nic.in एवं dbttribal.gov.in के आधिकारिक दिशा-निर्देशों की सरल चेकलिस्ट। नए मंत्रालय परिपत्र (PDF) Google Cloud Vision API द्वारा स्वतः स्कैन और तुलना कर अपडेट किए जाते हैं।',
@@ -1048,7 +1048,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   sat: {
     ministryHeader: 'ᱟᱫᱤᱵᱟᱥᱤ ᱠᱟᱹᱢᱤ ᱢᱚᱱᱛᱨᱟᱞᱚᱭ | ᱥᱤᱧᱚᱛ ᱥᱚᱨᱠᱟᱨ (Ministry of Tribal Affairs)',
-    portalTitle: 'ᱮᱠᱞᱚᱵᱽᱭᱚ-ᱮᱥᱠᱚᱞᱟᱨᱠᱚᱱᱮᱠᱴ (Eklavya-ScholarConnect) — MoTA ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱯᱚᱨᱴᱟᱞ',
+    portalTitle: 'ᱮᱠᱞᱚᱵᱽᱭᱚ ᱮᱥᱠᱚᱞᱟᱨᱠᱚᱱᱮᱠᱴ (Eklavya ScholarConnect) — MoTA ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱯᱚᱨᱴᱟᱞ',
     portalSubtitle: 'ᱟᱫᱤᱵᱟᱥᱤ ᱠᱟᱹᱢᱤ ᱢᱚᱱᱛᱨᱟᱞᱚᱭ · ᱯᱚᱥᱴ-ᱢᱮᱴᱨᱤᱠ ST, ᱴᱚᱯ ᱠᱞᱟᱥ, NFST ᱟᱨ NOS ᱯᱚᱨᱴᱟᱞ (SIH26239)',
     officialBadge: 'ᱥᱚᱨᱠᱟᱨᱤ ᱯᱚᱨᱴᱟᱞ',
     loginBtn: 'ᱯᱟᱹᱴᱷᱩᱣᱟᱹ / ᱚᱯᱷᱤᱥᱚᱨ ᱞᱚᱜᱤᱱ',
@@ -1064,7 +1064,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'ᱟᱫᱤᱵᱟᱥᱤ (Scheduled Tribe) ᱯᱟᱹᱴᱷᱩᱣᱟᱹ ᱠᱚ ᱞᱟᱹᱜᱤᱫ ᱯᱷᱟᱨᱪᱟ AI ᱟᱨ DBT ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱯᱚᱨᱴᱟᱞ',
     heroSubtitle:
-      'ᱮᱠᱞᱚᱵᱽᱭᱚ-ᱮᱥᱠᱚᱞᱟᱨᱠᱚᱱᱮᱠᱴ ᱫᱚ Google Vision API ᱠᱟᱜᱚᱡᱽ ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ, ᱵᱷᱟᱥᱤᱱᱤ ᱯᱟᱹᱨᱥᱤ ᱛᱚᱨᱡᱚᱢᱟ, ᱟᱨ PFMS SNA SPARSH ᱥᱚᱡᱷᱮ ᱵᱮᱸᱠ ᱠᱷᱟᱛᱟ ᱨᱮ ᱴᱟᱠᱟ ᱵᱷᱮᱡᱟᱣ ᱨᱮᱭᱟᱜ ᱥᱩᱵᱤᱫᱷᱟ ᱮᱢᱚᱜ ᱠᱟᱱᱟ᱾',
+      'ᱮᱠᱞᱚᱵᱽᱭᱚ ᱮᱥᱠᱚᱞᱟᱨᱠᱚᱱᱮᱠᱴ ᱫᱚ Google Vision API ᱠᱟᱜᱚᱡᱽ ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ, ᱵᱷᱟᱥᱤᱱᱤ ᱯᱟᱹᱨᱥᱤ ᱛᱚᱨᱡᱚᱢᱟ, ᱟᱨ PFMS SNA SPARSH ᱥᱚᱡᱷᱮ ᱵᱮᱸᱠ ᱠᱷᱟᱛᱟ ᱨᱮ ᱴᱟᱠᱟ ᱵᱷᱮᱡᱟᱣ ᱨᱮᱭᱟᱜ ᱥᱩᱵᱤᱫᱷᱟ ᱮᱢᱚᱜ ᱠᱟᱱᱟ᱾',
     informantTitle: 'MoTA ᱮᱥᱠᱚᱞᱟᱨᱥᱤᱯ ᱥᱩᱪᱚᱱᱟ ᱯᱚᱨᱴᱟᱞ ᱟᱨ ᱘-ᱛᱷᱚᱠ ᱪᱮᱠᱞᱤᱥᱴ',
     informantSubtitle:
       'tribal.nic.in ᱟᱨ dbttribal.gov.in ᱠᱷᱚᱱ ᱟᱞᱜᱟ ᱱᱤᱭᱚᱢ᱾ ᱱᱟᱶᱟ ᱥᱚᱨᱠᱟᱨᱤ PDF ᱥᱟᱨᱠᱩᱞᱟᱨ ᱫᱚ Google Vision API ᱛᱮ ᱟᱡ ᱛᱮᱜᱮ ᱮᱥᱠᱮᱱ ᱟᱨ ᱟᱯᱰᱮᱴ ᱦᱩᱭᱩᱜᱼᱟ᱾',
@@ -1086,7 +1086,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   or: {
     ministryHeader: 'ଜନଜାତି ବ୍ୟାପାର ମନ୍ତ୍ରଣାଳୟ | ଭାରତ ସରକାର',
-    portalTitle: 'ଏକଲବ୍ୟ-ସ୍କଲାରକନେକ୍ଟ (Eklavya-ScholarConnect) — MoTA ଛାତ୍ରବୃତ୍ତି ପ୍ରଣାଳୀ',
+    portalTitle: 'ଏକଲବ୍ୟ ସ୍କଲାରକନେକ୍ଟ (Eklavya ScholarConnect) — MoTA ଛାତ୍ରବୃତ୍ତି ପ୍ରଣାଳୀ',
     portalSubtitle: 'ଜନଜାତି ବ୍ୟାପାର ମନ୍ତ୍ରଣାଳୟ · ପୋଷ୍ଟ-ମାଟ୍ରିକ୍ ST, ଟପ୍ କ୍ଲାସ୍, NFST ଓ NOS କେନ୍ଦ୍ରୀୟ ପୋର୍ଟାଲ୍ (SIH26239)',
     officialBadge: 'ସରକାରୀ ପୋର୍ଟାଲ୍',
     loginBtn: 'ଅଧିକାରୀ / ଛାତ୍ର ଲଗଇନ୍',
@@ -1102,7 +1102,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'ସ୍ୱଚ୍ଛ ଓ AI-ଆଧାରିତ DBT ଛାତ୍ରବୃତ୍ତି ପ୍ରଶାସନ ଦ୍ୱାରା ଅନୁସୂଚିତ ଜନଜାତି (ST) ଛାତ୍ରଛାତ୍ରୀଙ୍କ ସଶକ୍ତିକରଣ',
     heroSubtitle:
-      'ଏକଲବ୍ୟ-ସ୍କଲାରକନେକ୍ଟ Google Vision API ପ୍ରମାଣପତ୍ର ଯାଞ୍ଚ, ଭାଷିଣୀ ବହୁଭାଷୀ ମାର୍ଗଦର୍ଶିକା ଓ PFMS SNA SPARSH ସିଧାସଳଖ ବ୍ୟାଙ୍କ ଟ୍ରାନ୍ସଫର ମାଧ୍ୟମରେ ପ୍ରତ୍ୟେକ ST ଛାତ୍ରଛାତ୍ରୀଙ୍କୁ ସମୟରେ ଛାତ୍ରବୃତ୍ତି ପ୍ରଦାନ କରେ।',
+      'ଏକଲବ୍ୟ ସ୍କଲାରକନେକ୍ଟ Google Vision API ପ୍ରମାଣପତ୍ର ଯାଞ୍ଚ, ଭାଷିଣୀ ବହୁଭାଷୀ ମାର୍ଗଦର୍ଶିକା ଓ PFMS SNA SPARSH ସିଧାସଳଖ ବ୍ୟାଙ୍କ ଟ୍ରାନ୍ସଫର ମାଧ୍ୟମରେ ପ୍ରତ୍ୟେକ ST ଛାତ୍ରଛାତ୍ରୀଙ୍କୁ ସମୟରେ ଛାତ୍ରବୃତ୍ତି ପ୍ରଦାନ କରେ।',
     informantTitle: 'MoTA ଛାତ୍ରବୃତ୍ତି ସୂଚନା ପୋର୍ଟାଲ୍ ଓ ପର୍ଯ୍ୟାୟକ୍ରମିକ ଚେକଲିଷ୍ଟ',
     informantSubtitle:
       'tribal.nic.in ଓ dbttribal.gov.in ର ସରଳ ନିୟମାବଳୀ। ନୂତନ ମନ୍ତ୍ରଣାଳୟ PDF ସର୍କୁଲାର୍ Google Vision API ଦ୍ୱାରା ସ୍ୱୟଂଚାଳିତ ଭାବେ ସ୍କାନ୍ ଓ ଅପଡେଟ୍ ହୁଏ।',
@@ -1124,7 +1124,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   mr: {
     ministryHeader: 'आदिवासी विकास मंत्रालय | भारत सरकार',
-    portalTitle: 'एकलव्य-स्कॉलरकनेक्ट (Eklavya-ScholarConnect) — MoTA शिष्यवृत्ती प्रणाली',
+    portalTitle: 'एकलव्य स्कॉलरकनेक्ट (Eklavya ScholarConnect) — MoTA शिष्यवृत्ती प्रणाली',
     portalSubtitle: 'आदिवासी विकास मंत्रालय · मॅट्रिकोत्तर ST, टॉप क्लास, NFST व NOS केंद्रीय पोर्टल (SIH26239)',
     officialBadge: 'अधिकृत पोर्टल',
     loginBtn: 'अधिकारी / विद्यार्थी लॉगिन',
@@ -1140,7 +1140,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'पारदर्शक व AI-आधारित DBT शिष्यवृत्ती प्रशासनाद्वारे अनुसूचित जमाती (ST) विद्यार्थ्यांचे सक्षमीकरण',
     heroSubtitle:
-      'एकलव्य-स्कॉलरकनेक्ट Google Vision API कागदपत्र पडताळणी, भाषिणी बहुभाषिक मार्गदर्शिका आणि PFMS SNA SPARSH थेट बँक हस्तांतरणाद्वारे प्रत्येक ST विद्यार्थ्याला वेळेत शिष्यवृत्ती सुनिश्चित करते.',
+      'एकलव्य स्कॉलरकनेक्ट Google Vision API कागदपत्र पडताळणी, भाषिणी बहुभाषिक मार्गदर्शिका आणि PFMS SNA SPARSH थेट बँक हस्तांतरणाद्वारे प्रत्येक ST विद्यार्थ्याला वेळेत शिष्यवृत्ती सुनिश्चित करते.',
     informantTitle: 'MoTA शिष्यवृत्ती माहिती पोर्टल आणि टप्प्याटप्प्याची विद्यार्थी चेकलिस्ट',
     informantSubtitle:
       'tribal.nic.in आणि dbttribal.gov.in वरील सोपी मार्गदर्शिका. नवीन मंत्रालय परिपत्रके Google Vision API द्वारे आपोआप स्कॅन आणि अपडेट केली जातात.',
@@ -1162,7 +1162,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   bn: {
     ministryHeader: 'উপজাতি বিষয়ক মন্ত্রক | ভারত সরকার',
-    portalTitle: 'একলব্য-স্কলারকানেক্ট (Eklavya-ScholarConnect) — MoTA বৃত্তি পোর্টাল',
+    portalTitle: 'একলব্য স্কলারকানেক্ট (Eklavya ScholarConnect) — MoTA বৃত্তি পোর্টাল',
     portalSubtitle: 'উপজাতি বিষয়ক মন্ত্রক · পোস্ট-ম্যাট্রিক ST, টপ ক্লাস, NFST ও NOS কেন্দ্রীয় পোর্টাল (SIH26239)',
     officialBadge: 'সরকারি পোর্টাল',
     loginBtn: 'লগইন (Login)',
@@ -1178,7 +1178,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'স্বচ্ছ ও AI-চালিত DBT বৃত্তি প্রশাসনের মাধ্যমে তফসিলি উপজাতি (ST) শিক্ষার্থীদের ক্ষমতায়ন',
     heroSubtitle:
-      'একলব্য-স্কলারকানেক্ট Google Vision API নথি যাচাইকরণ, ভাষিণী বহুভাষিক নির্দেশিকা এবং PFMS SNA SPARSH সরাসরি ব্যাঙ্ক ট্রান্সফারের মাধ্যমে প্রতিটি ST শিক্ষার্থীর জন্য সময়মতো বৃত্তি নিশ্চিত করে।',
+      'একলব্য স্কলারকানেক্ট Google Vision API নথি যাচাইকরণ, ভাষিণী বহুভাষিক নির্দেশিকা এবং PFMS SNA SPARSH সরাসরি ব্যাঙ্ক ট্রান্সফারের মাধ্যমে প্রতিটি ST শিক্ষার্থীর জন্য সময়মতো বৃত্তি নিশ্চিত করে।',
     informantTitle: 'MoTA বৃত্তি তথ্য পোর্টাল ও ধাপে ধাপে শিক্ষার্থী চেকলিস্ট',
     informantSubtitle:
       'tribal.nic.in ও dbttribal.gov.in-এর সরলীকৃত সরকারি নির্দেশিকা। নতুন মন্ত্রকের সার্কুলার PDF স্বয়ংক্রিয়ভাবে Google Cloud Vision API দ্বারা স্ক্যান ও আপডেট করা হয়।',
@@ -1200,7 +1200,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   gu: {
     ministryHeader: 'આદિજાતિ બાબતોનું મંત્રાલય | ભારત સરકાર',
-    portalTitle: 'એકલવ્ય-સ્કોલરકનેક્ટ (Eklavya-ScholarConnect) — MoTA શિષ્યવૃત્તિ સિસ્ટમ',
+    portalTitle: 'એકલવ્ય સ્કોલરકનેક્ટ (Eklavya ScholarConnect) — MoTA શિષ્યવૃત્તિ સિસ્ટમ',
     portalSubtitle: 'આદિજાતિ બાબતોનું મંત્રાલય · પોસ્ટ-મેટ્રિક ST, ટોપ ક્લાસ, NFST અને NOS કેન્દ્રીય પોર્ટલ (SIH26239)',
     officialBadge: 'સત્તાવાર પોર્ટલ',
     loginBtn: 'લોગિન (Login)',
@@ -1216,7 +1216,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'પારદર્શક અને AI-સંચાલિત DBT શિષ્યવૃત્તિ દ્વારા અનુસૂચિત જનજાતિ (ST) વિદ્યાર્થીઓનું સશક્તિકરણ',
     heroSubtitle:
-      'એકલવ્ય-સ્કોલરકનેક્ટ Google Vision API પ્રમાણપત્ર ચકાસણી, ભાષિણી બહુભાષી માર્ગદર્શિકા અને PFMS SNA SPARSH સીધા બેંક ટ્રાન્સફર દ્વારા દરેક ST વિદ્યાર્થીને સમયસર શિષ્યવૃત્તિ સુનિશ્ચિત કરે છે.',
+      'એકલવ્ય સ્કોલરકનેક્ટ Google Vision API પ્રમાણપત્ર ચકાસણી, ભાષિણી બહુભાષી માર્ગદર્શિકા અને PFMS SNA SPARSH સીધા બેંક ટ્રાન્સફર દ્વારા દરેક ST વિદ્યાર્થીને સમયસર શિષ્યવૃત્તિ સુનિશ્ચિત કરે છે.',
     informantTitle: 'MoTA શિષ્યવૃત્તિ માહિતી પોર્ટલ અને વિદ્યાર્થી ચેકલિસ્ટ',
     informantSubtitle:
       'tribal.nic.in અને dbttribal.gov.in પરથી સરળ માર્ગદર્શિકા. નવા પરિપત્રો Google Cloud Vision API દ્વારા આપમેળે સ્કેન અને અપડેટ થાય છે.',
@@ -1238,7 +1238,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   te: {
     ministryHeader: 'గిరిజన వ్యవహారాల మంత్రిత్వ శాఖ | భారత ప్రభుత్వం',
-    portalTitle: 'ఏకలవ్య-స్కాలర్‌కనెక్ట్ (Eklavya-ScholarConnect) — MoTA స్కాలర్‌షిప్ సిస్టమ్',
+    portalTitle: 'ఏకలవ్య స్కాలర్‌కనెక్ట్ (Eklavya ScholarConnect) — MoTA స్కాలర్‌షిప్ సిస్టమ్',
     portalSubtitle: 'గిరిజన వ్యవహారాల మంత్రిత్వ శాఖ · పోస్ట్-మెట్రిక్ ST, టాప్ క్లాస్, NFST & NOS కేంద్ర పోర్టల్ (SIH26239)',
     officialBadge: 'అధికారిక పోర్టల్',
     loginBtn: 'లాగిన్ (Login)',
@@ -1254,7 +1254,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'పారదర్శక AI-ఆధారిత DBT స్కాలర్‌షిప్ పాలనతో ఎస్టీ (ST) విద్యార్థుల సాధికారత',
     heroSubtitle:
-      'ఏకలవ్య-స్కాలర్‌కనెక్ట్ Google Vision API డాక్యుమెంట్ వెరిఫికేషన్, భాషిణి బహుభాషా మార్గదర్శకాలు మరియు PFMS SNA SPARSH డైరెక్ట్ బ్యాంక్ ట్రాన్స్‌ఫర్ ద్వారా ప్రతి ST విద్యార్థికి సకాలంలో స్కాలర్‌షిప్ అందిస్తుంది.',
+      'ఏకలవ్య స్కాలర్‌కనెక్ట్ Google Vision API డాక్యుమెంట్ వెరిఫికేషన్, భాషిణి బహుభాషా మార్గదర్శకాలు మరియు PFMS SNA SPARSH డైరెక్ట్ బ్యాంక్ ట్రాన్స్‌ఫర్ ద్వారా ప్రతి ST విద్యార్థికి సకాలంలో స్కాలర్‌షిప్ అందిస్తుంది.',
     informantTitle: 'MoTA స్కాలర్‌షిప్ సమాచార పోర్టల్ & దశలవారీ చెక్‌లిస్ట్',
     informantSubtitle:
       'tribal.nic.in & dbttribal.gov.in నుండి సులభతరమైన మార్గదర్శకాలు. కొత్త మంత్రిత్వ శాఖ PDF సర్క్యులర్‌లు Google Cloud Vision API ద్వారా ఆటోమేటిక్‌గా స్కాన్ చేయబడి అప్‌డేట్ చేయబడతాయి.',
@@ -1276,7 +1276,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
   },
   ta: {
     ministryHeader: 'பழங்குடியினர் நல அமைச்சகம் | இந்திய அரசு',
-    portalTitle: 'ஏகலைவா-ஸ்காலர்கனெக்ட் (Eklavya-ScholarConnect) — MoTA உதவித்தொகை அமைப்பு',
+    portalTitle: 'ஏகலைவா ஸ்காலர்கனெக்ட் (Eklavya ScholarConnect) — MoTA உதவித்தொகை அமைப்பு',
     portalSubtitle: 'பழங்குடியினர் நல அமைச்சகம் · போஸ்ட்-மெட்ரிக் ST, டாப் கிளாஸ், NFST & NOS மத்திய தளம் (SIH26239)',
     officialBadge: 'அதிகாரப்பூர்வ தளம்',
     loginBtn: 'உள்நுழைக (Login)',
@@ -1292,7 +1292,7 @@ const PORTAL_UI_MAP: Record<string, PortalUiStrings> = {
     },
     heroTitle: 'வெளிப்படையான AI-ஆதரவு DBT கல்வி உதவித்தொகை மூலம் பழங்குடியின (ST) மாணவர்களின் முன்னேற்றம்',
     heroSubtitle:
-      'ஏகலைவா-ஸ்காலர்கனெக்ட் Google Vision API சான்றிதழ் சரிபார்ப்பு, பாஷினி பலமொழி வழிகாட்டுதல்கள் மற்றும் PFMS SNA SPARSH நேரடி வங்கி பரிமாற்றம் மூலம் ஒவ்வொரு ST மாணவருக்கும் சரியான நேரத்தில் உதவித்தொகையை உறுதி செய்கிறது.',
+      'ஏகலைவா ஸ்காலர்கனெக்ட் Google Vision API சான்றிதழ் சரிபார்ப்பு, பாஷினி பலமொழி வழிகாட்டுதல்கள் மற்றும் PFMS SNA SPARSH நேரடி வங்கி பரிமாற்றம் மூலம் ஒவ்வொரு ST மாணவருக்கும் சரியான நேரத்தில் உதவித்தொகையை உறுதி செய்கிறது.',
     informantTitle: 'MoTA கல்வி உதவித்தொகை தகவல் தளம் & 8-நிலை சரிபார்ப்புப் பட்டியல்',
     informantSubtitle:
       'tribal.nic.in மற்றும் dbttribal.gov.in தளங்களின் எளிமையான வழிகாட்டுதல்கள். புதிய சுற்றறிக்கை PDF-கள் Google Cloud Vision API மூலம் தானாகவே ஸ்கேன் செய்யப்பட்டு புதுப்பிக்கப்படுகின்றன.',
