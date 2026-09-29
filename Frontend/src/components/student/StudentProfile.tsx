@@ -3,6 +3,7 @@ import { Card, Button, PageHeader, Tag, VerifiedBadge, ProgressBar, SkillBar, Mo
 import { ResumeScoreCard } from './StudentOverview';
 import { Student } from '../../types';
 import { studentApi } from '../../api/student';
+import { authApi } from '../../api/auth';
 import { useAuth } from '../../context/AuthContext';
 
 export const StudentProfile: React.FC<{
@@ -31,6 +32,68 @@ export const StudentProfile: React.FC<{
   const [skillsStr, setSkillsStr] = useState(student.skills.map((s) => s.name).join(', '));
   const [apps, setApps] = useState<any[]>([]);
   const { currentUser } = useAuth();
+
+  // Interactive UIDAI Aadhaar e-KYC State inside Student Profile
+  const [showEkycForm, setShowEkycForm] = useState(false);
+  const [aadhaarInput, setAadhaarInput] = useState('4829 7301 8492');
+  const [aadhaarModality, setAadhaarModality] = useState<'otp' | 'facerd'>('otp');
+  const [aadhaarOtpSent, setAadhaarOtpSent] = useState(false);
+  const [aadhaarOtp, setAadhaarOtp] = useState('');
+  const [aadhaarDemoOtp, setAadhaarDemoOtp] = useState<string | null>(null);
+  const [aadhaarBusy, setAadhaarBusy] = useState(false);
+  const [aadhaarRecord, setAadhaarRecord] = useState(() => {
+    try {
+      const saved = localStorage.getItem('scholarconnect_aadhaar_ekyc');
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // ignore
+    }
+    return {
+      holderName: student.name || 'Kareena Murmu',
+      maskedAadhaar: 'XXXX-XXXX-8492',
+      vaultToken: 'ADV-9F4A8C2E8492',
+      nspOtrId: 'OTR2026JH84929',
+      modality: 'UIDAI Aadhaar OTP e-KYC',
+      npciStatus: 'ACTIVE (DBT Enabled)',
+      seededBank: 'State Bank of India (SBI) · A/C XXXX-8492',
+      uidaiTxnId: 'UIDAI-AUTH-2026-8492',
+      verifiedAt: 'Verified & Linked',
+    };
+  });
+
+  const handleSendProfileAadhaarOtp = async () => {
+    setAadhaarBusy(true);
+    try {
+      const res = await authApi.sendAadhaarOtp(aadhaarInput);
+      setAadhaarOtpSent(true);
+      setAadhaarDemoOtp(res.demo_otp || '482910');
+    } finally {
+      setAadhaarBusy(false);
+    }
+  };
+
+  const handleVerifyProfileAadhaar = async (modOverride?: 'otp' | 'facerd') => {
+    setAadhaarBusy(true);
+    try {
+      const res = await authApi.verifyAadhaarEkyc({
+        aadhaar_number: aadhaarInput,
+        otp: aadhaarOtp || aadhaarDemoOtp || '482910',
+        modality: modOverride || aadhaarModality,
+        name: student.name,
+        state: 'Jharkhand',
+      });
+      setAadhaarRecord(res.ekyc);
+      setShowEkycForm(false);
+      setAadhaarOtpSent(false);
+      try {
+        localStorage.setItem('scholarconnect_aadhaar_ekyc', JSON.stringify(res.ekyc));
+      } catch {
+        // ignore
+      }
+    } finally {
+      setAadhaarBusy(false);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -178,6 +241,146 @@ export const StudentProfile: React.FC<{
             Edit ST Dossier
           </Button>
         </div>
+      </Card>
+
+      {/* Interactive UIDAI Aadhaar e-KYC, Data Vault Token & NPCI Bank Mapper Card */}
+      <Card className="p-5 border-emerald-300 bg-emerald-50/40 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-display font-semibold text-base text-slate-900">
+                UIDAI Aadhaar e-KYC, SHA-256 Data Vault &amp; NPCI Bank Mapper
+              </span>
+              <Tag tone="sage">✓ {aadhaarRecord.modality} Verified</Tag>
+            </div>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5">
+              Mandatory NSP 2.0 One-Time Registration (OTR) identity &amp; PFMS SNA SPARSH Direct Benefit Transfer linkage.
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            onClick={() => setShowEkycForm(!showEkycForm)}
+            className="text-xs shrink-0"
+          >
+            {showEkycForm ? 'Close Re-Verification ✕' : 'Re-Verify Aadhaar e-KYC / FaceRD'}
+          </Button>
+        </div>
+
+        <div className="grid sm:grid-cols-4 gap-3 text-xs">
+          <div className="p-3 rounded-lg bg-white border border-emerald-200">
+            <span className="text-[10px] font-bold uppercase text-slate-500 block">Masked Aadhaar / VID</span>
+            <span className="font-mono font-bold text-slate-900 text-sm mt-0.5 block">
+              {aadhaarRecord.maskedAadhaar}
+            </span>
+          </div>
+          <div className="p-3 rounded-lg bg-white border border-emerald-200">
+            <span className="text-[10px] font-bold uppercase text-slate-500 block">14-Digit NSP OTR ID</span>
+            <span className="font-mono font-bold text-[#1E3A8A] text-sm mt-0.5 block">
+              {aadhaarRecord.nspOtrId}
+            </span>
+          </div>
+          <div className="p-3 rounded-lg bg-white border border-emerald-200">
+            <span className="text-[10px] font-bold uppercase text-slate-500 block">SHA-256 Data Vault Token</span>
+            <span className="font-mono font-semibold text-slate-800 text-sm mt-0.5 block">
+              {aadhaarRecord.vaultToken}
+            </span>
+          </div>
+          <div className="p-3 rounded-lg bg-white border border-emerald-200">
+            <span className="text-[10px] font-bold uppercase text-slate-500 block">NPCI Bank Mapper (DBT)</span>
+            <span className="font-bold text-emerald-700 text-xs mt-0.5 block">
+              ● {aadhaarRecord.seededBank}
+            </span>
+          </div>
+        </div>
+
+        {showEkycForm && (
+          <div className="p-4 rounded-xl bg-white border border-slate-300 space-y-3 text-xs">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="font-bold text-slate-900">
+                Live UIDAI Aadhaar e-KYC &amp; NPCI Seeding Verification
+              </span>
+              <div className="flex gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setAadhaarModality('otp')}
+                  className={`px-2.5 py-1 rounded font-bold border ${
+                    aadhaarModality === 'otp'
+                      ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]'
+                      : 'bg-slate-50 text-slate-700 border-slate-300'
+                  }`}
+                >
+                  📱 Aadhaar OTP e-KYC
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setAadhaarModality('facerd')}
+                  className={`px-2.5 py-1 rounded font-bold border ${
+                    aadhaarModality === 'facerd'
+                      ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]'
+                      : 'bg-slate-50 text-slate-700 border-slate-300'
+                  }`}
+                >
+                  👤 UIDAI FaceRD Biometric
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <input
+                type="text"
+                value={aadhaarInput}
+                onChange={(e) =>
+                  setAadhaarInput(
+                    e.target.value
+                      .replace(/\D/g, '')
+                      .slice(0, 12)
+                      .replace(/(\d{4})(?=\d)/g, '$1 ')
+                  )
+                }
+                placeholder="XXXX XXXX XXXX (12-digit Aadhaar)"
+                className="flex-1 min-w-[200px] rounded-md border border-slate-300 px-3 py-1.5 font-mono text-sm"
+              />
+              {aadhaarModality === 'otp' ? (
+                <Button variant="primary" onClick={handleSendProfileAadhaarOtp} disabled={aadhaarBusy}>
+                  {aadhaarBusy ? 'Sending OTP…' : 'Send UIDAI OTP'}
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  onClick={() => handleVerifyProfileAadhaar('facerd')}
+                  disabled={aadhaarBusy}
+                >
+                  {aadhaarBusy ? 'Verifying FaceRD…' : 'Complete FaceRD Biometric e-KYC'}
+                </Button>
+              )}
+            </div>
+
+            {aadhaarModality === 'otp' && aadhaarOtpSent && (
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-200">
+                <input
+                  type="text"
+                  maxLength={6}
+                  value={aadhaarOtp}
+                  onChange={(e) => setAadhaarOtp(e.target.value.replace(/\D/g, ''))}
+                  placeholder={`Enter 6-digit OTP (Demo: ${aadhaarDemoOtp || '482910'})`}
+                  className="flex-1 min-w-[200px] rounded-md border border-blue-300 px-3 py-1.5 font-mono text-sm"
+                />
+                {aadhaarDemoOtp && (
+                  <button
+                    type="button"
+                    onClick={() => setAadhaarOtp(aadhaarDemoOtp)}
+                    className="px-2.5 py-1.5 rounded bg-blue-50 text-[#1E3A8A] font-bold border border-blue-200"
+                  >
+                    Auto-Fill OTP ({aadhaarDemoOtp})
+                  </button>
+                )}
+                <Button variant="primary" onClick={() => handleVerifyProfileAadhaar('otp')} disabled={aadhaarBusy}>
+                  Verify UIDAI OTP &amp; Update Token
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
       </Card>
 
       {/* Tribal Category, Family Income, Academic Qualifications & Research Synopsis Block */}

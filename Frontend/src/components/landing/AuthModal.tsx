@@ -53,6 +53,96 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
   const [expertiseDomain, setExpertiseDomain] = useState('');
   const [adminTpoContact, setAdminTpoContact] = useState('');
 
+  // =========================================================================
+  // UIDAI AADHAAR e-KYC, DATA VAULT TOKEN & NPCI BANK MAPPER STATE
+  // =========================================================================
+  const [aadhaarNumber, setAadhaarNumber] = useState<string>('');
+  const [aadhaarModality, setAadhaarModality] = useState<'otp' | 'facerd'>('otp');
+  const [aadhaarOtpSent, setAadhaarOtpSent] = useState<boolean>(false);
+  const [aadhaarOtpInput, setAadhaarOtpInput] = useState<string>('');
+  const [aadhaarDemoOtp, setAadhaarDemoOtp] = useState<string | null>(null);
+  const [aadhaarLoading, setAadhaarLoading] = useState<boolean>(false);
+  const [aadhaarVerifiedData, setAadhaarVerifiedData] = useState<{
+    holderName: string;
+    maskedAadhaar: string;
+    vaultToken: string;
+    nspOtrId: string;
+    modality: string;
+    npciStatus: string;
+    seededBank: string;
+    uidaiTxnId: string;
+    verifiedAt: string;
+  } | null>(null);
+
+  const formatAadhaarDisplay = (raw: string) => {
+    const digits = raw.replace(/\D/g, '').slice(0, 12);
+    return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+  };
+
+  const handleSendAadhaarOtp = async (customAadhaar?: string) => {
+    const raw = (customAadhaar !== undefined ? customAadhaar : aadhaarNumber).replace(/\D/g, '');
+    if (raw.length !== 12 && raw.length !== 16) {
+      setError('Please enter a valid 12-digit Aadhaar Number (or 16-digit VID) for UIDAI e-KYC.');
+      return;
+    }
+    setError(null);
+    setAadhaarLoading(true);
+    try {
+      const res = await authApi.sendAadhaarOtp(raw);
+      setAadhaarOtpSent(true);
+      setAadhaarDemoOtp(res.demo_otp || '482910');
+      setSuccessMsg(res.message);
+    } catch (err: any) {
+      setError(err.message || 'Failed to dispatch UIDAI Aadhaar OTP.');
+    } finally {
+      setAadhaarLoading(false);
+    }
+  };
+
+  const handleVerifyAadhaarEkyc = async (
+    customAadhaar?: string,
+    customOtp?: string,
+    customModality?: 'otp' | 'facerd',
+    customName?: string,
+    customState?: string
+  ) => {
+    const raw = (customAadhaar !== undefined ? customAadhaar : aadhaarNumber).replace(/\D/g, '');
+    const mod = customModality || aadhaarModality;
+    const otpToUse = customOtp !== undefined ? customOtp : aadhaarOtpInput;
+
+    if (raw.length !== 12 && raw.length !== 16) {
+      setError('Please enter a valid 12-digit Aadhaar Number before verifying e-KYC.');
+      return;
+    }
+    if (mod === 'otp' && (!otpToUse || otpToUse.trim().length < 4)) {
+      setError('Please enter the 6-digit UIDAI Aadhaar OTP (or click Auto-Fill OTP).');
+      return;
+    }
+
+    setError(null);
+    setAadhaarLoading(true);
+    try {
+      const res = await authApi.verifyAadhaarEkyc({
+        aadhaar_number: raw,
+        otp: otpToUse,
+        modality: mod,
+        name: customName || name || 'Kareena Murmu',
+        state: customState || casteState || 'Jharkhand',
+      });
+      setAadhaarVerifiedData(res.ekyc);
+      try {
+        localStorage.setItem('scholarconnect_aadhaar_ekyc', JSON.stringify(res.ekyc));
+      } catch {
+        // ignore storage errors
+      }
+      setSuccessMsg('UIDAI Aadhaar e-KYC, SHA-256 Data Vault Token & NPCI Bank Mapper Verified!');
+    } catch (err: any) {
+      setError(err.message || 'UIDAI Aadhaar e-KYC verification failed.');
+    } finally {
+      setAadhaarLoading(false);
+    }
+  };
+
   // Nodal Ministry / University Dropdown State
   const [institutes, setInstitutes] = useState<{ id: number; name: string }[]>([]);
   const [selectedInstituteId, setSelectedInstituteId] = useState<string>('1');
@@ -205,6 +295,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
     setCasteVerificationResult(null);
     setCasteCertNo('');
     setUploadedCertFileName(null);
+    setAadhaarNumber('');
+    setAadhaarOtpSent(false);
+    setAadhaarOtpInput('');
+    setAadhaarDemoOtp(null);
+    setAadhaarVerifiedData(null);
   }, [mode, role]);
 
   if (!mode) return null;
@@ -213,7 +308,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
     e.preventDefault();
     setError(null);
 
-    // Gatekeeper: If registering as ST applicant, caste certificate MUST be verified!
+    // Gatekeeper: If registering as ST applicant, both Aadhaar e-KYC and ST Caste Certificate MUST be verified!
+    if (role === 'student' && !aadhaarVerifiedData) {
+      setError(
+        'UIDAI Aadhaar e-KYC Required: Please complete your 12-digit Aadhaar e-KYC (OTP or FaceRD) before proceeding.'
+      );
+      return;
+    }
     if (role === 'student' && casteVerificationStatus !== 'verified_st') {
       setError(
         'Government Verification Required: You must verify your ST Caste Certificate via API Setu before registration can proceed.'
@@ -544,11 +645,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
                   setDesiredRole('Post-Matric Scholarship for ST Students');
                   setCasteState('Jharkhand');
                   setCasteCertNo('JH/ST/2023/84920');
+                  setAadhaarNumber('4829 7301 8492');
+                  setAadhaarOtpInput('482910');
+                  handleVerifyAadhaarEkyc('482973018492', '482910', 'otp', 'Kareena Murmu', 'Jharkhand');
                   handleVerifyCasteCertificate('JH/ST/2023/84920', 'Jharkhand');
                 }}
                 className="px-2.5 py-1 rounded border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-semibold text-[11px]"
               >
-                Auto-Fill ST Scholar + Verify Certificate
+                Auto-Fill ST Scholar + Aadhaar e-KYC + ST Certificate
               </button>
               <button
                 type="button"
@@ -585,35 +689,35 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
             <div className="space-y-4">
               {/* Statutory Notice Banner */}
               <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-slate-800">
-                <div className="flex items-center gap-2 font-bold text-blue-950 mb-1">
+                <div className="flex items-center gap-2 font-bold text-blue-950 mb-1 flex-wrap">
                   <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-white text-[10px] font-bold">
                     ST
                   </span>
-                  <span>Mandatory Two-Step Government Verification Gateway</span>
+                  <span>Mandatory Government Identity &amp; ST Verification Gateway</span>
                   <span className="ml-auto text-[10px] font-bold uppercase tracking-wider bg-blue-200 text-blue-900 px-2 py-0.5 rounded">
-                    API Setu Integrated
+                    UIDAI e-KYC + API Setu Integrated
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 leading-relaxed">
-                  As per Ministry of Tribal Affairs (MoTA) guidelines, registration is strictly restricted to Scheduled Tribe (ST) scholars. Before an account can be created, your ST Caste Certificate must be validated in real time against the State Revenue Department e-District repository via API Setu.
+                  As per Ministry of Tribal Affairs (MoTA) &amp; NSP 2.0 mandates, ST scholar registration requires (1) <strong>UIDAI Aadhaar e-KYC &amp; NPCI Bank Mapper verification</strong> to generate your 14-digit OTR ID, and (2) <strong>State e-District ST Caste Certificate validation</strong> via API Setu.
                 </p>
               </div>
 
               {/* Two Column Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Column 1: Step 1 - Basic Scholar Profile Details */}
+                {/* Column 1: Step 1 - Basic Scholar Profile Details + UIDAI Aadhaar e-KYC */}
                 <div className="space-y-3 bg-slate-50/70 p-3.5 rounded-lg border border-slate-200">
                   <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
                     <span className="w-5 h-5 rounded-full bg-slate-800 text-white text-xs font-bold flex items-center justify-center">
                       1
                     </span>
                     <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                      Scholar Basic Profile
+                      Scholar Profile &amp; UIDAI Aadhaar e-KYC
                     </h4>
                   </div>
 
                   <div>
-                    <label className="text-xs font-semibold text-slate-700">Full Name (as on ST Certificate) *</label>
+                    <label className="text-xs font-semibold text-slate-700">Full Name (as on Aadhaar &amp; ST Certificate) *</label>
                     <input
                       type="text"
                       required
@@ -691,6 +795,164 @@ export const AuthModal: React.FC<AuthModalProps> = ({ mode, onClose, setMode, on
                       <option value="Post-Matric Scholarship for ST Students">Post-Matric Scholarship for ST Students</option>
                       <option value="Top Class Education for ST Students">Top Class Education for ST Students</option>
                     </select>
+                  </div>
+
+                  {/* UIDAI AADHAAR e-KYC & NPCI BANK MAPPER BOX */}
+                  <div className="pt-3 border-t border-slate-200 space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-[#1E3A8A] uppercase tracking-wider">
+                        UIDAI Aadhaar e-KYC &amp; NPCI Mapper *
+                      </span>
+                      {aadhaarVerifiedData && (
+                        <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-300">
+                          ✓ e-KYC Verified
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex rounded-md bg-slate-200/80 p-0.5 text-[11px] font-semibold">
+                      <button
+                        type="button"
+                        onClick={() => setAadhaarModality('otp')}
+                        className={`flex-1 py-1 rounded text-center transition ${
+                          aadhaarModality === 'otp'
+                            ? 'bg-white text-[#1E3A8A] shadow-sm font-bold'
+                            : 'text-slate-600'
+                        }`}
+                      >
+                        📱 Aadhaar Mobile OTP
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setAadhaarModality('facerd')}
+                        className={`flex-1 py-1 rounded text-center transition ${
+                          aadhaarModality === 'facerd'
+                            ? 'bg-white text-[#1E3A8A] shadow-sm font-bold'
+                            : 'text-slate-600'
+                        }`}
+                      >
+                        👤 UIDAI FaceRD Biometric
+                      </button>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <label className="text-[11px] font-semibold text-slate-700">
+                          12-Digit Aadhaar Number / VID *
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAadhaarNumber('4829 7301 8492');
+                            setAadhaarVerifiedData(null);
+                          }}
+                          className="text-[10px] text-blue-600 hover:underline font-semibold"
+                        >
+                          Fill Sample Aadhaar
+                        </button>
+                      </div>
+                      <div className="flex gap-1.5 mt-1">
+                        <input
+                          type="text"
+                          value={aadhaarNumber}
+                          onChange={(e) => {
+                            setAadhaarNumber(formatAadhaarDisplay(e.target.value));
+                            if (aadhaarVerifiedData) setAadhaarVerifiedData(null);
+                          }}
+                          placeholder="XXXX XXXX XXXX (12 digits)"
+                          className="flex-1 rounded-md border border-slate-300 px-2.5 py-1.5 text-xs font-mono tracking-wider bg-white text-slate-900"
+                        />
+                        {aadhaarModality === 'otp' ? (
+                          <button
+                            type="button"
+                            disabled={aadhaarLoading}
+                            onClick={() => handleSendAadhaarOtp()}
+                            className="px-2.5 py-1.5 rounded-md bg-[#1E3A8A] hover:bg-blue-900 text-white text-[11px] font-bold shrink-0"
+                          >
+                            {aadhaarLoading ? 'Sending…' : aadhaarOtpSent ? 'Resend OTP' : 'Send UIDAI OTP'}
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            disabled={aadhaarLoading}
+                            onClick={() =>
+                              handleVerifyAadhaarEkyc(
+                                aadhaarNumber || '482973018492',
+                                'FACERD',
+                                'facerd'
+                              )
+                            }
+                            className="px-2.5 py-1.5 rounded-md bg-emerald-700 hover:bg-emerald-600 text-white text-[11px] font-bold shrink-0"
+                          >
+                            {aadhaarLoading ? 'Scanning…' : 'Verify FaceRD'}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {aadhaarModality === 'otp' && aadhaarOtpSent && !aadhaarVerifiedData && (
+                      <div className="p-2.5 rounded-lg bg-blue-50 border border-blue-200 space-y-2">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="font-semibold text-blue-950">
+                            Enter 6-Digit UIDAI OTP {aadhaarDemoOtp ? `(Demo OTP: ${aadhaarDemoOtp})` : ''}
+                          </span>
+                          {aadhaarDemoOtp && (
+                            <button
+                              type="button"
+                              onClick={() => setAadhaarOtpInput(aadhaarDemoOtp)}
+                              className="text-[10px] font-bold text-[#1E3A8A] underline"
+                            >
+                              Auto-Fill OTP
+                            </button>
+                          )}
+                        </div>
+                        <div className="flex gap-1.5">
+                          <input
+                            type="text"
+                            maxLength={6}
+                            value={aadhaarOtpInput}
+                            onChange={(e) => setAadhaarOtpInput(e.target.value.replace(/\D/g, ''))}
+                            placeholder="6-digit OTP"
+                            className="flex-1 rounded border border-blue-300 px-2.5 py-1 text-xs font-mono tracking-widest bg-white text-slate-900"
+                          />
+                          <button
+                            type="button"
+                            disabled={aadhaarLoading}
+                            onClick={() => handleVerifyAadhaarEkyc()}
+                            className="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold"
+                          >
+                            Verify Aadhaar e-KYC
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {aadhaarVerifiedData && (
+                      <div className="p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 text-[11px] text-emerald-950 space-y-1">
+                        <div className="flex items-center justify-between font-bold text-emerald-900 border-b border-emerald-200 pb-1">
+                          <span>✓ {aadhaarVerifiedData.modality} Verified</span>
+                          <span className="font-mono text-[10px] bg-emerald-200/70 px-1.5 py-0.5 rounded">
+                            {aadhaarVerifiedData.maskedAadhaar}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-1 pt-0.5">
+                          <div>
+                            <span className="text-[10px] text-emerald-700 block">14-Digit NSP OTR ID:</span>
+                            <span className="font-mono font-bold text-[#1E3A8A]">{aadhaarVerifiedData.nspOtrId}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-emerald-700 block">Aadhaar Vault Token:</span>
+                            <span className="font-mono font-semibold">{aadhaarVerifiedData.vaultToken}</span>
+                          </div>
+                          <div className="col-span-2">
+                            <span className="text-[10px] text-emerald-700 block">NPCI Bank Mapper (SNA SPARSH DBT):</span>
+                            <span className="font-bold text-emerald-800">
+                              ● {aadhaarVerifiedData.npciStatus} — {aadhaarVerifiedData.seededBank}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

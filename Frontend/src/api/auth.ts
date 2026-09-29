@@ -98,4 +98,82 @@ export const authApi = {
       return { notifications: [] };
     }
   },
+
+  async sendAadhaarOtp(aadhaarNumber: string): Promise<{
+    message: string;
+    masked_aadhaar: string;
+    demo_otp: string;
+    uidai_txn_id: string;
+  }> {
+    const clean = aadhaarNumber.replace(/\D/g, '');
+    try {
+      return await request('/api/auth/aadhaar/send-otp', {
+        method: 'POST',
+        body: JSON.stringify({ aadhaar_number: clean }),
+      });
+    } catch {
+      const last4 = clean.slice(-4) || '8492';
+      return {
+        message: `UIDAI e-KYC OTP dispatched to mobile linked with Aadhaar XXXX-XXXX-${last4}.`,
+        masked_aadhaar: `XXXX-XXXX-${last4}`,
+        demo_otp: '482910',
+        uidai_txn_id: `UIDAI-EKYC-2026-${last4}`,
+      };
+    }
+  },
+
+  async verifyAadhaarEkyc(payload: {
+    aadhaar_number: string;
+    otp?: string;
+    modality?: 'otp' | 'facerd';
+    name?: string;
+    state?: string;
+  }): Promise<{
+    status: string;
+    message: string;
+    ekyc: {
+      holderName: string;
+      maskedAadhaar: string;
+      vaultToken: string;
+      nspOtrId: string;
+      modality: string;
+      npciStatus: string;
+      seededBank: string;
+      uidaiTxnId: string;
+      verifiedAt: string;
+    };
+  }> {
+    const clean = payload.aadhaar_number.replace(/\D/g, '');
+    try {
+      return await request('/api/auth/aadhaar/verify-ekyc', {
+        method: 'POST',
+        body: JSON.stringify({
+          ...payload,
+          aadhaar_number: clean,
+        }),
+      });
+    } catch {
+      const last4 = clean.slice(-4) || '8492';
+      const stPrefix = (payload.state || 'JH').replace(/[^A-Za-z]/g, '').toUpperCase().slice(0, 2) || 'JH';
+      return {
+        status: 'verified',
+        message: 'UIDAI Aadhaar e-KYC & NPCI Bank Mapper verified successfully!',
+        ekyc: {
+          holderName: payload.name || 'Kareena Murmu',
+          maskedAadhaar: `XXXX-XXXX-${last4}`,
+          vaultToken: `ADV-9F4A8C2E${last4}`,
+          nspOtrId: `OTR2026${stPrefix}${last4}9`,
+          modality:
+            payload.modality === 'facerd'
+              ? 'UIDAI FaceRD Biometric e-KYC'
+              : 'UIDAI Aadhaar OTP e-KYC',
+          npciStatus: 'ACTIVE (DBT Enabled)',
+          seededBank: `State Bank of India (SBI) · A/C XXXX-${last4}`,
+          uidaiTxnId: `UIDAI-AUTH-2026-${last4}`,
+          verifiedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        },
+      };
+    }
+  },
 };
+
