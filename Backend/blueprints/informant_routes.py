@@ -1399,9 +1399,9 @@ def scan_and_compare_guideline_pdf():
             })
 
     # 5. Detect New Mandatory Requirement / Clause in Circular Text
-    clause_match = re.search(r'(?:mandatory|new requirement|must submit|compulsory)[:\s-]+([^.\n]{10,140})', extracted_text, re.IGNORECASE)
+    clause_match = re.search(r'(?:mandatory\s+requirement|new\s+requirement|mandatory|must\s+submit|compulsory)[:\s-]+([^.\n]{10,140})', extracted_text, re.IGNORECASE)
     if clause_match:
-        new_clause = clause_match.group(1).strip()
+        new_clause = re.sub(r'^requirement[:\s-]+', '', clause_match.group(1).strip(), flags=re.IGNORECASE)
         changes_detected.append({
             "field": "New Statutory Compliance Clause Added",
             "old_value": "Standard 8-Step Verification",

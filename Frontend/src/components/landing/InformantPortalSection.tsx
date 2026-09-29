@@ -261,13 +261,6 @@ export const InformantPortalSection: React.FC<InformantPortalSectionProps> = ({
     const prog = getLocalChecklistProgress(selectedSchemeCode);
     setCompletedSteps(prog.completed_steps);
     setCurrentStep(prog.current_step);
-    // Automatically scan, compare, and update the selected scheme's circular on our end if not yet synced!
-    if (!autoScannedSchemes[selectedSchemeCode]) {
-      const timer = setTimeout(() => {
-        handleTriggerBackendAutoScan(selectedSchemeCode);
-      }, 450);
-      return () => clearTimeout(timer);
-    }
   }, [selectedSchemeCode]);
 
   const activeScheme =
