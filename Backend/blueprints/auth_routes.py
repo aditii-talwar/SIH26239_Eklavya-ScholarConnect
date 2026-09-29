@@ -362,7 +362,9 @@ def logout():
     clear_user_session()
     return jsonify({'message': 'Logged out successfully.'}), 200
 
+import json
 import smtplib
+import urllib.request
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from config import Config
@@ -371,45 +373,89 @@ OTP_STORE = {}
 
 DEMO_DOMAINS = {'example.com', 'test.com', 'demo.com', 'sample.com', 'company.com', 'mota.gov.in', 'tribal.nic.in', 'capacityconnect.com', 'college.edu', 'msu.edu'}
 
-def send_real_email_otp(to_email: str, otp_code: str) -> bool:
-    """Attempts to dispatch an actual email via SMTP if credentials are configured."""
-    smtp_email = getattr(Config, 'SMTP_EMAIL', '')
-    smtp_password = getattr(Config, 'SMTP_PASSWORD', '').replace(' ', '')
-    smtp_server = getattr(Config, 'SMTP_SERVER', 'smtp.gmail.com')
+
+def _dispatch_email_via_apps_script_or_smtp(to_email: str, subject: str, html_content: str) -> bool:
+    """
+    Dispatches transactional emails via:
+      1. Google Apps Script HTTPS Web App Relay over TCP Port 443 (`GOOGLE_APPS_SCRIPT_URL`),
+         bypassing cloud outbound SMTP Port 587/25 firewall blocks (e.g., on Render Free Tier).
+      2. Direct SMTP over Port 465 (SSL) or Port 587 (STARTTLS) when `SMTP_EMAIL` & `SMTP_PASSWORD` are set.
+    """
+    apps_script_url = (
+        getattr(Config, 'GOOGLE_APPS_SCRIPT_URL', '')
+        or os.environ.get('GOOGLE_APPS_SCRIPT_URL', '')
+    ).strip()
+
+    # Priority 1: HTTPS Port 443 Relay via Google Apps Script Web App
+    if apps_script_url and apps_script_url.startswith('https://script.google.com/'):
+        try:
+            payload = json.dumps({
+                'to': to_email,
+                'subject': subject,
+                'htmlBody': html_content,
+                'senderName': 'MoTA ScholarConnect (SIH26239)'
+            }).encode('utf-8')
+            req = urllib.request.Request(
+                apps_script_url,
+                data=payload,
+                headers={'Content-Type': 'application/json', 'User-Agent': 'MoTA-ScholarConnect/1.0'},
+                method='POST'
+            )
+            with urllib.request.urlopen(req, timeout=12) as resp:
+                resp_text = resp.read().decode('utf-8', errors='ignore')
+                if resp.status in (200, 201, 302) and '"error"' not in resp_text.lower():
+                    print(f"[Google Apps Script Relay · Port 443] Dispatched live email to {to_email}!")
+                    return True
+                print(f"[Google Apps Script Relay Notice] Status {resp.status}: {resp_text[:160]}")
+        except Exception as e:
+            print(f"[Google Apps Script Relay Error] Could not send via HTTPS Port 443 to {to_email}: {e}")
+
+    # Priority 2: Direct SMTP (Port 465 SSL or Port 587 STARTTLS)
+    smtp_email = getattr(Config, 'SMTP_EMAIL', '').strip()
+    smtp_password = getattr(Config, 'SMTP_PASSWORD', '').replace(' ', '').strip()
+    smtp_server = getattr(Config, 'SMTP_SERVER', 'smtp.gmail.com').strip()
     smtp_port = int(getattr(Config, 'SMTP_PORT', 587))
 
     if not smtp_email or not smtp_password:
-        print(f"[Email Dispatcher] SMTP credentials not set in config.py. OTP for {to_email} is: {otp_code}")
+        print(f"[Email Dispatcher] Neither GOOGLE_APPS_SCRIPT_URL nor SMTP credentials configured for {to_email}.")
         return False
 
     try:
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = f"{otp_code} is your MoTA ScholarConnect Verification Code"
-        msg['From'] = f"MoTA ScholarConnect Verification <{smtp_email}>"
+        msg['Subject'] = subject
+        msg['From'] = f"MoTA ScholarConnect <{smtp_email}>"
         msg['To'] = to_email
-
-        html_content = f"""
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #E1D6AE; border-radius: 12px; background-color: #FDFBF7;">
-            <h2 style="color: #2C3524; margin-bottom: 8px;">MoTA ScholarConnect Verification</h2>
-            <p style="color: #6B7660; font-size: 14px;">Use the following 6-digit code to verify your account registration:</p>
-            <div style="margin: 24px 0; padding: 14px; background: #2C3524; color: #F2E8CF; font-size: 28px; font-weight: bold; letter-spacing: 6px; text-align: center; border-radius: 8px;">
-                {otp_code}
-            </div>
-            <p style="color: #6B7660; font-size: 12px;">This code will expire in 10 minutes. If you did not request this, please ignore this email.</p>
-        </div>
-        """
         msg.attach(MIMEText(html_content, 'html'))
 
-        server = smtplib.SMTP(smtp_server, smtp_port, timeout=10)
-        server.starttls()
+        if smtp_port == 465:
+            server = smtplib.SMTP_SSL(smtp_server, smtp_port, timeout=10)
+        else:
+            server = smtplib.SMTP(smtp_server, smtp_port, timeout=10)
+            server.starttls()
         server.login(smtp_email, smtp_password)
         server.sendmail(smtp_email, to_email, msg.as_string())
         server.quit()
-        print(f"[Email Dispatcher] Successfully sent live email to {to_email}!")
+        print(f"[SMTP Dispatcher · Port {smtp_port}] Successfully sent live email to {to_email}!")
         return True
     except Exception as e:
-        print(f"[Email Dispatcher Error] Could not send live email to {to_email}: {e}")
+        print(f"[SMTP Dispatcher Error] Could not send live email to {to_email}: {e}")
         return False
+
+
+def send_real_email_otp(to_email: str, otp_code: str) -> bool:
+    """Attempts to dispatch an actual verification OTP email via Google Apps Script (HTTPS 443) or SMTP."""
+    subject = f"{otp_code} is your MoTA ScholarConnect Verification Code"
+    html_content = f"""
+    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #E1D6AE; border-radius: 12px; background-color: #FDFBF7;">
+        <h2 style="color: #2C3524; margin-bottom: 8px;">MoTA ScholarConnect Verification</h2>
+        <p style="color: #6B7660; font-size: 14px;">Use the following 6-digit code to verify your account registration:</p>
+        <div style="margin: 24px 0; padding: 14px; background: #2C3524; color: #F2E8CF; font-size: 28px; font-weight: bold; letter-spacing: 6px; text-align: center; border-radius: 8px;">
+            {otp_code}
+        </div>
+        <p style="color: #6B7660; font-size: 12px;">This code will expire in 10 minutes. If you did not request this, please ignore this email.</p>
+    </div>
+    """
+    return _dispatch_email_via_apps_script_or_smtp(to_email, subject, html_content)
 
 @auth_bp.route('/send-otp', methods=['POST'])
 def send_otp():
@@ -559,44 +605,19 @@ def verify_aadhaar_ekyc():
 RESET_OTP_STORE = {}
 
 def send_password_reset_email(to_email: str, otp_code: str) -> bool:
-    """Attempts to dispatch an actual password reset email via SMTP if credentials are configured."""
-    smtp_email = getattr(Config, 'SMTP_EMAIL', '')
-    smtp_password = getattr(Config, 'SMTP_PASSWORD', '').replace(' ', '')
-    smtp_server = getattr(Config, 'SMTP_SERVER', 'smtp.gmail.com')
-    smtp_port = int(getattr(Config, 'SMTP_PORT', 587))
-
-    if not smtp_email or not smtp_password:
-        print(f"[Password Reset Dispatcher] SMTP credentials not set in config.py. Reset OTP for {to_email} is: {otp_code}")
-        return False
-
-    try:
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = f"{otp_code} is your MoTA ScholarConnect Password Reset Code"
-        msg['From'] = f"MoTA ScholarConnect Security <{smtp_email}>"
-        msg['To'] = to_email
-
-        html_content = f"""
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #E1D6AE; border-radius: 12px; background-color: #FDFBF7;">
-            <h2 style="color: #2C3524; margin-bottom: 8px;">MoTA ScholarConnect Password Reset</h2>
-            <p style="color: #6B7660; font-size: 14px;">We received a request to reset your MoTA ScholarConnect account password. Use the following 6-digit code:</p>
-            <div style="margin: 24px 0; padding: 14px; background: #2C3524; color: #F2E8CF; font-size: 28px; font-weight: bold; letter-spacing: 6px; text-align: center; border-radius: 8px;">
-                {otp_code}
-            </div>
-            <p style="color: #6B7660; font-size: 12px;">This code will expire in 10 minutes. If you did not request a password reset, please ignore this email.</p>
+    """Attempts to dispatch an actual password reset email via Google Apps Script (HTTPS 443) or SMTP."""
+    subject = f"{otp_code} is your MoTA ScholarConnect Password Reset Code"
+    html_content = f"""
+    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #E1D6AE; border-radius: 12px; background-color: #FDFBF7;">
+        <h2 style="color: #2C3524; margin-bottom: 8px;">MoTA ScholarConnect Password Reset</h2>
+        <p style="color: #6B7660; font-size: 14px;">We received a request to reset your MoTA ScholarConnect account password. Use the following 6-digit code:</p>
+        <div style="margin: 24px 0; padding: 14px; background: #2C3524; color: #F2E8CF; font-size: 28px; font-weight: bold; letter-spacing: 6px; text-align: center; border-radius: 8px;">
+            {otp_code}
         </div>
-        """
-        msg.attach(MIMEText(html_content, 'html'))
-
-        server = smtplib.SMTP(smtp_server, smtp_port, timeout=10)
-        server.starttls()
-        server.login(smtp_email, smtp_password)
-        server.sendmail(smtp_email, to_email, msg.as_string())
-        server.quit()
-        print(f"[Password Reset Dispatcher] Successfully sent reset email to {to_email}!")
-        return True
-    except Exception as e:
-        print(f"[Password Reset Dispatcher Error] Could not send reset email to {to_email}: {e}")
-        return False
+        <p style="color: #6B7660; font-size: 12px;">This code will expire in 10 minutes. If you did not request a password reset, please ignore this email.</p>
+    </div>
+    """
+    return _dispatch_email_via_apps_script_or_smtp(to_email, subject, html_content)
 
 @auth_bp.route('/forgot-password', methods=['POST'])
 def forgot_password():
@@ -635,7 +656,7 @@ def forgot_password():
     domain = email.split('@')[-1]
     is_demo = domain in DEMO_DOMAINS or 'demo' in email or 'test' in email
 
-    # Send real email via SMTP if configured
+    # Send real email via Google Apps Script (HTTPS 443) or SMTP if configured
     email_dispatched = send_password_reset_email(email, otp_code)
 
     payload = {
@@ -717,22 +738,22 @@ def get_notifications():
         notifications = [
             {
                 "id": "notif-guest-1",
-                "text": "Welcome to MoTA ScholarConnect! Register or log in as a Trainee, Trainer, or Admin.",
+                "text": "Welcome to MoTA ScholarConnect (SIH26239)! Register or log in as an ST Applicant, Level-1 INO, or Ministry Nodal Admin.",
                 "tag": "Welcome",
                 "type": "info",
                 "time": "Just now"
             },
             {
                 "id": "notif-guest-2",
-                "text": "Explore active capacity building courses, study materials, and questionnaires.",
-                "tag": "Courses",
+                "text": "Explore 8-step statutory checklists across all 5 Central MoTA ST Scholarship & Fellowship Schemes in 9 Bhashini languages.",
+                "tag": "Schemes",
                 "type": "info",
                 "time": "1h ago"
             },
             {
                 "id": "notif-guest-3",
-                "text": "Subject-wise MCQ assessments support 10 timed questions with AI competency certification.",
-                "tag": "Assessment",
+                "text": "Complete UIDAI Aadhaar e-KYC, NPCI Bank Mapper checks, and Google Cloud Vision certificate OCR verification.",
+                "tag": "e-KYC & OCR",
                 "type": "success",
                 "time": "Today"
             }
@@ -744,7 +765,7 @@ def get_notifications():
     user_id = user.get('user_id')
 
     if role == 'student':
-        # 1. Trainee Info
+        # 1. ST Applicant Info
         cursor.execute(
             """
             SELECT s.name, s.college, s.verification_status, s.university_roll_no, 

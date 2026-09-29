@@ -5,7 +5,7 @@ from flask_cors import CORS
 from config import Config
 from models import init_db
 
-# Import all blueprints (including the 3 dedicated Auth Blueprints for Trainee, Trainer, and Admin)
+# Import MoTA ScholarConnect (SIH26239) Blueprints
 from blueprints.auth_routes import auth_bp
 from blueprints.trainee_auth_routes import trainee_auth_bp
 from blueprints.trainer_auth_routes import trainer_auth_bp
@@ -39,7 +39,7 @@ def create_app():
     except Exception as e:
         print(f"[Seed Warning] Auto-seeding skipped: {e}")
 
-    # Register the 3 Role Auth Blueprints + Shared Auth & Portal Blueprints
+    # Register MoTA ScholarConnect Auth & Stakeholder Portal Blueprints
     app.register_blueprint(trainee_auth_bp)
     app.register_blueprint(trainer_auth_bp)
     app.register_blueprint(admin_auth_bp)
@@ -81,13 +81,11 @@ def create_app():
                 'status': 'online',
                 'endpoints': {
                     'health': '/api/health',
-                    'trainee_auth': '/api/auth/trainees',
-                    'trainer_auth': '/api/auth/trainers',
-                    'admin_auth': '/api/auth/admins',
                     'auth': '/api/auth',
-                    'trainee': '/api/student',
-                    'trainer': '/api/academician',
-                    'admin': '/api/institute'
+                    'st_applicant': '/api/student',
+                    'level1_ino': '/api/academician',
+                    'mota_admin': '/api/institute',
+                    'informant': '/api/informant/guidelines'
                 }
             }), 200
 
@@ -106,5 +104,6 @@ app = create_app()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
-    print(f"Server starting on http://127.0.0.1:{port}")
-    app.run(host='127.0.0.1', port=port, debug=True)
+    debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+    print(f"Server starting on http://127.0.0.1:{port} (debug={debug_mode})")
+    app.run(host='127.0.0.1', port=port, debug=debug_mode)

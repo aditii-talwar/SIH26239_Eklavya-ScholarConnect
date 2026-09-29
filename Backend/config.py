@@ -25,6 +25,8 @@ class Config:
     SMTP_PORT = int(os.environ.get("SMTP_PORT", 587))
     SMTP_EMAIL = os.environ.get("SMTP_EMAIL", "")
     SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")
+    # Google Apps Script HTTPS Relay (Port 443) to bypass cloud SMTP Port 587 blocks on Render
+    GOOGLE_APPS_SCRIPT_URL = os.environ.get("GOOGLE_APPS_SCRIPT_URL", "")
     # Google Cloud Vision API for OCR scanning of certificates & MoTA Guideline PDFs
     GOOGLE_VISION_API_KEY = os.environ.get("GOOGLE_VISION_API_KEY") or os.environ.get("GEMINI_API_KEY", "")
     # MeitY Bhashini ULCA / Dhruva API for Multilingual Translation & TTS
